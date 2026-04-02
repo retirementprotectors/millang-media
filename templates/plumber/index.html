@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- BUSINESS_NAME: Replace the title below -->
-  <title>[Business Name] — Licensed Plumber in [City], Iowa</title>
-  <meta name="description" content="[Business Name] — Licensed, insured plumber serving [City] and surrounding areas. Emergency plumbing, drain cleaning, water heaters, and more. Call now!" />
+  <title>Heartland Plumbing — Licensed Plumber in Des Moines, Iowa</title>
+  <meta name="description" content="Heartland Plumbing — Licensed, insured plumber serving Des Moines and surrounding areas. Emergency plumbing, drain cleaning, water heaters, and more. Call now!" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -324,19 +323,6 @@
       border: 1px solid var(--gray-200);
     }
     .map-embed iframe { width: 100%; height: 100%; border: none; }
-    .map-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: .75rem;
-      color: var(--gray-500);
-      font-size: .9rem;
-    }
-    .map-placeholder .map-emoji { font-size: 3rem; }
-    .map-placeholder p { font-size: .8rem; text-align: center; max-width: 200px; }
     .cities-list { list-style: none; }
     .cities-list h4 {
       font-size: .82rem;
@@ -355,7 +341,7 @@
       padding: .4rem 0;
       border-bottom: 1px solid var(--gray-100);
     }
-    .cities-list li::before { content: '📍'; font-size: .8rem; }
+    .cities-list li::before { content: '\U0001F4CD'; font-size: .8rem; }
     @media (max-width: 768px) { .area-grid { grid-template-columns: 1fr; } }
 
     /* ABOUT */
@@ -373,9 +359,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
       box-shadow: var(--shadow-lg);
       position: relative;
+    }
+    .about-initials {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      border: 3px solid rgba(255,255,255,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: .05em;
     }
     .about-photo-label {
       position: absolute;
@@ -549,6 +548,19 @@
     }
     .footer-bottom a { color: rgba(255,255,255,.4); text-decoration: none; }
     .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+    .demo-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.35);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .2rem .6rem;
+      border-radius: 4px;
+      margin-left: .5rem;
+    }
     @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } }
 
     /* STICKY MOBILE CTA */
@@ -587,28 +599,24 @@
 <body>
 
 <!-- TOPBAR -->
-<!-- PHONE: Replace (555) 000-0000 with actual phone -->
 <div class="topbar">
-  ⚡ Available for Emergency Calls 24/7 —
-  <a href="tel:+15550000000">(555) 000-0000</a>
+  Available for Emergency Calls 24/7 —
+  <a href="tel:+15155550199">(515) 555-0199</a>
 </div>
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <!-- BUSINESS_NAME: Replace [Business Name] -->
-    <!-- CITY: Replace [City] -->
     <a href="#" class="nav-logo">
-      [Business Name]
-      <small>Licensed Plumber · [City], IA</small>
+      Heartland Plumbing
+      <small>Licensed Plumber · Des Moines, IA</small>
     </a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="#area">Service Area</a></li>
       <li><a href="#about">About</a></li>
-      <!-- PHONE: Replace phone number -->
-      <li><a href="tel:+15550000000" class="nav-call">📞 (555) 000-0000</a></li>
+      <li><a href="tel:+15155550199" class="nav-call">&#x1F4DE; (515) 555-0199</a></li>
     </ul>
   </div>
 </nav>
@@ -616,23 +624,18 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <!-- CITY: Replace [City] -->
-    <div class="hero-badge">📍 Serving [City] and Surrounding Areas</div>
-    <!-- BUSINESS_NAME, CITY: Replace both -->
-    <h1>[Business Name]<br>Your <span class="accent">Trusted Local</span> Plumber</h1>
-    <!-- CITY: Replace [City] -->
-    <p class="hero-sub">Fast, reliable plumbing service in [City], Iowa and surrounding communities. We show up when you need us — day or night.</p>
+    <div class="hero-badge">&#x1F4CD; Serving Des Moines and Surrounding Areas</div>
+    <h1>Heartland Plumbing<br>Your <span class="accent">Trusted Local</span> Plumber</h1>
+    <p class="hero-sub">Fast, reliable plumbing service in Des Moines, Iowa and surrounding communities. We show up when you need us — day or night.</p>
     <div class="hero-ctas">
-      <!-- PHONE: Replace phone number -->
-      <a href="tel:+15550000000" class="btn-call">📞 Call Now — (555) 000-0000</a>
-      <a href="#book" class="btn-secondary">📅 Schedule Online</a>
+      <a href="tel:+15155550199" class="btn-call">&#x1F4DE; Call Now — (515) 555-0199</a>
+      <a href="#book" class="btn-secondary">&#x1F4C5; Schedule Online</a>
     </div>
     <div class="hero-trust">
-      <span class="trust-item">🛡️ Licensed &amp; Insured</span>
-      <span class="trust-item">⚡ 24/7 Emergency</span>
-      <span class="trust-item">✅ Free Estimates</span>
-      <!-- YEARS: Replace [X] with actual years in business -->
-      <span class="trust-item">🏆 [X]+ Years Experience</span>
+      <span class="trust-item">&#x1F6E1;&#xFE0F; Licensed &amp; Insured</span>
+      <span class="trust-item">&#x26A1; 24/7 Emergency</span>
+      <span class="trust-item">&#x2B50; 4.9 Stars · 147 Google Reviews</span>
+      <span class="trust-item">&#x1F3C6; 17+ Years Experience</span>
     </div>
   </div>
 </section>
@@ -647,32 +650,32 @@
     </div>
     <div class="services-grid">
       <div class="service-card">
-        <span class="service-icon">🚨</span>
+        <span class="service-icon">&#x1F6A8;</span>
         <h3>Emergency Plumbing</h3>
         <p>Burst pipe? Major leak? We're available 24/7 for plumbing emergencies. Fast response times, no surprise fees.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🔧</span>
+        <span class="service-icon">&#x1F527;</span>
         <h3>Drain Cleaning</h3>
         <p>Slow drains and blockages cleared fast. We use professional equipment to get the job done right the first time.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">♨️</span>
+        <span class="service-icon">&#x2668;&#xFE0F;</span>
         <h3>Water Heater Service</h3>
         <p>Installation, repair, and replacement of traditional tank and tankless water heaters. Same-day service available.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🔩</span>
+        <span class="service-icon">&#x1F529;</span>
         <h3>Pipe Repair &amp; Replacement</h3>
         <p>Leaking pipes, cracked lines, outdated galvanized pipes — we diagnose and fix plumbing issues of all sizes.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🛁</span>
+        <span class="service-icon">&#x1F6C1;</span>
         <h3>Bathroom Remodeling</h3>
         <p>Complete bathroom plumbing for remodels and additions. New fixtures, tub and shower installs, full rough-in work.</p>
       </div>
       <div class="service-card">
-        <span class="service-icon">🏗️</span>
+        <span class="service-icon">&#x1F3D7;&#xFE0F;</span>
         <h3>Sewer Line Service</h3>
         <p>Sewer camera inspections, hydro-jetting, and sewer line repair or replacement. Know what's going on underground.</p>
       </div>
@@ -685,23 +688,22 @@
   <div class="section-inner">
     <div class="section-header center">
       <p class="section-label">Why Choose Us</p>
-      <!-- BUSINESS_NAME: Replace [Business Name] -->
-      <h2 class="section-title">Why [Business Name]?</h2>
+      <h2 class="section-title">Why Heartland Plumbing?</h2>
       <p class="section-sub">We're your neighbors. We do the job right and we treat your home with respect.</p>
     </div>
     <div class="why-grid">
       <div class="why-item">
-        <span class="why-icon">🛡️</span>
+        <span class="why-icon">&#x1F6E1;&#xFE0F;</span>
         <h3>Licensed &amp; Insured</h3>
         <p>Fully licensed plumber in the state of Iowa. Carry full liability insurance for your protection and peace of mind.</p>
       </div>
       <div class="why-item">
-        <span class="why-icon">⚡</span>
+        <span class="why-icon">&#x26A1;</span>
         <h3>24/7 Emergency Service</h3>
         <p>Plumbing emergencies don't wait for business hours. Neither do we. Call anytime — nights, weekends, holidays.</p>
       </div>
       <div class="why-item">
-        <span class="why-icon">⭐</span>
+        <span class="why-icon">&#x2B50;</span>
         <h3>Satisfaction Guaranteed</h3>
         <p>We stand behind every job. If something isn't right, we come back and make it right. No questions asked.</p>
       </div>
@@ -715,31 +717,26 @@
     <div class="section-header center">
       <p class="section-label">Customer Reviews</p>
       <h2 class="section-title">What Our Customers Say</h2>
-      <!-- RATING: Replace [X.X] and [XXX] with actual Google rating and review count -->
-      <p class="section-sub">⭐⭐⭐⭐⭐ [X.X] stars on Google · [XXX]+ reviews</p>
+      <p class="section-sub">&#x2B50;&#x2B50;&#x2B50;&#x2B50;&#x2B50; 4.9 stars on Google · 147+ reviews</p>
     </div>
     <div class="reviews-grid">
-      <!-- REVIEW_1: Replace with an actual customer review -->
       <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Called at 8pm with a burst pipe and [Business Name] was at our house within an hour. Fixed everything quickly and the price was very fair. Highly recommend!"</p>
-        <div class="review-author">Sarah M.</div>
-        <!-- CITY: Replace with actual reviewer city -->
-        <div class="review-location">📍 [City], IA · Google Review</div>
+        <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+        <p class="review-text">"Called at 8pm on a Tuesday with water coming through the basement ceiling. Mike had a guy at our house in under 45 minutes. Fixed the burst pipe, cleaned up, and the bill was exactly what he quoted. These guys are the real deal."</p>
+        <div class="review-author">Jake R.</div>
+        <div class="review-location">&#x1F4CD; Ankeny, IA · Google Review</div>
       </div>
-      <!-- REVIEW_2: Replace with an actual customer review -->
       <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"We've used [Business Name] twice now and both times were great. Shows up on time, explains what needs to be done, doesn't try to upsell you on stuff you don't need."</p>
-        <div class="review-author">Tom K.</div>
-        <div class="review-location">📍 [City], IA · Google Review</div>
+        <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+        <p class="review-text">"We've used Heartland Plumbing three times now — new water heater, drain cleaning, and a bathroom rough-in for our addition. Every time they show up on time, explain everything, and don't try to sell us stuff we don't need. Rare these days."</p>
+        <div class="review-author">Danielle M.</div>
+        <div class="review-location">&#x1F4CD; West Des Moines, IA · Google Review</div>
       </div>
-      <!-- REVIEW_3: Replace with an actual customer review -->
       <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Got a quote same day and the work was done the next morning. Cleaned up after themselves, which not all contractors do. Saved my number — these are my go-to plumbers."</p>
-        <div class="review-author">Linda R.</div>
-        <div class="review-location">📍 [City], IA · Google Review</div>
+        <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+        <p class="review-text">"Got quotes from three plumbers for our sewer line repair. Heartland was the most thorough — they ran a camera first and showed us exactly what was wrong. Fair price, great work, cleaned up the yard better than they found it."</p>
+        <div class="review-author">Chris &amp; Laura T.</div>
+        <div class="review-location">&#x1F4CD; Urbandale, IA · Google Review</div>
       </div>
     </div>
   </div>
@@ -750,37 +747,24 @@
   <div class="section-inner">
     <div class="section-header">
       <p class="section-label">Service Area</p>
-      <!-- CITY: Replace [City] -->
-      <h2 class="section-title">Serving [City] &amp; Surrounding Communities</h2>
-      <p class="section-sub">Based in [City], we serve the greater metro area. Not sure if we cover your area? Give us a call.</p>
+      <h2 class="section-title">Serving Des Moines &amp; Surrounding Communities</h2>
+      <p class="section-sub">Based in Des Moines, we serve the greater metro area. Not sure if we cover your area? Give us a call.</p>
     </div>
     <div class="area-grid">
-      <!--
-        MAP: Replace the placeholder below with a real Google Maps iframe.
-        Steps:
-          1. Go to maps.google.com
-          2. Search for the business city or address
-          3. Click Share > Embed a map
-          4. Copy the <iframe ...> tag and paste it here, replacing the placeholder div
-      -->
       <div class="map-embed">
-        <div class="map-placeholder">
-          <span class="map-emoji">🗺️</span>
-          <strong>Google Maps Embed</strong>
-          <p>Replace this block with an iframe from Google Maps — see comment above</p>
-        </div>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190015.12345!2d-93.7977!3d41.5868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee99a4c1611ee7%3A0x710028512691e4b2!2sDes%20Moines%2C%20IA!5e0!3m2!1sen!2sus!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <!-- CITIES: Replace each [City Name] with actual cities served -->
       <div>
         <ul class="cities-list">
           <h4>Cities We Serve</h4>
-          <li>[City], Iowa (Home Base)</li>
-          <li>[Nearby City 1]</li>
-          <li>[Nearby City 2]</li>
-          <li>[Nearby City 3]</li>
-          <li>[Nearby City 4]</li>
-          <li>[Nearby City 5]</li>
-          <li>[Nearby City 6]</li>
+          <li>Des Moines, Iowa (Home Base)</li>
+          <li>West Des Moines</li>
+          <li>Ankeny</li>
+          <li>Urbandale</li>
+          <li>Waukee</li>
+          <li>Johnston</li>
+          <li>Grimes</li>
+          <li>Clive</li>
           <li>And surrounding areas</li>
         </ul>
       </div>
@@ -792,35 +776,23 @@
 <section id="about">
   <div class="section-inner">
     <div class="about-grid">
-      <!--
-        PHOTO: Replace this placeholder with an actual owner/crew photo.
-        Example:
-          <img src="images/owner.jpg" alt="[Owner Name], owner of [Business Name]"
-               style="width:100%; border-radius:20px; object-fit:cover; aspect-ratio:3/4;" />
-      -->
       <div class="about-photo">
-        👷
-        <!-- OWNER_NAME: Replace [Owner Name] -->
-        <div class="about-photo-label">[Owner Name], Owner</div>
+        <div class="about-initials">MD</div>
+        <div class="about-photo-label">Mike Daniels, Owner</div>
       </div>
       <div class="about-text">
         <p class="section-label">About Us</p>
-        <!-- BUSINESS_NAME: Replace [Business Name] -->
-        <h2 class="section-title">[Business Name]</h2>
-        <!-- STORY: Replace this paragraph with the real business origin story -->
-        <!-- YEAR: Replace [YEAR] with founding year -->
-        <p class="section-sub">[Business Name] has been serving [City] and the surrounding area since [YEAR]. What started as a one-person operation has grown into a trusted local business with hundreds of satisfied customers.</p>
-        <!-- OWNER_NAME: Replace [Owner Name] -->
+        <h2 class="section-title">Heartland Plumbing</h2>
+        <p class="section-sub">Heartland Plumbing has been serving Des Moines and the surrounding area since 2009. What started as a one-person operation has grown into a trusted local business with hundreds of satisfied customers.</p>
         <br>
-        <p class="section-sub">Owner [Owner Name] personally oversees every job. We believe in honest pricing, showing up when we say we will, and treating your home the way we'd treat our own.</p>
+        <p class="section-sub">Owner Mike Daniels personally oversees every job. We believe in honest pricing, showing up when we say we will, and treating your home the way we'd treat our own.</p>
         <div class="about-cred">
-          <div class="cred-item"><span class="cred-check">✓</span> Iowa Licensed Plumber</div>
-          <div class="cred-item"><span class="cred-check">✓</span> Fully Insured</div>
-          <!-- YEARS: Replace [X] with actual years in business -->
-          <div class="cred-item"><span class="cred-check">✓</span> [X]+ Years in Business</div>
-          <div class="cred-item"><span class="cred-check">✓</span> Free Estimates</div>
-          <div class="cred-item"><span class="cred-check">✓</span> Upfront Pricing</div>
-          <div class="cred-item"><span class="cred-check">✓</span> Local &amp; Family Owned</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Iowa Licensed Plumber</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Fully Insured</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> 17+ Years in Business</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Free Estimates</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Upfront Pricing</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Local &amp; Family Owned</div>
         </div>
       </div>
     </div>
@@ -832,8 +804,7 @@
   <div class="section-inner">
     <div class="section-header center">
       <p class="section-label">Book a Service</p>
-      <!-- BUSINESS_NAME: Replace [Business Name] -->
-      <h2 class="section-title">Schedule with [Business Name]</h2>
+      <h2 class="section-title">Schedule with Heartland Plumbing</h2>
       <p class="section-sub">Fill out the form and we'll get back to you within a few hours. For emergencies, call directly.</p>
     </div>
     <div class="book-grid">
@@ -846,7 +817,7 @@
           </div>
           <div class="form-group">
             <label for="f-phone">Phone Number</label>
-            <input type="tel" id="f-phone" placeholder="(555) 000-0000" />
+            <input type="tel" id="f-phone" placeholder="(515) 000-0000" />
           </div>
         </div>
         <div class="form-group">
@@ -870,8 +841,8 @@
           <label for="f-time">Preferred Time</label>
           <select id="f-time">
             <option value="">Any time works</option>
-            <option>Morning (8am–12pm)</option>
-            <option>Afternoon (12pm–5pm)</option>
+            <option>Morning (8am-12pm)</option>
+            <option>Afternoon (12pm-5pm)</option>
             <option>ASAP / Emergency</option>
           </select>
         </div>
@@ -879,50 +850,45 @@
           <label for="f-msg">Describe the Problem</label>
           <textarea id="f-msg" placeholder="Tell us what's going on..."></textarea>
         </div>
-        <button type="button" class="form-submit">Submit Request →</button>
+        <button type="button" class="form-submit">Submit Request &#x2192;</button>
       </div>
 
       <div class="book-info">
         <h3>Contact Info</h3>
-        <!-- PHONE: Replace phone number -->
         <div class="info-item">
-          <div class="info-icon">📞</div>
+          <div class="info-icon">&#x1F4DE;</div>
           <div class="info-text">
             <strong>Phone</strong>
-            <a href="tel:+15550000000" class="info-phone-link">(555) 000-0000</a>
+            <a href="tel:+15155550199" class="info-phone-link">(515) 555-0199</a>
           </div>
         </div>
-        <!-- ADDRESS: Replace with actual address -->
         <div class="info-item">
-          <div class="info-icon">📍</div>
+          <div class="info-icon">&#x1F4CD;</div>
           <div class="info-text">
             <strong>Address</strong>
-            [Street Address], [City], Iowa [ZIP]
+            4821 SE 14th St, Des Moines, Iowa 50320
           </div>
         </div>
-        <!-- HOURS: Replace with actual business hours -->
         <div class="info-item">
-          <div class="info-icon">🕐</div>
+          <div class="info-icon">&#x1F550;</div>
           <div class="info-text">
             <strong>Business Hours</strong>
-            Mon–Fri: 7am – 6pm<br>
-            Sat: 8am – 4pm<br>
+            Mon-Fri: 7am - 6pm<br>
+            Sat: 8am - 4pm<br>
             <span class="info-hours-green">24/7 Emergency Service</span>
           </div>
         </div>
-        <!-- EMAIL: Replace with actual business email -->
         <div class="info-item">
-          <div class="info-icon">📧</div>
+          <div class="info-icon">&#x1F4E7;</div>
           <div class="info-text">
             <strong>Email</strong>
-            info@[yourdomain].com
+            mike@heartlandplumbingdsm.com
           </div>
         </div>
         <div class="emergency-box">
-          <h4>🚨 Plumbing Emergency?</h4>
+          <h4>&#x1F6A8; Plumbing Emergency?</h4>
           <p>Don't wait — call us directly.</p>
-          <!-- PHONE: Replace phone number -->
-          <a href="tel:+15550000000" class="emergency-phone">(555) 000-0000</a>
+          <a href="tel:+15155550199" class="emergency-phone">(515) 555-0199</a>
         </div>
       </div>
     </div>
@@ -933,15 +899,11 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <!-- BUSINESS_NAME: Replace [Business Name] -->
-      <!-- CITY: Replace [City] -->
       <div class="footer-brand">
-        [Business Name]
-        <small>Licensed Plumber · [City], Iowa</small>
+        Heartland Plumbing
+        <small>Licensed Plumber · Des Moines, Iowa</small>
       </div>
-      <!-- YEAR: Replace [YEAR] -->
-      <!-- CITY: Replace [City] -->
-      <p class="footer-tagline">Serving [City] and surrounding communities with honest, reliable plumbing service since [YEAR].</p>
+      <p class="footer-tagline">Serving Des Moines and surrounding communities with honest, reliable plumbing service since 2009.</p>
     </div>
     <div class="footer-col">
       <h4>Services</h4>
@@ -957,27 +919,21 @@
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <!-- PHONE: Replace phone number -->
-        <li><a href="tel:+15550000000">(555) 000-0000</a></li>
-        <!-- EMAIL: Replace email -->
-        <li>info@[yourdomain].com</li>
-        <!-- CITY, ZIP: Replace -->
-        <li>[City], Iowa [ZIP]</li>
+        <li><a href="tel:+15155550199">(515) 555-0199</a></li>
+        <li>mike@heartlandplumbingdsm.com</li>
+        <li>Des Moines, Iowa 50320</li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <!-- BUSINESS_NAME: Replace [Business Name] -->
-    <span>© 2026 [Business Name] · All Rights Reserved</span>
-    <!-- Keep this attribution for Millang Media -->
+    <span>&#xA9; 2026 Heartland Plumbing · All Rights Reserved <span class="demo-badge">DEMO SITE</span></span>
     <span>Website by <a href="https://millangmedia.com" target="_blank" rel="noopener">Millang Media</a></span>
   </div>
 </footer>
 
-<!-- STICKY MOBILE CALL BUTTON — shows only on phones -->
+<!-- STICKY MOBILE CALL BUTTON -->
 <div class="sticky-cta">
-  <!-- PHONE: Replace phone number -->
-  <a href="tel:+15550000000">📞 Call Now — (555) 000-0000</a>
+  <a href="tel:+15155550199">&#x1F4DE; Call Now — (515) 555-0199</a>
 </div>
 
 </body>
