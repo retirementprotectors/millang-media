@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Millang Media — Business Roadmap</title>
+<style>
+:root {
+  --bg: #0a0e17;
+  --bg-card: #111827;
+  --bg-hover: #1a2236;
+  --border: #1e293b;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #3b82f6;
+  --accent-glow: rgba(59, 130, 246, 0.15);
+  --green: #22c55e;
+  --orange: #f59e0b;
+  --red: #ef4444;
+  --purple: #a855f7;
+  --navy: #1e3a5f;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0f172a 0%, #172554 50%, #0f172a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 32px;
+  text-align: center;
+}
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), #60a5fa, #93c5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.header .subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0 auto;
+}
+.header .badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 4px 16px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border: 1px solid rgba(59,130,246,0.3);
+}
+
+/* TABS */
+.tab-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabs {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  gap: 0;
+}
+.tab {
+  padding: 14px 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.tab:hover { color: var(--text); background: var(--bg-hover); }
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* CONTENT */
+.content { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* CARDS */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+.card h3 { font-size: 1rem; font-weight: 600; margin: 16px 0 8px; color: var(--accent); }
+.card p { color: var(--text-muted); margin-bottom: 12px; }
+.card ul { color: var(--text-muted); margin: 8px 0 12px 20px; }
+.card li { margin-bottom: 6px; }
+
+/* TABLES */
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.875rem; }
+th { text-align: left; padding: 10px 12px; background: var(--bg-hover); color: var(--accent); font-weight: 600; border-bottom: 1px solid var(--border); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+tr:hover td { background: var(--bg-hover); }
+
+/* STATUS PILLS */
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.pill.done { background: rgba(34,197,94,0.15); color: var(--green); }
+.pill.active { background: rgba(59,130,246,0.15); color: var(--accent); }
+.pill.todo { background: rgba(148,163,184,0.15); color: var(--text-muted); }
+.pill.talan { background: rgba(168,85,247,0.15); color: var(--purple); }
+.pill.musashi { background: rgba(59,130,246,0.15); color: var(--accent); }
+
+/* FLOW STEPS */
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: var(--bg-hover);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+.flow-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.flow-step.green { border-left-color: var(--green); }
+.flow-step.green .flow-num { background: var(--green); }
+.flow-step.orange { border-left-color: var(--orange); }
+.flow-step.orange .flow-num { background: var(--orange); }
+.flow-step.purple { border-left-color: var(--purple); }
+.flow-step.purple .flow-num { background: var(--purple); }
+
+/* CHECKLIST */
+.checklist { list-style: none; margin: 0; padding: 0; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.checklist li:last-child { border-bottom: none; }
+.check { font-size: 1.1rem; flex-shrink: 0; }
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 16px 0;
+}
+.kpi {
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+.kpi .number { font-size: 2rem; font-weight: 800; color: var(--accent); }
+.kpi .label { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+
+/* SCRIPT BOX */
+.script-box {
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 12px 0;
+  white-space: pre-wrap;
+}
+.script-box .label { color: var(--accent); font-weight: 600; font-family: inherit; }
+.script-box .emphasis { color: var(--text); font-weight: 600; }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 32px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .header h1 { font-size: 1.8rem; }
+  .content { padding: 16px; }
+  .card { padding: 16px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Millang Media</h1>
+  <div class="subtitle">Business Roadmap &amp; Playbook — From Side Hustle to Systematic Revenue</div>
+  <div class="badge">Updated April 2, 2026</div>
+</div>
+
+<!-- TABS -->
+<div class="tab-container">
+  <div class="tabs">
+    <div class="tab active" data-tab="vision">Vision</div>
+    <div class="tab" data-tab="status">What's Done</div>
+    <div class="tab" data-tab="phase1">Phase 1: Launch</div>
+    <div class="tab" data-tab="phase2">Phase 2: CRM</div>
+    <div class="tab" data-tab="phase3">Phase 3: Scale</div>
+    <div class="tab" data-tab="phase4">Phase 4: Growth</div>
+    <div class="tab" data-tab="playbook">Talan's Playbook</div>
+    <div class="tab" data-tab="resources">Resources</div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ═══════════════ TAB 1: VISION ═══════════════ -->
+<div class="tab-panel active" id="vision">
+  <div class="card">
+    <h2>The Opportunity</h2>
+    <p>Most local tradespeople either have <strong style="color:var(--text)">no website</strong> or a terrible one from 2012. They know they're losing jobs to the guy who shows up first on Google — they just don't know how to fix it.</p>
+    <p><strong style="color:var(--text)">Millang Media</strong> builds professional, mobile-first websites for local trades — starting with plumbers in the Des Moines metro. One killer template per niche. Swap the content. Launch in 48 hours. Charge monthly.</p>
+  </div>
+
+  <div class="card">
+    <h2>The Business Model</h2>
+    <table>
+      <tr><th>Tier</th><th>Setup Fee</th><th>Monthly</th><th>What They Get</th></tr>
+      <tr><td><strong style="color:var(--text)">Launch</strong></td><td>$500</td><td>$150/mo</td><td>1-page site, mobile, maps, contact form, hosting, monthly updates</td></tr>
+      <tr><td><strong style="color:var(--text)">Growth</strong></td><td>$1,000</td><td>$250/mo</td><td>Multi-page (5), SEO, Google Business Profile, reviews, analytics</td></tr>
+      <tr><td><strong style="color:var(--text)">Pro</strong></td><td>$1,500</td><td>$350/mo</td><td>Everything in Growth + custom design, performance reports, dedicated support</td></tr>
+    </table>
+    <h3>The Math</h3>
+    <p>10 Growth clients = <strong style="color:var(--green)">$10,000 setup + $2,500/month recurring</strong>. That's $30,000/year in recurring revenue from 10 clients. 20 clients = $60K. The setup fees fund the build time. The monthly fees compound.</p>
+  </div>
+
+  <div class="card">
+    <h2>The Market (Des Moines MSA)</h2>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="number">150</div><div class="label">Plumbers Found</div></div>
+      <div class="kpi"><div class="number">37</div><div class="label">No Website</div></div>
+      <div class="kpi"><div class="number">24%</div><div class="label">Opportunity Rate</div></div>
+      <div class="kpi"><div class="number">6</div><div class="label">Counties Covered</div></div>
+    </div>
+    <p>And that's just plumbers. Same search works for electricians, HVAC, roofers, landscapers, painters. Every SIC code is a new pipeline of prospects.</p>
+  </div>
+
+  <div class="card">
+    <h2>The Competitive Advantage</h2>
+    <ul>
+      <li><strong style="color:var(--text)">Speed</strong> — Template-first means 48-hour turnaround. Agencies take weeks.</li>
+      <li><strong style="color:var(--text)">Price</strong> — $500-$1,500 setup vs. $3,000-$10,000 from an agency.</li>
+      <li><strong style="color:var(--text)">Local</strong> — Talan is in Des Moines. He can meet face-to-face. Out-of-state web shops can't.</li>
+      <li><strong style="color:var(--text)">Data-driven prospecting</strong> — Google Places API finds every business without a website. No cold-calling blind.</li>
+      <li><strong style="color:var(--text)">The Machine behind it</strong> — MUSASHI + RPI infrastructure for templates, hosting, CRM. Unfair advantage.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 2: WHAT'S DONE ═══════════════ -->
+<div class="tab-panel" id="status">
+  <div class="card">
+    <h2>Shipped (April 2, 2026)</h2>
+    <ul class="checklist">
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">Agency Website</strong> — millangmedia.com live on GitHub Pages, SSL locked, custom domain on GoDaddy<br><a href="https://millangmedia.com" style="color:var(--accent)">millangmedia.com</a></div></li>
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">Plumber Demo Site</strong> — "Heartland Plumbing" polished demo, Des Moines, fully realistic<br><a href="https://retirementprotectors.github.io/millang-media/templates/plumber/" style="color:var(--accent)">Live Demo</a></div></li>
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">Stripe Billing</strong> — 3 Payment Links wired (test mode), setup fee + monthly in one checkout<br>Launch / Growth / Pro buttons live on pricing section</div></li>
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">Prospect Database</strong> — 150 plumbers in Des Moines MSA, 37 without websites<br>CSV in repo: data/prospects.csv + data/competitors.csv</div></li>
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">Google Places API</strong> — Enabled on GCP, free tier covers all searches<br>Can scan any trade, any city, on demand</div></li>
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">Business Phone</strong> — Google Voice (515) 421-9871, forwards to Talan's phone</div></li>
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">Business Email</strong> — hello@millangmedia.com on Outlook 365</div></li>
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">Domain</strong> — millangmedia.com registered on GoDaddy, DNS configured</div></li>
+      <li><span class="check">&#x2705;</span> <div><strong style="color:var(--text)">This Roadmap</strong> — Published to GitHub Pages</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Architecture</h2>
+    <table>
+      <tr><th>Component</th><th>Technology</th><th>Cost</th></tr>
+      <tr><td>Agency Website</td><td>Static HTML, GitHub Pages</td><td>Free</td></tr>
+      <tr><td>Client Templates</td><td>Static HTML, per-client deploy</td><td>Free</td></tr>
+      <tr><td>Domain</td><td>GoDaddy (millangmedia.com)</td><td>~$12/yr</td></tr>
+      <tr><td>Hosting</td><td>GitHub Pages (unlimited sites)</td><td>Free</td></tr>
+      <tr><td>Billing</td><td>Stripe Payment Links</td><td>2.9% + 30c per transaction</td></tr>
+      <tr><td>Prospecting</td><td>Google Places API</td><td>Free ($200/mo credit)</td></tr>
+      <tr><td>Phone</td><td>Google Voice</td><td>Free</td></tr>
+      <tr><td>Email</td><td>Outlook 365</td><td>Included</td></tr>
+      <tr><td>Code</td><td>GitHub (retirementprotectors/millang-media)</td><td>Free</td></tr>
+    </table>
+    <p><strong style="color:var(--green)">Total monthly overhead: ~$1/mo</strong> (domain amortized). Everything else is free tier. 100% of revenue is margin until client volume requires paid hosting.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 3: PHASE 1 — LAUNCH ═══════════════ -->
+<div class="tab-panel" id="phase1">
+  <div class="card">
+    <h2>Phase 1: Launch Ready <span class="pill active">CURRENT PHASE</span></h2>
+    <p>Get Talan from "I have a website" to "I'm making calls and closing deals."</p>
+  </div>
+
+  <div class="card">
+    <h2>Tasks</h2>
+    <table>
+      <tr><th>#</th><th>Task</th><th>Who</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>1.1</td><td>Switch Stripe to live mode</td><td><span class="pill talan">TALAN</span></td><td><span class="pill todo">TODO</span></td><td>Stripe Dashboard > Settings > Go Live. Recreate 3 Payment Links in live mode. Give URLs to MUSASHI to update site.</td></tr>
+      <tr><td>1.2</td><td>Talan's headshot for About section</td><td><span class="pill talan">TALAN</span></td><td><span class="pill todo">TODO</span></td><td>Clean photo, shoulders up, good lighting. Send to Dad, MUSASHI swaps it in.</td></tr>
+      <tr><td>1.3</td><td>Update agency site with live Stripe links</td><td><span class="pill musashi">MUSASHI</span></td><td><span class="pill todo">TODO</span></td><td>Waiting on 1.1</td></tr>
+      <tr><td>1.4</td><td>Create email signature</td><td><span class="pill talan">TALAN</span></td><td><span class="pill todo">TODO</span></td><td>Name, title, phone, email, millangmedia.com link</td></tr>
+      <tr><td>1.5</td><td>Practice the pitch</td><td><span class="pill talan">TALAN</span></td><td><span class="pill todo">TODO</span></td><td>See Playbook tab for cold call script + demo walkthrough</td></tr>
+      <tr><td>1.6</td><td>Make first 5 cold calls</td><td><span class="pill talan">TALAN</span></td><td><span class="pill todo">TODO</span></td><td>Start with top 5 prospects from data/prospects.csv. Track status.</td></tr>
+      <tr><td>1.7</td><td>Land first client</td><td><span class="pill talan">TALAN</span></td><td><span class="pill todo">TODO</span></td><td>Goal: 1 paying client within first 2 weeks of calling</td></tr>
+      <tr><td>1.8</td><td>Build first client site from template</td><td><span class="pill musashi">MUSASHI</span></td><td><span class="pill todo">TODO</span></td><td>Copy template, swap placeholders, deploy to client domain. Talan watches + learns.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Definition of Done</h2>
+    <ul>
+      <li>Stripe is in live mode, accepting real payments</li>
+      <li>Talan has made his first 5 cold calls</li>
+      <li>At least 1 prospect is in "INTERESTED" or "PROPOSAL" status</li>
+      <li>Talan can demo the Heartland Plumbing site on his phone confidently</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 4: PHASE 2 — CRM ═══════════════ -->
+<div class="tab-panel" id="phase2">
+  <div class="card">
+    <h2>Phase 2: CRM &amp; Pipeline <span class="pill todo">NEXT</span></h2>
+    <p>Replace the CSV with a real system. Talan needs to track prospects, manage clients, and see his pipeline at a glance.</p>
+  </div>
+
+  <div class="card">
+    <h2>What Gets Built</h2>
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div><strong style="color:var(--text)">Prospect Tracker</strong><br>All 150+ plumbers in a searchable, filterable view. Status pipeline: NEW > CONTACTED > INTERESTED > PROPOSAL > CLIENT > PASSED. Click to call, click to email. Notes per prospect.</div>
+    </div>
+    <div class="flow-step green">
+      <div class="flow-num">2</div>
+      <div><strong style="color:var(--text)">Client Dashboard</strong><br>Active clients with site status, subscription tier, monthly revenue, last update date. Quick links to edit their site.</div>
+    </div>
+    <div class="flow-step orange">
+      <div class="flow-num">3</div>
+      <div><strong style="color:var(--text)">Revenue View</strong><br>Total MRR (Monthly Recurring Revenue), total clients, average revenue per client, pipeline value. The numbers that matter.</div>
+    </div>
+    <div class="flow-step purple">
+      <div class="flow-num">4</div>
+      <div><strong style="color:var(--text)">Prospecting Engine</strong><br>Google Places API search baked in. Pick a trade, pick a city, find every business without a website. Auto-add to prospect list.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Tech Stack</h2>
+    <table>
+      <tr><th>Layer</th><th>Technology</th><th>Why</th></tr>
+      <tr><td>Frontend</td><td>Next.js + Tailwind</td><td>Same stack as toMachina. Fast, modern, mobile-first.</td></tr>
+      <tr><td>Auth</td><td>Firebase Auth</td><td>Google sign-in, simple, free.</td></tr>
+      <tr><td>Database</td><td>Firestore</td><td>Real-time, scales to zero, free tier covers Talan's volume.</td></tr>
+      <tr><td>Hosting</td><td>Vercel or Firebase Hosting</td><td>Free tier, auto-deploy from GitHub.</td></tr>
+      <tr><td>API</td><td>Next.js API routes</td><td>Serverless, no server to manage.</td></tr>
+    </table>
+    <p>All free tier. Zero hosting cost until significant scale.</p>
+  </div>
+
+  <div class="card">
+    <h2>Pipeline Stages</h2>
+    <div class="script-box"><span class="label">NEW</span>          Found via Google Places. No contact yet.
+     |
+<span class="label">CONTACTED</span>    Called or emailed. Waiting for response.
+     |
+<span class="label">INTERESTED</span>   They want to see a demo or learn more.
+     |
+<span class="label">PROPOSAL</span>     Sent pricing. Waiting on decision.
+     |
+<span class="label">CLIENT</span>       Signed up! Building their site.
+     |
+<span class="label">LIVE</span>         Site deployed. Monthly billing active.
+
+<span class="label">PASSED</span>       Not interested. Revisit in 6 months.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 5: PHASE 3 — SCALE ═══════════════ -->
+<div class="tab-panel" id="phase3">
+  <div class="card">
+    <h2>Phase 3: Scale <span class="pill todo">FUTURE</span></h2>
+    <p>Expand beyond plumbers. Same system, new niches, more revenue.</p>
+  </div>
+
+  <div class="card">
+    <h2>New Trade Templates</h2>
+    <table>
+      <tr><th>Trade</th><th>SIC Code</th><th>Template Focus</th><th>Priority</th></tr>
+      <tr><td>Electricians</td><td>1731</td><td>Emergency service, panel upgrades, EV chargers</td><td>High — similar to plumbers</td></tr>
+      <tr><td>HVAC</td><td>1711</td><td>Seasonal (heating/cooling), maintenance plans</td><td>High — recurring upsell</td></tr>
+      <tr><td>Roofers</td><td>1761</td><td>Storm damage, insurance claims, before/after</td><td>Medium</td></tr>
+      <tr><td>Landscapers</td><td>0782</td><td>Seasonal services, photo gallery heavy</td><td>Medium</td></tr>
+      <tr><td>Painters</td><td>1721</td><td>Before/after portfolio, color visualizer</td><td>Lower</td></tr>
+      <tr><td>General Contractors</td><td>1522</td><td>Project portfolio, licensing, insurance proof</td><td>Lower</td></tr>
+    </table>
+    <p>Each template takes MUSASHI ~2 hours to build. One template serves every business in that trade across the metro. Build once, sell many.</p>
+  </div>
+
+  <div class="card">
+    <h2>Expanded Prospecting</h2>
+    <p>Run the same Google Places API search for each new trade. The Des Moines MSA (6 counties, ~700K people) has hundreds of trades businesses. Conservative estimate:</p>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="number">150</div><div class="label">Plumbers (done)</div></div>
+      <div class="kpi"><div class="number">~200</div><div class="label">Electricians</div></div>
+      <div class="kpi"><div class="number">~180</div><div class="label">HVAC</div></div>
+      <div class="kpi"><div class="number">~120</div><div class="label">Roofers</div></div>
+    </div>
+    <p>At 24% without websites, that's <strong style="color:var(--green)">~150 additional prospects</strong> across just 3 more trades.</p>
+  </div>
+
+  <div class="card">
+    <h2>Revenue Targets</h2>
+    <table>
+      <tr><th>Milestone</th><th>Clients</th><th>MRR</th><th>Annual Revenue</th></tr>
+      <tr><td>First client</td><td>1</td><td>$150-350</td><td>$1,800-4,200 + setup</td></tr>
+      <tr><td>Ramen profitable</td><td>5</td><td>$1,000-1,500</td><td>$12,000-18,000 + setups</td></tr>
+      <tr><td>Real business</td><td>10</td><td>$2,000-3,000</td><td>$24,000-36,000 + setups</td></tr>
+      <tr><td>Full-time viable</td><td>20</td><td>$4,000-6,000</td><td>$48,000-72,000 + setups</td></tr>
+      <tr><td>Hire help</td><td>40+</td><td>$8,000+</td><td>$96,000+ + setups</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 6: PHASE 4 — GROWTH ═══════════════ -->
+<div class="tab-panel" id="phase4">
+  <div class="card">
+    <h2>Phase 4: Growth Engine <span class="pill todo">FUTURE</span></h2>
+    <p>Automation, SEO, social proof, and systems that sell while Talan sleeps.</p>
+  </div>
+
+  <div class="card">
+    <h2>Growth Features</h2>
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div><strong style="color:var(--text)">Automated Onboarding</strong><br>Client fills out a form with business name, phone, address, services, photos. Template auto-populates. Site goes live with minimal manual work.</div>
+    </div>
+    <div class="flow-step green">
+      <div class="flow-num">2</div>
+      <div><strong style="color:var(--text)">SEO Package</strong><br>Google Business Profile setup, local citations, schema markup on every client site. Clients rank higher = they see ROI = they stay longer.</div>
+    </div>
+    <div class="flow-step orange">
+      <div class="flow-num">3</div>
+      <div><strong style="color:var(--text)">Review Collection</strong><br>Automated "How was your service?" text/email after each job. Feeds directly to Google Reviews. More reviews = higher ranking = more calls.</div>
+    </div>
+    <div class="flow-step purple">
+      <div class="flow-num">4</div>
+      <div><strong style="color:var(--text)">Portfolio &amp; Case Studies</strong><br>Every client site becomes a portfolio piece. "We built this in 48 hours. They got 15 new calls in the first week." Social proof sells the next client.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Upsell Opportunities</h2>
+    <table>
+      <tr><th>Service</th><th>Price</th><th>Description</th></tr>
+      <tr><td>Google Ads Management</td><td>$200-500/mo</td><td>Run local search ads. "Plumber near me" → client's site.</td></tr>
+      <tr><td>Social Media Setup</td><td>$300 one-time</td><td>Facebook + Instagram business pages, linked to site.</td></tr>
+      <tr><td>Monthly Blog Posts</td><td>$100/mo add-on</td><td>SEO content: "5 Signs Your Water Heater Needs Replacing"</td></tr>
+      <tr><td>Logo Design</td><td>$200-500 one-time</td><td>Professional logo for businesses that don't have one.</td></tr>
+      <tr><td>Business Cards</td><td>$75 one-time</td><td>Matching the website design. Canva templates.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 7: TALAN'S PLAYBOOK ═══════════════ -->
+<div class="tab-panel" id="playbook">
+  <div class="card">
+    <h2>Talan's Daily Playbook</h2>
+    <p>This is what you do every day to build the business. No code required. Just calls, demos, and follow-ups.</p>
+  </div>
+
+  <div class="card">
+    <h2>Cold Call Script</h2>
+    <div class="script-box"><span class="label">INTRO:</span>
+"Hey [Owner Name], my name is Talan with Millang Media.
+I'm a local web designer here in Des Moines —
+I actually found your business on Google and noticed
+you don't have a website yet. Is that right?"
+
+<span class="label">IF YES:</span>
+"Yeah, I figured. A lot of plumbers in the area are
+in the same spot. I actually specialize in building
+websites specifically for plumbers — mobile-friendly,
+shows up on Google, has a click-to-call button right
+at the top. I can actually <span class="emphasis">show you a demo</span> of what
+yours would look like. It takes about 2 minutes.
+Would you be open to that?"
+
+<span class="label">IF THEY SAY "HOW MUCH?":</span>
+"It starts at $500 for a single-page site, and I handle
+everything — design, hosting, updates. There's a small
+monthly fee for hosting and support, but no contracts.
+Cancel anytime. Want me to show you the demo?"
+
+<span class="label">IF THEY WANT THE DEMO:</span>
+"Perfect — pull up your phone if you can and go to..."
+(Send them the Heartland Plumbing demo link via text)
+"See how that looks? Now imagine that says
+[Their Business Name] instead of Heartland Plumbing.
+That's what I'd build for you."
+
+<span class="label">CLOSE:</span>
+"I can have your site live within 48 hours.
+If you want to get started, I'll send you a quick
+link to get the setup fee taken care of and we're
+rolling. Sound good?"</div>
+  </div>
+
+  <div class="card">
+    <h2>Demo Walkthrough</h2>
+    <p>When showing the Heartland Plumbing demo on your phone or theirs:</p>
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div><strong style="color:var(--text)">Start at the top</strong> — "See that emergency banner? That's live 24/7. And this Call Now button? One tap and it dials you. 80% of your customers are on their phone."</div>
+    </div>
+    <div class="flow-step green">
+      <div class="flow-num">2</div>
+      <div><strong style="color:var(--text)">Scroll to reviews</strong> — "I'd pull your real Google reviews right onto the site. You've got [X] reviews at [X.X] stars — that's your best sales tool and right now nobody sees it unless they're already on Google."</div>
+    </div>
+    <div class="flow-step orange">
+      <div class="flow-num">3</div>
+      <div><strong style="color:var(--text)">Show the map</strong> — "Your service area, right here. Customers see you're local, see exactly where you're based."</div>
+    </div>
+    <div class="flow-step purple">
+      <div class="flow-num">4</div>
+      <div><strong style="color:var(--text)">Contact form</strong> — "They can request service right from the site. You get an email with their name, number, and what they need. No phone tag."</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div><strong style="color:var(--text)">The close</strong> — "Everything you just saw? I can have that live with YOUR name, YOUR number, YOUR reviews in 48 hours. And that Millang Media credit at the bottom means I handle all the tech."</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Daily Routine</h2>
+    <table>
+      <tr><th>Time</th><th>Activity</th><th>Duration</th></tr>
+      <tr><td>Morning</td><td>Check email (hello@millangmedia.com) for any inbound inquiries</td><td>5 min</td></tr>
+      <tr><td>Morning</td><td>Make 3-5 cold calls from prospect list</td><td>30-45 min</td></tr>
+      <tr><td>Afternoon</td><td>Follow up on any "interested" prospects from previous days</td><td>15-20 min</td></tr>
+      <tr><td>Afternoon</td><td>Send demo link to anyone who expressed interest</td><td>5 min</td></tr>
+      <tr><td>Evening</td><td>Update prospect status in CSV (or CRM when built)</td><td>5 min</td></tr>
+    </table>
+    <p><strong style="color:var(--text)">Total: ~1 hour/day.</strong> That's it. Consistency beats volume. 5 calls a day = 25 calls a week = 100 calls a month. At even a 5% close rate, that's 5 clients/month.</p>
+  </div>
+
+  <div class="card">
+    <h2>Prospect Prioritization</h2>
+    <p>Work the list from the top. Your hottest leads are businesses with:</p>
+    <ul>
+      <li><strong style="color:var(--green)">High Google rating (4.5+)</strong> — They're doing great work, they just need online presence</li>
+      <li><strong style="color:var(--green)">High review count (50+)</strong> — Busy business, money to spend, understands customer feedback</li>
+      <li><strong style="color:var(--green)">No website</strong> — Obvious. They need you.</li>
+      <li><strong style="color:var(--orange)">Bad website</strong> — Harder sell but bigger opportunity. "I can make this way better."</li>
+    </ul>
+    <h3>Top 5 Plumber Prospects (Start Here)</h3>
+    <table>
+      <tr><th>#</th><th>Business</th><th>City</th><th>Rating</th><th>Reviews</th></tr>
+      <tr><td>1</td><td><strong style="color:var(--text)">Streamline Plumbing LLC</strong></td><td>Grimes</td><td>5.0</td><td>133</td></tr>
+      <tr><td>2</td><td><strong style="color:var(--text)">Bob's Sewerooter Services</strong></td><td>Des Moines</td><td>4.8</td><td>126</td></tr>
+      <tr><td>3</td><td><strong style="color:var(--text)">Mark's Drain &amp; Plumbing</strong></td><td>Waukee</td><td>4.7</td><td>48</td></tr>
+      <tr><td>4</td><td><strong style="color:var(--text)">Hulgan Plumbing &amp; Heating</strong></td><td>Perry</td><td>4.3</td><td>42</td></tr>
+      <tr><td>5</td><td><strong style="color:var(--text)">Rozendaal Drain Cleaning</strong></td><td>Sully</td><td>4.8</td><td>29</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>When You Close a Client</h2>
+    <ul class="checklist">
+      <li><span class="check">1.</span> <div>Send them the Stripe Payment Link for their tier (Launch / Growth / Pro)</div></li>
+      <li><span class="check">2.</span> <div>Once paid, collect: business name, phone, address, service area cities, 3 Google reviews to feature, owner name + photo, business hours, email</div></li>
+      <li><span class="check">3.</span> <div>Message Dad — he'll get MUSASHI to build the site from the template (48 hrs)</div></li>
+      <li><span class="check">4.</span> <div>Client buys their domain ($12/yr on GoDaddy) or Talan buys it and bills them</div></li>
+      <li><span class="check">5.</span> <div>Site goes live. Send client the link. Celebrate.</div></li>
+      <li><span class="check">6.</span> <div>Check in after 1 week: "How many calls have you gotten from the site?"</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 8: RESOURCES ═══════════════ -->
+<div class="tab-panel" id="resources">
+  <div class="card">
+    <h2>Links &amp; Logins</h2>
+    <table>
+      <tr><th>Resource</th><th>URL</th><th>Notes</th></tr>
+      <tr><td>Agency Website</td><td><a href="https://millangmedia.com" style="color:var(--accent)">millangmedia.com</a></td><td>Live, GitHub Pages + GoDaddy</td></tr>
+      <tr><td>Plumber Demo</td><td><a href="https://retirementprotectors.github.io/millang-media/templates/plumber/" style="color:var(--accent)">Demo Link</a></td><td>Send this to prospects</td></tr>
+      <tr><td>This Roadmap</td><td><a href="https://retirementprotectors.github.io/millang-media/roadmap.html" style="color:var(--accent)">Roadmap</a></td><td>Bookmark this page</td></tr>
+      <tr><td>GitHub Repo</td><td><a href="https://github.com/retirementprotectors/millang-media" style="color:var(--accent)">GitHub</a></td><td>All code + data lives here</td></tr>
+      <tr><td>Stripe Dashboard</td><td><a href="https://dashboard.stripe.com" style="color:var(--accent)">stripe.com</a></td><td>Billing, subscriptions, revenue</td></tr>
+      <tr><td>GoDaddy</td><td><a href="https://godaddy.com" style="color:var(--accent)">godaddy.com</a></td><td>Domain + DNS management</td></tr>
+      <tr><td>Google Voice</td><td><a href="https://voice.google.com" style="color:var(--accent)">voice.google.com</a></td><td>Business phone settings</td></tr>
+      <tr><td>Business Email</td><td>hello@millangmedia.com</td><td>Outlook 365</td></tr>
+      <tr><td>Business Phone</td><td>(515) 421-9871</td><td>Google Voice → Talan's phone</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Prospect Data Files</h2>
+    <table>
+      <tr><th>File</th><th>What's In It</th><th>How to Use</th></tr>
+      <tr><td>data/prospects.csv</td><td>33 plumbers WITHOUT websites</td><td>Your cold call list. Update status column as you work through them.</td></tr>
+      <tr><td>data/competitors.csv</td><td>15 top plumber sites</td><td>Study what they built. Know the market. Reference when pitching.</td></tr>
+    </table>
+    <h3>Prospect Status Tracking</h3>
+    <p>Update the <code style="color:var(--accent)">status</code> column in prospects.csv as you work:</p>
+    <div class="script-box">NEW        → Haven't contacted yet
+CONTACTED  → Called or emailed, waiting for response
+INTERESTED → They want a demo or more info
+PROPOSAL   → Sent pricing, waiting on decision
+CLIENT     → They paid! Building their site.
+PASSED     → Not interested (revisit in 6 months)</div>
+  </div>
+
+  <div class="card">
+    <h2>How to Request MUSASHI's Help</h2>
+    <p>When Talan needs something built, customized, or fixed:</p>
+    <ul>
+      <li><strong style="color:var(--text)">Text Dad</strong> — JDM relays to MUSASHI on MDJ_SERVER</li>
+      <li><strong style="color:var(--text)">Be specific</strong> — "Build a site for Bob's Sewerooter, here's the info: [details]"</li>
+      <li><strong style="color:var(--text)">Include</strong> — business name, phone, address, services, any photos, Google review text</li>
+      <li><strong style="color:var(--text)">Turnaround</strong> — 24-48 hours for a new client site from template</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Key Contacts</h2>
+    <table>
+      <tr><th>Who</th><th>Role</th><th>When to Contact</th></tr>
+      <tr><td>JDM (Dad)</td><td>Business advisor, infrastructure</td><td>Strategy questions, MUSASHI requests, Stripe/domain issues</td></tr>
+      <tr><td>MUSASHI</td><td>Creative + technical (via JDM)</td><td>Build client sites, new templates, design work, prospecting scans</td></tr>
+    </table>
+  </div>
+</div>
+
+</div><!-- end .content -->
+
+<!-- FOOTER -->
+<div class="footer">
+  Millang Media Business Roadmap &mdash; Built by MUSASHI, ARTxBLADE &mdash; April 2, 2026<br>
+  <em>"Build once, deploy many. Art x Blade."</em>
+</div>
+
+<!-- TAB SWITCHING -->
+<script>
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
