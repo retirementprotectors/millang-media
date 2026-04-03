@@ -1018,40 +1018,10 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   var phone = form.querySelector('#phone').value.trim();
   var email = form.querySelector('#email').value.trim();
   var message = form.querySelector('#message').value.trim();
+  var btn = form.querySelector('.form-submit');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
 
-  // Save to CRM localStorage
-  var KEY = 'mm_crm_v2';
-  var prospects = [];
-  try { prospects = JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) {}
-  prospects.push({
-    id: Date.now(),
-    name: business || name,
-    contact: name,
-    phone: phone,
-    email: email,
-    address: '',
-    city: '',
-    state: 'IA',
-    zip: '',
-    hasWebsite: 'NO',
-    webUrl: '',
-    rating: 'N/A',
-    reviews: 0,
-    stage: 'NEW',
-    tier: 'launch',
-    prefContact: '',
-    bestTime: '',
-    notes: 'FROM WEBSITE: ' + message,
-    lastContacted: '',
-    nextFollowup: new Date().toISOString().split('T')[0],
-    demoDate: '',
-    proposalSent: '',
-    dateClosed: '',
-    dateAdded: new Date().toISOString().split('T')[0]
-  });
-  localStorage.setItem(KEY, JSON.stringify(prospects));
-
-  // Submit to Formspree
   var data = new FormData(form);
   fetch('https://formspree.io/f/xjgpenvz', {
     method: 'POST',
@@ -1059,14 +1029,23 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     headers: { 'Accept': 'application/json' }
   }).then(function(r) {
     if (r.ok) {
-      form.querySelector('.form-submit').textContent = 'Thanks! We will be in touch within 24 hours.';
-      form.querySelector('.form-submit').style.background = '#16a34a';
-      form.querySelector('.form-submit').disabled = true;
-      form.reset();
+      var params = new URLSearchParams();
+      params.set('name', name);
+      params.set('business', business);
+      params.set('phone', phone);
+      params.set('email', email);
+      params.set('message', message);
+      params.set('source', 'website');
+      window.location.href = '/crm/?newlead=' + encodeURIComponent(params.toString());
     } else {
-      form.querySelector('.form-submit').textContent = 'Something went wrong — try calling us!';
-      form.querySelector('.form-submit').style.background = '#dc2626';
+      btn.textContent = 'Something went wrong — try calling us!';
+      btn.style.background = '#dc2626';
+      btn.disabled = false;
     }
+  }).catch(function() {
+    btn.textContent = 'Network error — try calling (515) 421-9871';
+    btn.style.background = '#dc2626';
+    btn.disabled = false;
   });
 });
 </script>

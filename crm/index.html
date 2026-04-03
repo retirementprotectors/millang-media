@@ -522,6 +522,62 @@ function resetData() {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 renderBoard();
+
+// Auto-import leads from website form
+(function() {
+  var url = new URL(window.location.href);
+  var raw = url.searchParams.get('newlead');
+  if (!raw) return;
+  var params = new URLSearchParams(raw);
+  var business = params.get('business') || '';
+  var name = params.get('name') || '';
+  var phone = params.get('phone') || '';
+  var email = params.get('email') || '';
+  var message = params.get('message') || '';
+  if (!business && !name) return;
+  // Check for duplicate (same phone or business name)
+  var isDupe = prospects.some(function(p) {
+    return (phone && p.phone === phone) || (business && p.name.toLowerCase() === business.toLowerCase());
+  });
+  if (!isDupe) {
+    prospects.push({
+      id: Date.now(),
+      name: business || name,
+      contact: name,
+      phone: phone,
+      email: email,
+      address: '',
+      city: '',
+      state: 'IA',
+      zip: '',
+      hasWebsite: 'NO',
+      webUrl: '',
+      rating: 'N/A',
+      reviews: 0,
+      stage: 'NEW',
+      tier: 'launch',
+      prefContact: '',
+      bestTime: '',
+      notes: 'FROM WEBSITE: ' + message,
+      lastContacted: '',
+      nextFollowup: new Date().toISOString().split('T')[0],
+      demoDate: '',
+      proposalSent: '',
+      dateClosed: '',
+      dateAdded: new Date().toISOString().split('T')[0]
+    });
+    save(prospects);
+    renderBoard();
+  }
+  // Clean URL
+  window.history.replaceState({}, '', '/crm/');
+  // Show notification
+  var bar = document.getElementById('followup-bar');
+  bar.classList.add('active');
+  bar.querySelector('.text').textContent = 'New lead from website:';
+  bar.querySelector('#followup-count').textContent = '!';
+  bar.querySelector('#followup-names').textContent = business || name;
+})();
 </script>
 </body>
 </html>
