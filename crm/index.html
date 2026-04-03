@@ -161,7 +161,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 <div class="kpi-bar">
   <div class="kpi"><div class="kpi-value" id="kpi-total">0</div><div class="kpi-label">Prospects</div></div>
   <div class="kpi"><div class="kpi-value orange" id="kpi-followups">0</div><div class="kpi-label">Follow-ups Due</div></div>
-  <div class="kpi"><div class="kpi-value" id="kpi-pipeline">$0</div><div class="kpi-label">Pipeline Value</div><select id="proj-tier" onchange="renderBoard()" style="margin-top:.25rem;font-size:.7rem;padding:.15rem .3rem;border:1px solid var(--gray-200);border-radius:4px;background:var(--white);color:var(--gray-700);cursor:pointer;"><option value="launch">Launch ($500+$150)</option><option value="growth">Growth ($1k+$250)</option><option value="pro">Pro ($1.5k+$350)</option></select></div>
+  <div class="kpi"><div class="kpi-value" id="kpi-pipeline">$0</div><div class="kpi-label">Pipeline Value</div></div>
   <div class="kpi"><div class="kpi-value green" id="kpi-clients">0</div><div class="kpi-label">Clients</div></div>
   <div class="kpi"><div class="kpi-value green" id="kpi-mrr">$0</div><div class="kpi-label">MRR</div></div>
 </div>
@@ -340,7 +340,7 @@ function updateKPIs() {
   liveClients.forEach(c => { mrr += TIER_MONTHLY[c.tier] || 250; });
   document.getElementById('kpi-total').textContent = total;
   document.getElementById('kpi-followups').textContent = dueToday.length;
-  const projTier = document.getElementById('proj-tier').value; const projSetup = {launch:500,growth:1000,pro:1500}; const projMonthly = {launch:150,growth:250,pro:350}; const projVal = interested.length * (projSetup[projTier] + projMonthly[projTier] * 12); document.getElementById('kpi-pipeline').textContent = '$' + projVal.toLocaleString();
+  const SETUP={launch:500,growth:1000,pro:1500};const MONTHLY={launch:150,growth:250,pro:350};let projVal=0;interested.forEach(function(p){var t=p.tier||'launch';projVal+=SETUP[t]+MONTHLY[t]*12;});document.getElementById('kpi-pipeline').textContent='$'+projVal.toLocaleString();
   document.getElementById('kpi-clients').textContent = clients.length;
   document.getElementById('kpi-mrr').textContent = '$' + mrr.toLocaleString() + '/mo';
 
