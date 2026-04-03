@@ -231,6 +231,31 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       <div class="form-group"><label>Date Added</label><input type="date" id="f-dateadded" disabled></div>
     </div>
 
+    <h3>Send Demos</h3>
+    <div id="send-demos" style="display:none;margin-bottom:1rem;">
+      <p style="font-size:.75rem;color:var(--gray-500);margin-bottom:.5rem;">Send a demo link via text or email:</p>
+      <div style="display:grid;grid-template-columns:1fr auto auto;gap:.4rem;align-items:center;">
+        <span style="font-size:.82rem;font-weight:600;color:var(--accent);">Launch ($500+$150/mo)</span>
+        <a id="sms-launch" href="#" onclick="event.stopPropagation()" class="btn btn-sm btn-primary" style="font-size:.72rem;padding:.3rem .6rem;">Text</a>
+        <a id="email-launch" href="#" onclick="event.stopPropagation()" class="btn btn-sm" style="font-size:.72rem;padding:.3rem .6rem;background:var(--navy);color:#fff;">Email</a>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto auto;gap:.4rem;align-items:center;margin-top:.4rem;">
+        <span style="font-size:.82rem;font-weight:600;color:var(--yellow);">Growth ($1k+$250/mo)</span>
+        <a id="sms-growth" href="#" onclick="event.stopPropagation()" class="btn btn-sm btn-primary" style="font-size:.72rem;padding:.3rem .6rem;">Text</a>
+        <a id="email-growth" href="#" onclick="event.stopPropagation()" class="btn btn-sm" style="font-size:.72rem;padding:.3rem .6rem;background:var(--navy);color:#fff;">Email</a>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto auto;gap:.4rem;align-items:center;margin-top:.4rem;">
+        <span style="font-size:.82rem;font-weight:600;color:var(--orange);">Pro ($1.5k+$350/mo)</span>
+        <a id="sms-pro" href="#" onclick="event.stopPropagation()" class="btn btn-sm btn-primary" style="font-size:.72rem;padding:.3rem .6rem;">Text</a>
+        <a id="email-pro" href="#" onclick="event.stopPropagation()" class="btn btn-sm" style="font-size:.72rem;padding:.3rem .6rem;background:var(--navy);color:#fff;">Email</a>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto auto;gap:.4rem;align-items:center;margin-top:.4rem;padding-top:.4rem;border-top:1px solid var(--gray-200);">
+        <span style="font-size:.82rem;font-weight:600;color:var(--gray-700);">All 3 Demos</span>
+        <a id="sms-all" href="#" onclick="event.stopPropagation()" class="btn btn-sm btn-primary" style="font-size:.72rem;padding:.3rem .6rem;">Text</a>
+        <a id="email-all" href="#" onclick="event.stopPropagation()" class="btn btn-sm" style="font-size:.72rem;padding:.3rem .6rem;background:var(--navy);color:#fff;">Email</a>
+      </div>
+    </div>
+
     <h3>Notes</h3>
     <div class="form-group"><textarea id="f-notes" placeholder="Pitch notes, objections, what they liked..."></textarea></div>
 
@@ -454,6 +479,29 @@ function openModal(id) {
     document.getElementById('f-dateadded').value = p.dateAdded || '';
     document.getElementById('f-notes').value = p.notes || '';
     delBtn.style.display = 'block';
+    // Set up Send Demo links
+    var demos = document.getElementById('send-demos');
+    var ph = (p.phone || '').replace(/[^\d+]/g, '');
+    var em = p.email || '';
+    var biz = p.name || '';
+    var launchUrl = 'https://millangmedia.com/templates/plumber-launch/';
+    var growthUrl = 'https://millangmedia.com/templates/plumber-growth/';
+    var proUrl = 'https://millangmedia.com/templates/plumber-pro/';
+    var allUrls = launchUrl + '\n' + growthUrl + '\n' + proUrl;
+    if (ph || em) {
+      demos.style.display = 'block';
+      var smsBody = function(tier, url) { return encodeURIComponent('Hey' + (biz ? ' ' + biz : '') + '! This is Talan from Millang Media. I put together a ' + tier + ' demo site for you to check out: ' + url + ' — Let me know what you think!'); };
+      var emailSubj = function(tier) { return encodeURIComponent(tier + ' Website Demo for ' + biz); };
+      var emailBody = function(tier, url) { return encodeURIComponent('Hi' + (biz ? ' ' + biz : '') + ',\n\nHere is the ' + tier + ' demo I mentioned:\n\n' + url + '\n\nLet me know if you have any questions!\n\nTalan Millang\nMillang Media\n(515) 421-9871'); };
+      document.getElementById('sms-launch').href = ph ? 'sms:' + ph + '?body=' + smsBody('Launch', launchUrl) : '#';
+      document.getElementById('sms-growth').href = ph ? 'sms:' + ph + '?body=' + smsBody('Growth', growthUrl) : '#';
+      document.getElementById('sms-pro').href = ph ? 'sms:' + ph + '?body=' + smsBody('Pro', proUrl) : '#';
+      document.getElementById('sms-all').href = ph ? 'sms:' + ph + '?body=' + encodeURIComponent('Hey' + (biz ? ' ' + biz : '') + '! This is Talan from Millang Media. Check out our 3 website packages:\n\nLaunch: ' + launchUrl + '\nGrowth: ' + growthUrl + '\nPro: ' + proUrl + '\n\nLet me know which one fits!') : '#';
+      document.getElementById('email-launch').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Launch') + '&body=' + emailBody('Launch', launchUrl) : '#';
+      document.getElementById('email-growth').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Growth') + '&body=' + emailBody('Growth', growthUrl) : '#';
+      document.getElementById('email-pro').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Pro') + '&body=' + emailBody('Pro', proUrl) : '#';
+      document.getElementById('email-all').href = em ? 'mailto:' + em + '?subject=' + encodeURIComponent('Website Demo Options for ' + biz) + '&body=' + encodeURIComponent('Hi' + (biz ? ' ' + biz : '') + ',\n\nHere are our 3 website packages:\n\nLaunch ($500 + $150/mo): ' + launchUrl + '\nGrowth ($1,000 + $250/mo): ' + growthUrl + '\nPro ($1,500 + $350/mo): ' + proUrl + '\n\nLet me know which one interests you!\n\nTalan Millang\nMillang Media\n(515) 421-9871') : '#';
+    } else { demos.style.display = 'none'; }
   } else {
     title.textContent = 'Add Prospect';
     document.getElementById('edit-id').value = '';
@@ -466,6 +514,7 @@ function openModal(id) {
     document.getElementById('f-besttime').value = '';
     document.getElementById('f-dateadded').value = today();
     delBtn.style.display = 'none';
+    document.getElementById('send-demos').style.display = 'none';
   }
   overlay.classList.add('active');
 }
