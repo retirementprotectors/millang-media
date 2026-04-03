@@ -550,7 +550,7 @@ fetch('https://mdjserver.tail7845ea.ts.net/api/millang/leads')
           address: '', city: '', state: 'IA', zip: '',
           hasWebsite: 'NO', webUrl: '',
           rating: 'N/A', reviews: 0,
-          stage: 'NEW', tier: 'launch',
+          stage: 'NEW', tier: lead.tier || 'launch',
           prefContact: '', bestTime: '',
           notes: lead.source === 'website' ? 'FROM WEBSITE: ' + (lead.message || '') : 'Source: ' + (lead.source || 'unknown'),
           source: lead.source || 'website',
