@@ -27,6 +27,8 @@
   --orange: #ea580c;
   --orange-light: #fff7ed;
   --red: #dc2626;
+  --red-light: #fef2f2;
+  --purple: #7c3aed;
   --radius: 10px;
   --shadow: 0 2px 8px rgba(0,0,0,.08);
   --shadow-lg: 0 8px 24px rgba(0,0,0,.12);
@@ -34,12 +36,11 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--gray-100); color: var(--gray-900); min-height: 100vh; }
 
-/* NAV */
-.navbar { background: var(--navy); padding: .75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.navbar { background: var(--navy); padding: .75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: .5rem; }
 .nav-brand { color: var(--white); font-size: 1.15rem; font-weight: 800; letter-spacing: -.02em; }
 .nav-brand span { color: var(--accent); }
-.nav-actions { display: flex; gap: .75rem; align-items: center; }
-.btn { padding: .5rem 1rem; border-radius: 8px; font-size: .85rem; font-weight: 600; cursor: pointer; border: none; transition: all .2s; font-family: inherit; }
+.nav-actions { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+.btn { padding: .5rem 1rem; border-radius: 8px; font-size: .82rem; font-weight: 600; cursor: pointer; border: none; transition: all .2s; font-family: inherit; }
 .btn-primary { background: var(--accent); color: var(--white); }
 .btn-primary:hover { background: #2563eb; }
 .btn-outline-w { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,.3); }
@@ -47,21 +48,38 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .btn-sm { padding: .35rem .7rem; font-size: .78rem; }
 .btn-danger { background: var(--red); color: var(--white); }
 .btn-danger:hover { opacity: .9; }
+.btn-warn { background: var(--orange); color: var(--white); }
+
+/* FOLLOW-UP ALERT */
+.followup-bar { background: var(--yellow-light); border-bottom: 2px solid var(--yellow); padding: .75rem 1.5rem; display: none; align-items: center; gap: .75rem; flex-wrap: wrap; }
+.followup-bar.active { display: flex; }
+.followup-bar .icon { font-size: 1.2rem; }
+.followup-bar .text { font-size: .88rem; font-weight: 600; color: var(--gray-900); }
+.followup-bar .count { background: var(--orange); color: var(--white); padding: .15rem .5rem; border-radius: 100px; font-size: .78rem; font-weight: 700; }
 
 /* KPI BAR */
-.kpi-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--gray-200); }
-.kpi { text-align: center; padding: .75rem; }
-.kpi-value { font-size: 1.5rem; font-weight: 800; color: var(--navy); }
+.kpi-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: .75rem; padding: 1rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--gray-200); }
+.kpi { text-align: center; padding: .5rem; }
+.kpi-value { font-size: 1.4rem; font-weight: 800; color: var(--navy); }
 .kpi-value.green { color: var(--green); }
-.kpi-label { font-size: .75rem; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-top: .15rem; }
-@media (max-width: 600px) { .kpi-bar { grid-template-columns: repeat(2, 1fr); } }
+.kpi-value.orange { color: var(--orange); }
+.kpi-label { font-size: .7rem; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-top: .1rem; }
+@media (max-width: 600px) { .kpi-bar { grid-template-columns: repeat(3, 1fr); } }
+
+/* FILTER + SEARCH */
+.filter-bar { padding: .5rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--gray-200); display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+.filter-btn { padding: .35rem .75rem; border-radius: 100px; font-size: .78rem; font-weight: 600; cursor: pointer; border: 1.5px solid var(--gray-200); background: var(--white); color: var(--gray-500); transition: all .2s; font-family: inherit; }
+.filter-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.filter-btn:hover { border-color: var(--accent); }
+.search-input { flex: 1; min-width: 180px; padding: .4rem .75rem; border: 1.5px solid var(--gray-200); border-radius: 8px; font-size: .85rem; outline: none; font-family: inherit; background: var(--gray-50); }
+.search-input:focus { border-color: var(--accent); background: var(--white); }
 
 /* BOARD */
-.board { display: flex; gap: 1rem; padding: 1rem 1.5rem; overflow-x: auto; min-height: calc(100vh - 160px); align-items: flex-start; }
-.column { min-width: 260px; max-width: 300px; flex: 1; background: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200); display: flex; flex-direction: column; max-height: calc(100vh - 180px); }
-.column-header { padding: .75rem 1rem; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-200); position: sticky; top: 0; background: inherit; border-radius: var(--radius) var(--radius) 0 0; }
-.column-count { background: var(--gray-200); color: var(--gray-700); padding: .1rem .5rem; border-radius: 100px; font-size: .75rem; }
-.column-cards { padding: .5rem; flex: 1; overflow-y: auto; min-height: 60px; }
+.board { display: flex; gap: .75rem; padding: 1rem 1.5rem; overflow-x: auto; min-height: calc(100vh - 220px); align-items: flex-start; }
+.column { min-width: 250px; max-width: 290px; flex: 1; background: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200); display: flex; flex-direction: column; max-height: calc(100vh - 240px); }
+.column-header { padding: .6rem .85rem; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-200); position: sticky; top: 0; background: inherit; border-radius: var(--radius) var(--radius) 0 0; }
+.column-count { background: var(--gray-200); color: var(--gray-700); padding: .1rem .45rem; border-radius: 100px; font-size: .72rem; }
+.column-cards { padding: .4rem; flex: 1; overflow-y: auto; min-height: 50px; }
 .col-new .column-header { color: var(--gray-500); }
 .col-contacted .column-header { color: var(--accent); }
 .col-interested .column-header { color: var(--yellow); }
@@ -70,57 +88,56 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .col-live .column-header { color: var(--green-dark); }
 
 /* CARDS */
-.card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: .75rem; margin-bottom: .5rem; cursor: grab; transition: box-shadow .2s, transform .15s; border-left: 3px solid var(--gray-300); }
+.card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: .65rem; margin-bottom: .4rem; cursor: grab; transition: box-shadow .2s, transform .15s; border-left: 3px solid var(--gray-300); position: relative; }
 .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
 .card.dragging { opacity: .5; transform: rotate(2deg); }
-.card-name { font-size: .88rem; font-weight: 700; color: var(--gray-900); margin-bottom: .25rem; }
-.card-city { font-size: .75rem; color: var(--gray-400); margin-bottom: .4rem; }
-.card-phone { font-size: .8rem; color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: .25rem; }
+.card.has-followup-today { border-left-color: var(--orange); }
+.card.has-followup-today::after { content:''; position:absolute; top:6px; right:6px; width:8px; height:8px; background:var(--orange); border-radius:50%; }
+.card.overdue::after { background: var(--red); }
+.card-name { font-size: .85rem; font-weight: 700; color: var(--gray-900); margin-bottom: .15rem; padding-right: 14px; }
+.card-contact { font-size: .75rem; color: var(--gray-700); margin-bottom: .15rem; }
+.card-city { font-size: .72rem; color: var(--gray-400); margin-bottom: .3rem; }
+.card-phone { font-size: .78rem; color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: .2rem; }
 .card-phone:hover { text-decoration: underline; }
-.card-meta { display: flex; justify-content: space-between; align-items: center; margin-top: .5rem; }
-.card-rating { font-size: .75rem; color: var(--gray-500); }
+.card-meta { display: flex; justify-content: space-between; align-items: center; margin-top: .4rem; }
+.card-rating { font-size: .72rem; color: var(--gray-500); }
 .card-rating .star { color: #f59e0b; }
-.card-tier { font-size: .7rem; padding: .15rem .4rem; border-radius: 4px; font-weight: 600; background: var(--gray-100); color: var(--gray-500); }
+.card-tier { font-size: .68rem; padding: .12rem .35rem; border-radius: 4px; font-weight: 600; background: var(--gray-100); color: var(--gray-500); }
 .card-tier.launch { background: var(--accent-light); color: var(--accent); }
 .card-tier.growth { background: var(--yellow-light); color: var(--yellow); }
 .card-tier.pro { background: var(--orange-light); color: var(--orange); }
-.card-notes { font-size: .75rem; color: var(--gray-400); margin-top: .35rem; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.card-date { font-size: .7rem; color: var(--gray-400); margin-top: .25rem; }
+.card-web { font-size: .68rem; padding: .12rem .35rem; border-radius: 4px; font-weight: 600; }
+.card-web.no { background: var(--green-light); color: var(--green); }
+.card-web.yes { background: var(--gray-100); color: var(--gray-400); }
+.card-notes { font-size: .72rem; color: var(--gray-400); margin-top: .25rem; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-followup { font-size: .7rem; margin-top: .2rem; font-weight: 600; }
+.card-followup.due { color: var(--orange); }
+.card-followup.overdue { color: var(--red); }
+.card-followup.future { color: var(--gray-400); }
 .col-contacted .card { border-left-color: var(--accent); }
 .col-interested .card { border-left-color: var(--yellow); }
 .col-proposal .card { border-left-color: var(--orange); }
 .col-client .card { border-left-color: var(--green); }
 .col-live .card { border-left-color: var(--green-dark); }
-
-/* DROP ZONE */
 .column-cards.drag-over { background: var(--accent-light); border-radius: 6px; }
 
 /* MODAL */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; align-items: center; justify-content: center; }
 .modal-overlay.active { display: flex; }
-.modal { background: var(--white); border-radius: 16px; padding: 2rem; width: 90%; max-width: 500px; box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto; }
-.modal h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem; }
-.form-group { margin-bottom: .85rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-.form-group label { display: block; font-size: .78rem; font-weight: 600; color: var(--gray-700); margin-bottom: .3rem; }
-.form-group input, .form-group select, .form-group textarea { width: 100%; font-family: inherit; font-size: .88rem; padding: .55rem .75rem; border: 1.5px solid var(--gray-200); border-radius: 8px; outline: none; transition: border-color .2s; background: var(--gray-50); }
+.modal { background: var(--white); border-radius: 16px; padding: 1.75rem; width: 92%; max-width: 540px; box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto; }
+.modal h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; }
+.modal h3 { font-size: .85rem; font-weight: 700; color: var(--gray-500); margin: 1rem 0 .5rem; text-transform: uppercase; letter-spacing: .05em; }
+.form-group { margin-bottom: .7rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .6rem; }
+.form-group label { display: block; font-size: .75rem; font-weight: 600; color: var(--gray-700); margin-bottom: .25rem; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; font-family: inherit; font-size: .85rem; padding: .5rem .7rem; border: 1.5px solid var(--gray-200); border-radius: 8px; outline: none; transition: border-color .2s; background: var(--gray-50); }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); background: var(--white); }
-.form-group textarea { resize: vertical; min-height: 70px; }
-.modal-actions { display: flex; justify-content: space-between; margin-top: 1.25rem; gap: .75rem; }
+.form-group textarea { resize: vertical; min-height: 60px; }
+.modal-actions { display: flex; justify-content: space-between; margin-top: 1.25rem; gap: .5rem; }
 .modal-actions .btn { flex: 1; }
-
-/* SEARCH */
-.search-bar { padding: .5rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--gray-200); }
-.search-input { width: 100%; padding: .5rem .75rem; border: 1.5px solid var(--gray-200); border-radius: 8px; font-size: .88rem; outline: none; font-family: inherit; background: var(--gray-50); }
-.search-input:focus { border-color: var(--accent); background: var(--white); }
-
-/* FOOTER */
-.footer { text-align: center; padding: 1rem; font-size: .75rem; color: var(--gray-400); }
-
-@media (max-width: 768px) {
-  .board { padding: .75rem; gap: .75rem; }
-  .column { min-width: 220px; }
-}
+.footer { text-align: center; padding: 1rem; font-size: .72rem; color: var(--gray-400); }
+@media (max-width: 768px) { .board { padding: .5rem; gap: .5rem; } .column { min-width: 220px; } }
 </style>
 </head>
 <body>
@@ -128,233 +145,278 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 <div class="navbar">
   <div class="nav-brand">Millang<span>Media</span> CRM</div>
   <div class="nav-actions">
+    <button class="btn btn-outline-w btn-sm" onclick="resetData()">Reset Data</button>
     <button class="btn btn-outline-w btn-sm" onclick="exportCSV()">Export CSV</button>
     <button class="btn btn-primary btn-sm" onclick="openModal()">+ Add Prospect</button>
   </div>
 </div>
 
-<div class="kpi-bar">
-  <div class="kpi"><div class="kpi-value" id="kpi-total">0</div><div class="kpi-label">Total Prospects</div></div>
-  <div class="kpi"><div class="kpi-value" id="kpi-pipeline">$0</div><div class="kpi-label">Pipeline Value</div></div>
-  <div class="kpi"><div class="kpi-value green" id="kpi-clients">0</div><div class="kpi-label">Active Clients</div></div>
-  <div class="kpi"><div class="kpi-value green" id="kpi-mrr">$0</div><div class="kpi-label">Monthly Revenue</div></div>
+<div class="followup-bar" id="followup-bar">
+  <span class="icon">&#128276;</span>
+  <span class="text">Follow-ups due today:</span>
+  <span class="count" id="followup-count">0</span>
+  <span class="text" id="followup-names" style="font-weight:400;color:var(--gray-700)"></span>
 </div>
 
-<div class="search-bar">
-  <input type="text" class="search-input" id="search" placeholder="Search prospects by name, city, or phone..." oninput="renderBoard()">
+<div class="kpi-bar">
+  <div class="kpi"><div class="kpi-value" id="kpi-total">0</div><div class="kpi-label">Prospects</div></div>
+  <div class="kpi"><div class="kpi-value orange" id="kpi-followups">0</div><div class="kpi-label">Follow-ups Due</div></div>
+  <div class="kpi"><div class="kpi-value" id="kpi-pipeline">$0</div><div class="kpi-label">Pipeline Value</div></div>
+  <div class="kpi"><div class="kpi-value green" id="kpi-clients">0</div><div class="kpi-label">Clients</div></div>
+  <div class="kpi"><div class="kpi-value green" id="kpi-mrr">$0</div><div class="kpi-label">MRR</div></div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
+  <button class="filter-btn" data-filter="no-site" onclick="setFilter('no-site')">No Website</button>
+  <button class="filter-btn" data-filter="has-site" onclick="setFilter('has-site')">Has Website</button>
+  <button class="filter-btn" data-filter="due-today" onclick="setFilter('due-today')">Due Today</button>
+  <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue')">Overdue</button>
+  <input type="text" class="search-input" id="search" placeholder="Search by name, city, owner, or phone..." oninput="renderBoard()">
 </div>
 
 <div class="board" id="board">
-  <div class="column col-new" data-stage="NEW">
-    <div class="column-header">New <span class="column-count" id="count-NEW">0</span></div>
-    <div class="column-cards" id="cards-NEW"></div>
-  </div>
-  <div class="column col-contacted" data-stage="CONTACTED">
-    <div class="column-header">Contacted <span class="column-count" id="count-CONTACTED">0</span></div>
-    <div class="column-cards" id="cards-CONTACTED"></div>
-  </div>
-  <div class="column col-interested" data-stage="INTERESTED">
-    <div class="column-header">Interested <span class="column-count" id="count-INTERESTED">0</span></div>
-    <div class="column-cards" id="cards-INTERESTED"></div>
-  </div>
-  <div class="column col-proposal" data-stage="PROPOSAL">
-    <div class="column-header">Proposal <span class="column-count" id="count-PROPOSAL">0</span></div>
-    <div class="column-cards" id="cards-PROPOSAL"></div>
-  </div>
-  <div class="column col-client" data-stage="CLIENT">
-    <div class="column-header">Client <span class="column-count" id="count-CLIENT">0</span></div>
-    <div class="column-cards" id="cards-CLIENT"></div>
-  </div>
-  <div class="column col-live" data-stage="LIVE">
-    <div class="column-header">Live <span class="column-count" id="count-LIVE">0</span></div>
-    <div class="column-cards" id="cards-LIVE"></div>
-  </div>
+  <div class="column col-new" data-stage="NEW"><div class="column-header">New <span class="column-count" id="count-NEW">0</span></div><div class="column-cards" id="cards-NEW"></div></div>
+  <div class="column col-contacted" data-stage="CONTACTED"><div class="column-header">Contacted <span class="column-count" id="count-CONTACTED">0</span></div><div class="column-cards" id="cards-CONTACTED"></div></div>
+  <div class="column col-interested" data-stage="INTERESTED"><div class="column-header">Interested <span class="column-count" id="count-INTERESTED">0</span></div><div class="column-cards" id="cards-INTERESTED"></div></div>
+  <div class="column col-proposal" data-stage="PROPOSAL"><div class="column-header">Proposal <span class="column-count" id="count-PROPOSAL">0</span></div><div class="column-cards" id="cards-PROPOSAL"></div></div>
+  <div class="column col-client" data-stage="CLIENT"><div class="column-header">Client <span class="column-count" id="count-CLIENT">0</span></div><div class="column-cards" id="cards-CLIENT"></div></div>
+  <div class="column col-live" data-stage="LIVE"><div class="column-header">Live <span class="column-count" id="count-LIVE">0</span></div><div class="column-cards" id="cards-LIVE"></div></div>
 </div>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <h2 id="modal-title">Add Prospect</h2>
     <input type="hidden" id="edit-id">
+
+    <h3>Business Info</h3>
     <div class="form-row">
       <div class="form-group"><label>Business Name *</label><input type="text" id="f-name" required></div>
-      <div class="form-group"><label>Contact Name</label><input type="text" id="f-contact"></div>
+      <div class="form-group"><label>Owner / Contact Name</label><input type="text" id="f-contact"></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>Phone</label><input type="tel" id="f-phone"></div>
       <div class="form-group"><label>Email</label><input type="email" id="f-email"></div>
     </div>
-    <div class="form-row">
+    <div class="form-row-3">
       <div class="form-group"><label>City</label><input type="text" id="f-city"></div>
       <div class="form-group"><label>State</label><input type="text" id="f-state" value="IA"></div>
+      <div class="form-group"><label>Zip</label><input type="text" id="f-zip"></div>
     </div>
     <div class="form-group"><label>Address</label><input type="text" id="f-address"></div>
     <div class="form-row">
-      <div class="form-group">
-        <label>Stage</label>
-        <select id="f-stage"><option>NEW</option><option>CONTACTED</option><option>INTERESTED</option><option>PROPOSAL</option><option>CLIENT</option><option>LIVE</option></select>
-      </div>
-      <div class="form-group">
-        <label>Tier Interest</label>
-        <select id="f-tier"><option value="">Unknown</option><option value="launch">Launch</option><option value="growth">Growth</option><option value="pro">Pro</option></select>
-      </div>
+      <div class="form-group"><label>Has Website?</label><select id="f-hasweb"><option value="NO">No</option><option value="YES">Yes</option></select></div>
+      <div class="form-group"><label>Website URL</label><input type="url" id="f-weburl" placeholder="https://..."></div>
     </div>
-    <div class="form-group"><label>Notes</label><textarea id="f-notes"></textarea></div>
+
+    <h3>Sales Pipeline</h3>
+    <div class="form-row-3">
+      <div class="form-group"><label>Stage</label><select id="f-stage"><option>NEW</option><option>CONTACTED</option><option>INTERESTED</option><option>PROPOSAL</option><option>CLIENT</option><option>LIVE</option></select></div>
+      <div class="form-group"><label>Tier Interest</label><select id="f-tier"><option value="">Unknown</option><option value="launch">Launch</option><option value="growth">Growth</option><option value="pro">Pro</option></select></div>
+      <div class="form-group"><label>Preferred Contact</label><select id="f-prefcontact"><option value="">Any</option><option value="call">Call</option><option value="email">Email</option><option value="text">Text</option></select></div>
+    </div>
+    <div class="form-group"><label>Best Time to Call</label><select id="f-besttime"><option value="">Anytime</option><option value="morning">Morning (8-11am)</option><option value="afternoon">Afternoon (12-4pm)</option><option value="evening">Evening (5-7pm)</option></select></div>
+
+    <h3>Key Dates</h3>
+    <div class="form-row-3">
+      <div class="form-group"><label>Last Contacted</label><input type="date" id="f-lastcontacted"></div>
+      <div class="form-group"><label>Next Follow-Up</label><input type="date" id="f-nextfollowup"></div>
+      <div class="form-group"><label>Demo Date</label><input type="date" id="f-demodate"></div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group"><label>Proposal Sent</label><input type="date" id="f-proposalsent"></div>
+      <div class="form-group"><label>Date Closed</label><input type="date" id="f-dateclosed"></div>
+      <div class="form-group"><label>Date Added</label><input type="date" id="f-dateadded" disabled></div>
+    </div>
+
+    <h3>Notes</h3>
+    <div class="form-group"><textarea id="f-notes" placeholder="Pitch notes, objections, what they liked..."></textarea></div>
+
     <div class="modal-actions">
-      <button class="btn btn-danger btn-sm" id="btn-delete" onclick="deleteProspect()" style="display:none;flex:0 0 auto;padding:.5rem .75rem;">Delete</button>
+      <button class="btn btn-danger btn-sm" id="btn-delete" onclick="deleteProspect()" style="display:none;flex:0 0 auto;">Delete</button>
       <div style="flex:1"></div>
-      <button class="btn btn-outline-w btn-sm" onclick="closeModal()" style="color:var(--gray-500);border-color:var(--gray-300)">Cancel</button>
+      <button class="btn btn-sm" onclick="closeModal()" style="color:var(--gray-500);border:1.5px solid var(--gray-300);background:var(--white);">Cancel</button>
       <button class="btn btn-primary" onclick="saveProspect()">Save</button>
     </div>
   </div>
 </div>
 
-<div class="footer">Millang Media CRM — Powered by Millang Media</div>
+<div class="footer">Millang Media CRM &mdash; Powered by Millang Media</div>
 
 <script>
-// SEED DATA
 const SEED = [
-{name:"Streamline Plumbing LLC",address:"1513 NW 8th St",city:"Grimes",state:"IA",phone:"(515) 779-0247",rating:"5.0",reviews:133},
-{name:"Bob's Sewerooter Services",address:"4677 NE 38th St",city:"Des Moines",state:"IA",phone:"(515) 262-6520",rating:"4.8",reviews:126},
-{name:"Mark's Drain & Plumbing Repair",address:"120 Northview Dr",city:"Waukee",state:"IA",phone:"(515) 537-0006",rating:"4.7",reviews:48},
-{name:"Hulgan Plumbing & Heating Co",address:"801 1st Ave",city:"Perry",state:"IA",phone:"(515) 465-3030",rating:"4.3",reviews:42},
-{name:"Rozendaal Drain Cleaning Inc",address:"503 N 2nd Ct",city:"Sully",state:"IA",phone:"(641) 990-5215",rating:"4.8",reviews:29},
-{name:"Doug's Plumbing & Heating",address:"2164 IA-25",city:"Guthrie Center",state:"IA",phone:"(641) 332-2198",rating:"4.4",reviews:28},
-{name:"Bee Line Sewer Cleaning",address:"Des Moines",city:"Des Moines",state:"IA",phone:"(515) 225-4843",rating:"4.0",reviews:27},
-{name:"R & D Plumbing",address:"302 1st Ave N",city:"Altoona",state:"IA",phone:"(515) 967-3957",rating:"4.0",reviews:25},
-{name:"Affordable Drain Services Jet Surge",address:"Indianola",city:"Indianola",state:"IA",phone:"(515) 961-9843",rating:"3.4",reviews:17},
-{name:"Pleva Mechanical Inc",address:"13420 Bittersweet Rd",city:"Woodward",state:"IA",phone:"(515) 438-2279",rating:"4.7",reviews:15},
-{name:"Elite Electric & Utility Contractors",address:"1403 Sugar Grove Ave",city:"Dallas Center",state:"IA",phone:"(515) 992-3222",rating:"3.5",reviews:14},
-{name:"Broich Plumbing LLC",address:"2502 SW 31st St",city:"Ankeny",state:"IA",phone:"(515) 229-8635",rating:"3.4",reviews:10},
-{name:"G & R Plumbing",address:"Waukee",city:"Waukee",state:"IA",phone:"(515) 987-1008",rating:"5.0",reviews:8},
-{name:"Deremiah Plumbing",address:"1070 45th St",city:"Des Moines",state:"IA",phone:"(515) 710-7997",rating:"4.1",reviews:7},
-{name:"Practical Plumbing Heating & Cooling LLC",address:"12045 NE 68th St",city:"Bondurant",state:"IA",phone:"(515) 964-1070",rating:"5.0",reviews:7},
-{name:"Golden Rule Plumbing Heating & Cooling",address:"102 N Jefferson Way",city:"Indianola",state:"IA",phone:"(888) 986-2424",rating:"3.9",reviews:7},
-{name:"Lifestyle Plumbing",address:"707 Collins Dr",city:"Waukee",state:"IA",phone:"(515) 987-4193",rating:"5.0",reviews:6},
-{name:"Mikes Plumbing & Backhoe Service LLC",address:"3802 25th Ave",city:"Cumming",state:"IA",phone:"(515) 208-3681",rating:"3.7",reviews:6},
-{name:"Bendon Plumbing Heating and AC",address:"717 W 2nd Ave",city:"Indianola",state:"IA",phone:"(515) 962-5016",rating:"4.3",reviews:6},
-{name:"G & S Plumbing",address:"8090 NE 30th Pl",city:"Altoona",state:"IA",phone:"(515) 975-7515",rating:"4.4",reviews:5},
-{name:"Above the Radar Resource",address:"405 3rd St NE",city:"Mitchellville",state:"IA",phone:"(515) 202-6632",rating:"4.0",reviews:5},
-{name:"Des Moines Plumbing",address:"3419 1st St UNIT 7",city:"Des Moines",state:"IA",phone:"(515) 346-6891",rating:"4.3",reviews:4},
-{name:"10G Heating Cooling Plumbing",address:"265 Garfield Ave",city:"Elkhart",state:"IA",phone:"(641) 373-2174",rating:"5.0",reviews:4},
-{name:"Kevin's Plumbing",address:"325 N Market St",city:"Madrid",state:"IA",phone:"(515) 795-4050",rating:"5.0",reviews:3},
-{name:"Drain Pro Plumbing",address:"325 N Market St",city:"Madrid",state:"IA",phone:"(515) 402-8929",rating:"5.0",reviews:2},
-{name:"Sneller Plumbing Heating Services",address:"110 N Marshall St",city:"Prairie City",state:"IA",phone:"(515) 994-2283",rating:"2.5",reviews:2},
-{name:"Clarks Plumbing Inc",address:"608 N NW 8th St",city:"Grimes",state:"IA",phone:"(515) 986-4545",rating:"5.0",reviews:1},
-{name:"Walls Plumbing & Handyman Services",address:"600 E 4th St N",city:"Newton",state:"IA",phone:"(641) 275-7252",rating:"5.0",reviews:1},
-{name:"Golden Rule Plumbing",address:"Norwalk",city:"Norwalk",state:"IA",phone:"(515) 981-5710",rating:"N/A",reviews:0},
-{name:"Madison County Plumbing Heating",address:"108 W Jefferson St",city:"Winterset",state:"IA",phone:"(515) 462-3467",rating:"N/A",reviews:0},
-{name:"Carstens Plumbing & Heating & AC",address:"307 SE 4th St",city:"Panora",state:"IA",phone:"(641) 755-3805",rating:"N/A",reviews:0},
-{name:"Firebaugh Plumbing",address:"406 NE 2nd St",city:"Panora",state:"IA",phone:"(641) 755-3665",rating:"N/A",reviews:0},
-{name:"TLI Plumbing LLC",address:"196 50th Ave",city:"Prairie City",state:"IA",phone:"(515) 238-2977",rating:"N/A",reviews:0}
+{name:"Streamline Plumbing LLC",address:"1513 NW 8th St",city:"Grimes",state:"IA",zip:"50111",phone:"(515) 779-0247",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:133},
+{name:"Bob's Sewerooter Services",address:"4677 NE 38th St",city:"Des Moines",state:"IA",zip:"50317",phone:"(515) 262-6520",hasWebsite:"NO",webUrl:"",rating:"4.8",reviews:126},
+{name:"Mark's Drain & Plumbing Repair",address:"120 Northview Dr",city:"Waukee",state:"IA",zip:"50263",phone:"(515) 537-0006",hasWebsite:"NO",webUrl:"",rating:"4.7",reviews:48},
+{name:"Hulgan Plumbing & Heating Co",address:"801 1st Ave",city:"Perry",state:"IA",zip:"50220",phone:"(515) 465-3030",hasWebsite:"NO",webUrl:"",rating:"4.3",reviews:42},
+{name:"Rozendaal Drain Cleaning Inc",address:"503 N 2nd Ct",city:"Sully",state:"IA",zip:"50251",phone:"(641) 990-5215",hasWebsite:"NO",webUrl:"",rating:"4.8",reviews:29},
+{name:"Doug's Plumbing & Heating",address:"2164 IA-25",city:"Guthrie Center",state:"IA",zip:"50115",phone:"(641) 332-2198",hasWebsite:"NO",webUrl:"",rating:"4.4",reviews:28},
+{name:"Bee Line Sewer Cleaning",address:"Des Moines",city:"Des Moines",state:"IA",zip:"50311",phone:"(515) 225-4843",hasWebsite:"NO",webUrl:"",rating:"4.0",reviews:27},
+{name:"R & D Plumbing",address:"302 1st Ave N",city:"Altoona",state:"IA",zip:"50009",phone:"(515) 967-3957",hasWebsite:"NO",webUrl:"",rating:"4.0",reviews:25},
+{name:"Affordable Drain Services Jet Surge",address:"Indianola",city:"Indianola",state:"IA",zip:"50125",phone:"(515) 961-9843",hasWebsite:"NO",webUrl:"",rating:"3.4",reviews:17},
+{name:"Pleva Mechanical Inc",address:"13420 Bittersweet Rd",city:"Woodward",state:"IA",zip:"50276",phone:"(515) 438-2279",hasWebsite:"NO",webUrl:"",rating:"4.7",reviews:15},
+{name:"Elite Electric & Utility Contractors",address:"1403 Sugar Grove Ave",city:"Dallas Center",state:"IA",zip:"50063",phone:"(515) 992-3222",hasWebsite:"NO",webUrl:"",rating:"3.5",reviews:14},
+{name:"Broich Plumbing LLC",address:"2502 SW 31st St",city:"Ankeny",state:"IA",zip:"50023",phone:"(515) 229-8635",hasWebsite:"NO",webUrl:"",rating:"3.4",reviews:10},
+{name:"G & R Plumbing",address:"Waukee",city:"Waukee",state:"IA",zip:"50263",phone:"(515) 987-1008",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:8},
+{name:"Deremiah Plumbing",address:"1070 45th St",city:"Des Moines",state:"IA",zip:"50311",phone:"(515) 710-7997",hasWebsite:"NO",webUrl:"",rating:"4.1",reviews:7},
+{name:"Practical Plumbing Heating & Cooling LLC",address:"12045 NE 68th St",city:"Bondurant",state:"IA",zip:"50035",phone:"(515) 964-1070",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:7},
+{name:"Golden Rule Plumbing Heating & Cooling",address:"102 N Jefferson Way",city:"Indianola",state:"IA",zip:"50125",phone:"(888) 986-2424",hasWebsite:"NO",webUrl:"",rating:"3.9",reviews:7},
+{name:"Lifestyle Plumbing",address:"707 Collins Dr",city:"Waukee",state:"IA",zip:"50263",phone:"(515) 987-4193",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:6},
+{name:"Mikes Plumbing & Backhoe Service LLC",address:"3802 25th Ave",city:"Cumming",state:"IA",zip:"50061",phone:"(515) 208-3681",hasWebsite:"NO",webUrl:"",rating:"3.7",reviews:6},
+{name:"Bendon Plumbing Heating and AC",address:"717 W 2nd Ave",city:"Indianola",state:"IA",zip:"50125",phone:"(515) 962-5016",hasWebsite:"NO",webUrl:"",rating:"4.3",reviews:6},
+{name:"G & S Plumbing",address:"8090 NE 30th Pl",city:"Altoona",state:"IA",zip:"50009",phone:"(515) 975-7515",hasWebsite:"NO",webUrl:"",rating:"4.4",reviews:5},
+{name:"Above the Radar Resource",address:"405 3rd St NE",city:"Mitchellville",state:"IA",zip:"50169",phone:"(515) 202-6632",hasWebsite:"NO",webUrl:"",rating:"4.0",reviews:5},
+{name:"Des Moines Plumbing",address:"3419 1st St UNIT 7",city:"Des Moines",state:"IA",zip:"50313",phone:"(515) 346-6891",hasWebsite:"NO",webUrl:"",rating:"4.3",reviews:4},
+{name:"10G Heating Cooling Plumbing",address:"265 Garfield Ave",city:"Elkhart",state:"IA",zip:"50073",phone:"(641) 373-2174",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:4},
+{name:"Kevin's Plumbing",address:"325 N Market St",city:"Madrid",state:"IA",zip:"50156",phone:"(515) 795-4050",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:3},
+{name:"Drain Pro Plumbing",address:"325 N Market St",city:"Madrid",state:"IA",zip:"50156",phone:"(515) 402-8929",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:2},
+{name:"Sneller Plumbing Heating Services",address:"110 N Marshall St",city:"Prairie City",state:"IA",zip:"50228",phone:"(515) 994-2283",hasWebsite:"NO",webUrl:"",rating:"2.5",reviews:2},
+{name:"Clarks Plumbing Inc",address:"608 N NW 8th St",city:"Grimes",state:"IA",zip:"50111",phone:"(515) 986-4545",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:1},
+{name:"Walls Plumbing & Handyman Services",address:"600 E 4th St N",city:"Newton",state:"IA",zip:"50208",phone:"(641) 275-7252",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:1},
+{name:"Golden Rule Plumbing",address:"Norwalk",city:"Norwalk",state:"IA",zip:"50211",phone:"(515) 981-5710",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
+{name:"Madison County Plumbing Heating",address:"108 W Jefferson St",city:"Winterset",state:"IA",zip:"50273",phone:"(515) 462-3467",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
+{name:"Carstens Plumbing & Heating & AC",address:"307 SE 4th St",city:"Panora",state:"IA",zip:"50216",phone:"(641) 755-3805",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
+{name:"Firebaugh Plumbing",address:"406 NE 2nd St",city:"Panora",state:"IA",zip:"50216",phone:"(641) 755-3665",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
+{name:"TLI Plumbing LLC",address:"196 50th Ave",city:"Prairie City",state:"IA",zip:"50228",phone:"(515) 238-2977",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
+{name:"Holt Plumbing & Heating Inc",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://holtplumbingandheating.com/",rating:"4.8",reviews:3486},
+{name:"Clog Busters Drain Cleaning & Repair",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://clogbusters.co/",rating:"4.9",reviews:2815},
+{name:"Kohles & Bach Heating & Cooling",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://www.kohlesandbach.com/",rating:"4.9",reviews:2367},
+{name:"Lazer Home Services",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://lazerhomeservices.com/",rating:"4.8",reviews:2213},
+{name:"Lenz Heating & Cooling",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://lenzmechanical.com/",rating:"4.9",reviews:1835},
+{name:"Lozier Heating & Cooling",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://www.lozierheatingcooling.com/",rating:"4.9",reviews:1604},
+{name:"True Comfort Heating Cooling and Plumbing",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://www.truecomfortiowa.com/",rating:"5.0",reviews:1015},
+{name:"1-Tom-Plumber",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://1tomplumber.com/",rating:"4.9",reviews:770},
+{name:"H & H Plumbing Inc",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://www.hhplumbinginc.com/",rating:"4.9",reviews:589},
+{name:"Mendel Plumbing Heating & Electric",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://www.callmendel.com/",rating:"4.9",reviews:2835},
+{name:"Schaal Plumbing Heating and Cooling",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://callschaalyaall.com/",rating:"4.9",reviews:8272},
+{name:"Service Legends",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://www.servicelegends.com/",rating:"4.9",reviews:5429},
+{name:"Greens Appliance Heating & Cooling",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://greensahc.com/",rating:"4.9",reviews:4064},
+{name:"Bell Brothers Heating Cooling & Plumbing",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://bellbrothers.com/",rating:"4.9",reviews:3849},
+{name:"Golden Rule Plumbing Heating Cooling & Electrical",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://goldenrulephc.com/",rating:"4.9",reviews:9230}
 ];
 
 const STAGES = ['NEW','CONTACTED','INTERESTED','PROPOSAL','CLIENT','LIVE'];
 const TIER_MONTHLY = { launch: 150, growth: 250, pro: 350 };
-const TIER_SETUP = { launch: 500, growth: 1000, pro: 1500 };
-const KEY = 'mm_crm_prospects';
+const KEY = 'mm_crm_v2';
+let currentFilter = 'all';
 
 function load() {
   const stored = localStorage.getItem(KEY);
   if (stored) return JSON.parse(stored);
   return SEED.map((p, i) => ({
     id: Date.now() + i,
-    name: p.name,
-    contact: '',
-    phone: p.phone,
-    email: '',
-    address: p.address,
-    city: p.city,
-    state: p.state,
-    rating: p.rating,
-    reviews: p.reviews,
-    stage: 'NEW',
-    tier: '',
-    notes: '',
-    lastContacted: '',
-    created: new Date().toISOString().split('T')[0]
+    name: p.name, contact: '', phone: p.phone || '', email: '',
+    address: p.address, city: p.city, state: p.state, zip: p.zip || '',
+    hasWebsite: p.hasWebsite || 'NO', webUrl: p.webUrl || '',
+    rating: p.rating, reviews: p.reviews,
+    stage: 'NEW', tier: '', prefContact: '', bestTime: '',
+    notes: '', lastContacted: '', nextFollowup: '',
+    demoDate: '', proposalSent: '', dateClosed: '',
+    dateAdded: new Date().toISOString().split('T')[0]
   }));
 }
-
-function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
+function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 
 let prospects = load();
 save(prospects);
+
+function today() { return new Date().toISOString().split('T')[0]; }
+
+function getFollowupStatus(p) {
+  if (!p.nextFollowup) return null;
+  const t = today();
+  if (p.nextFollowup === t) return 'due';
+  if (p.nextFollowup < t) return 'overdue';
+  return 'future';
+}
 
 function updateKPIs() {
   const total = prospects.length;
   const interested = prospects.filter(p => p.stage === 'INTERESTED' || p.stage === 'PROPOSAL');
   const clients = prospects.filter(p => p.stage === 'CLIENT' || p.stage === 'LIVE');
   const liveClients = prospects.filter(p => p.stage === 'LIVE');
-  const pipelineValue = interested.length * 1000;
+  const dueToday = prospects.filter(p => { const s = getFollowupStatus(p); return s === 'due' || s === 'overdue'; });
   let mrr = 0;
   liveClients.forEach(c => { mrr += TIER_MONTHLY[c.tier] || 250; });
   document.getElementById('kpi-total').textContent = total;
-  document.getElementById('kpi-pipeline').textContent = '$' + pipelineValue.toLocaleString();
+  document.getElementById('kpi-followups').textContent = dueToday.length;
+  document.getElementById('kpi-pipeline').textContent = '$' + (interested.length * 1000).toLocaleString();
   document.getElementById('kpi-clients').textContent = clients.length;
   document.getElementById('kpi-mrr').textContent = '$' + mrr.toLocaleString() + '/mo';
+
+  const bar = document.getElementById('followup-bar');
+  if (dueToday.length > 0) {
+    bar.classList.add('active');
+    document.getElementById('followup-count').textContent = dueToday.length;
+    document.getElementById('followup-names').textContent = dueToday.slice(0, 3).map(p => p.name).join(', ') + (dueToday.length > 3 ? '...' : '');
+  } else { bar.classList.remove('active'); }
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+  renderBoard();
 }
 
 function renderBoard() {
   const q = document.getElementById('search').value.toLowerCase();
-  const filtered = prospects.filter(p => 
-    p.name.toLowerCase().includes(q) || 
-    p.city.toLowerCase().includes(q) || 
-    p.phone.includes(q) ||
-    (p.contact && p.contact.toLowerCase().includes(q))
+  let filtered = prospects.filter(p =>
+    p.name.toLowerCase().includes(q) || p.city.toLowerCase().includes(q) ||
+    p.phone.includes(q) || (p.contact && p.contact.toLowerCase().includes(q))
   );
+  if (currentFilter === 'no-site') filtered = filtered.filter(p => p.hasWebsite === 'NO');
+  else if (currentFilter === 'has-site') filtered = filtered.filter(p => p.hasWebsite === 'YES');
+  else if (currentFilter === 'due-today') filtered = filtered.filter(p => { const s = getFollowupStatus(p); return s === 'due' || s === 'overdue'; });
+  else if (currentFilter === 'overdue') filtered = filtered.filter(p => getFollowupStatus(p) === 'overdue');
+
   STAGES.forEach(stage => {
     const container = document.getElementById('cards-' + stage);
-    const stageProspects = filtered.filter(p => p.stage === stage);
-    document.getElementById('count-' + stage).textContent = stageProspects.length;
-    container.innerHTML = stageProspects.map(p => `
-      <div class="card" draggable="true" data-id="${p.id}" onclick="openModal(${p.id})"
-           ondragstart="onDragStart(event)" ondragend="onDragEnd(event)">
+    const sp = filtered.filter(p => p.stage === stage);
+    document.getElementById('count-' + stage).textContent = sp.length;
+    container.innerHTML = sp.map(p => {
+      const fs = getFollowupStatus(p);
+      const classes = ['card'];
+      if (fs === 'due') classes.push('has-followup-today');
+      if (fs === 'overdue') classes.push('has-followup-today','overdue');
+      return `<div class="${classes.join(' ')}" draggable="true" data-id="${p.id}" onclick="openModal(${p.id})" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)">
         <div class="card-name">${esc(p.name)}</div>
+        ${p.contact ? `<div class="card-contact">${esc(p.contact)}</div>` : ''}
         <div class="card-city">${esc(p.city)}, ${esc(p.state)}</div>
         ${p.phone ? `<a class="card-phone" href="tel:${p.phone.replace(/[^\d+]/g,'')}" onclick="event.stopPropagation()">&#128222; ${esc(p.phone)}</a>` : ''}
         <div class="card-meta">
           ${p.rating && p.rating !== 'N/A' ? `<span class="card-rating"><span class="star">&#9733;</span> ${p.rating} (${p.reviews})</span>` : '<span class="card-rating">No reviews</span>'}
+          <span class="card-web ${p.hasWebsite === 'YES' ? 'yes' : 'no'}">${p.hasWebsite === 'YES' ? 'Has Site' : 'No Site'}</span>
           ${p.tier ? `<span class="card-tier ${p.tier}">${p.tier.charAt(0).toUpperCase()+p.tier.slice(1)}</span>` : ''}
         </div>
         ${p.notes ? `<div class="card-notes">${esc(p.notes)}</div>` : ''}
-        ${p.lastContacted ? `<div class="card-date">Last contact: ${p.lastContacted}</div>` : ''}
-      </div>
-    `).join('');
+        ${p.nextFollowup ? `<div class="card-followup ${fs}">${fs === 'overdue' ? 'OVERDUE: ' : fs === 'due' ? 'TODAY: ' : 'Follow-up: '}${p.nextFollowup}</div>` : ''}
+      </div>`;
+    }).join('');
   });
   updateKPIs();
 }
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 
-// DRAG & DROP
 let dragId = null;
-function onDragStart(e) {
-  dragId = parseInt(e.target.dataset.id);
-  e.target.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-}
+function onDragStart(e) { dragId = parseInt(e.target.dataset.id); e.target.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }
 function onDragEnd(e) { e.target.classList.remove('dragging'); dragId = null; }
-
 document.querySelectorAll('.column-cards').forEach(col => {
   col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('drag-over'); });
   col.addEventListener('dragleave', () => col.classList.remove('drag-over'));
   col.addEventListener('drop', e => {
-    e.preventDefault();
-    col.classList.remove('drag-over');
+    e.preventDefault(); col.classList.remove('drag-over');
     if (dragId === null) return;
     const newStage = col.id.replace('cards-', '');
     const p = prospects.find(x => x.id === dragId);
     if (p) {
       p.stage = newStage;
-      if (newStage !== 'NEW' && !p.lastContacted) p.lastContacted = new Date().toISOString().split('T')[0];
-      save(prospects);
-      renderBoard();
+      if (newStage !== 'NEW' && !p.lastContacted) p.lastContacted = today();
+      save(prospects); renderBoard();
     }
   });
 });
 
-// MODAL
 function openModal(id) {
   const overlay = document.getElementById('modal-overlay');
   const title = document.getElementById('modal-title');
@@ -370,92 +432,95 @@ function openModal(id) {
     document.getElementById('f-email').value = p.email || '';
     document.getElementById('f-city').value = p.city || '';
     document.getElementById('f-state').value = p.state || 'IA';
+    document.getElementById('f-zip').value = p.zip || '';
     document.getElementById('f-address').value = p.address || '';
+    document.getElementById('f-hasweb').value = p.hasWebsite || 'NO';
+    document.getElementById('f-weburl').value = p.webUrl || '';
     document.getElementById('f-stage').value = p.stage;
     document.getElementById('f-tier').value = p.tier || '';
+    document.getElementById('f-prefcontact').value = p.prefContact || '';
+    document.getElementById('f-besttime').value = p.bestTime || '';
+    document.getElementById('f-lastcontacted').value = p.lastContacted || '';
+    document.getElementById('f-nextfollowup').value = p.nextFollowup || '';
+    document.getElementById('f-demodate').value = p.demoDate || '';
+    document.getElementById('f-proposalsent').value = p.proposalSent || '';
+    document.getElementById('f-dateclosed').value = p.dateClosed || '';
+    document.getElementById('f-dateadded').value = p.dateAdded || '';
     document.getElementById('f-notes').value = p.notes || '';
     delBtn.style.display = 'block';
   } else {
     title.textContent = 'Add Prospect';
     document.getElementById('edit-id').value = '';
-    document.querySelectorAll('.modal input, .modal textarea').forEach(i => i.value = '');
+    document.querySelectorAll('.modal input:not([disabled]), .modal textarea').forEach(i => i.value = '');
     document.getElementById('f-state').value = 'IA';
     document.getElementById('f-stage').value = 'NEW';
     document.getElementById('f-tier').value = '';
+    document.getElementById('f-hasweb').value = 'NO';
+    document.getElementById('f-prefcontact').value = '';
+    document.getElementById('f-besttime').value = '';
+    document.getElementById('f-dateadded').value = today();
     delBtn.style.display = 'none';
   }
   overlay.classList.add('active');
 }
-
 function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
 
 function saveProspect() {
   const name = document.getElementById('f-name').value.trim();
   if (!name) return;
   const editId = document.getElementById('edit-id').value;
+  const data = {
+    name, contact: document.getElementById('f-contact').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    city: document.getElementById('f-city').value.trim(),
+    state: document.getElementById('f-state').value.trim() || 'IA',
+    zip: document.getElementById('f-zip').value.trim(),
+    address: document.getElementById('f-address').value.trim(),
+    hasWebsite: document.getElementById('f-hasweb').value,
+    webUrl: document.getElementById('f-weburl').value.trim(),
+    stage: document.getElementById('f-stage').value,
+    tier: document.getElementById('f-tier').value,
+    prefContact: document.getElementById('f-prefcontact').value,
+    bestTime: document.getElementById('f-besttime').value,
+    lastContacted: document.getElementById('f-lastcontacted').value,
+    nextFollowup: document.getElementById('f-nextfollowup').value,
+    demoDate: document.getElementById('f-demodate').value,
+    proposalSent: document.getElementById('f-proposalsent').value,
+    dateClosed: document.getElementById('f-dateclosed').value,
+    notes: document.getElementById('f-notes').value.trim()
+  };
   if (editId) {
     const p = prospects.find(x => x.id === parseInt(editId));
-    if (p) {
-      p.name = name;
-      p.contact = document.getElementById('f-contact').value.trim();
-      p.phone = document.getElementById('f-phone').value.trim();
-      p.email = document.getElementById('f-email').value.trim();
-      p.city = document.getElementById('f-city').value.trim();
-      p.state = document.getElementById('f-state').value.trim();
-      p.address = document.getElementById('f-address').value.trim();
-      p.stage = document.getElementById('f-stage').value;
-      p.tier = document.getElementById('f-tier').value;
-      p.notes = document.getElementById('f-notes').value.trim();
-    }
+    if (p) Object.assign(p, data);
   } else {
-    prospects.push({
-      id: Date.now(),
-      name: name,
-      contact: document.getElementById('f-contact').value.trim(),
-      phone: document.getElementById('f-phone').value.trim(),
-      email: document.getElementById('f-email').value.trim(),
-      address: document.getElementById('f-address').value.trim(),
-      city: document.getElementById('f-city').value.trim(),
-      state: document.getElementById('f-state').value.trim() || 'IA',
-      rating: 'N/A',
-      reviews: 0,
-      stage: document.getElementById('f-stage').value,
-      tier: document.getElementById('f-tier').value,
-      notes: document.getElementById('f-notes').value.trim(),
-      lastContacted: '',
-      created: new Date().toISOString().split('T')[0]
-    });
+    prospects.push({ id: Date.now(), ...data, rating: 'N/A', reviews: 0, dateAdded: today() });
   }
-  save(prospects);
-  renderBoard();
-  closeModal();
+  save(prospects); renderBoard(); closeModal();
 }
 
 function deleteProspect() {
   const editId = parseInt(document.getElementById('edit-id').value);
   if (!editId) return;
-  if (!confirm('Delete this prospect?')) return;
   prospects = prospects.filter(p => p.id !== editId);
-  save(prospects);
-  renderBoard();
-  closeModal();
+  save(prospects); renderBoard(); closeModal();
 }
 
 function exportCSV() {
-  const headers = ['name','contact','phone','email','address','city','state','stage','tier','rating','reviews','notes','lastContacted'];
-  const rows = prospects.map(p => headers.map(h => '"' + (p[h]||'').toString().replace(/"/g,'""') + '"').join(','));
-  const csv = headers.join(',') + '\n' + rows.join('\n');
-  const blob = new Blob([csv], {type:'text/csv'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'millang-media-prospects-' + new Date().toISOString().split('T')[0] + '.csv';
-  a.click();
+  const h = ['name','contact','phone','email','address','city','state','zip','hasWebsite','webUrl','stage','tier','prefContact','bestTime','rating','reviews','notes','lastContacted','nextFollowup','demoDate','proposalSent','dateClosed','dateAdded'];
+  const rows = prospects.map(p => h.map(k => '"'+(p[k]||'').toString().replace(/"/g,'""')+'"').join(','));
+  const csv = h.join(',') + '\n' + rows.join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = 'millang-media-crm-'+today()+'.csv'; a.click();
 }
 
-// Keyboard
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+function resetData() {
+  if (!window.confirm('Reset all CRM data to original prospects? This cannot be undone.')) return;
+  localStorage.removeItem(KEY);
+  prospects = load(); save(prospects); renderBoard();
+}
 
-// Init
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 renderBoard();
 </script>
 </body>
