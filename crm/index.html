@@ -114,6 +114,27 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .card-followup.due { color: var(--orange); }
 .card-followup.overdue { color: var(--red); }
 .card-followup.future { color: var(--gray-400); }
+.card-followup-actions { display: flex; gap: .3rem; margin-top: .3rem; }
+.card-followup-actions a { font-size: .68rem; padding: .2rem .5rem; border-radius: 5px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: .2rem; }
+.card-followup-actions .btn-text { background: var(--accent); color: var(--white); }
+.card-followup-actions .btn-cal { background: var(--green); color: var(--white); }
+
+/* FOLLOWUP POPUP */
+.followup-popup-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); z-index:2000; justify-content:center; align-items:center; }
+.followup-popup-overlay.active { display:flex; }
+.followup-popup { background:var(--white); border-radius:16px; padding:1.5rem; max-width:380px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,.3); text-align:center; }
+.followup-popup h3 { font-size:1rem; font-weight:700; color:var(--gray-900); margin-bottom:.3rem; }
+.followup-popup .fu-date { font-size:.88rem; color:var(--accent); font-weight:600; margin-bottom:1rem; }
+.followup-popup .fu-actions { display:flex; flex-direction:column; gap:.6rem; }
+.followup-popup .fu-btn { display:flex; align-items:center; gap:.6rem; padding:.75rem 1rem; border-radius:10px; text-decoration:none; font-weight:600; font-size:.88rem; border:1.5px solid var(--gray-200); color:var(--gray-900); transition:all .15s; }
+.followup-popup .fu-btn:hover { border-color:var(--accent); background:var(--accent-light); }
+.followup-popup .fu-btn .fu-icon { font-size:1.3rem; width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.followup-popup .fu-btn .fu-icon.text-icon { background:var(--accent-light); color:var(--accent); }
+.followup-popup .fu-btn .fu-icon.cal-icon { background:var(--green-light); color:var(--green); }
+.followup-popup .fu-btn .fu-label { text-align:left; }
+.followup-popup .fu-btn .fu-label small { display:block; font-size:.72rem; font-weight:400; color:var(--gray-500); }
+.followup-popup .fu-skip { margin-top:.75rem; font-size:.78rem; color:var(--gray-400); cursor:pointer; border:none; background:none; font-family:inherit; }
+.followup-popup .fu-skip:hover { color:var(--gray-600); }
 .col-contacted .card { border-left-color: var(--accent); }
 .col-interested .card { border-left-color: var(--yellow); }
 .col-proposal .card { border-left-color: var(--orange); }
@@ -421,6 +442,7 @@ function renderBoard() {
         </div>
         ${p.notes ? `<div class="card-notes">${esc(p.notes)}</div>` : ''}
         ${p.nextFollowup ? `<div class="card-followup ${fs}">${fs === 'overdue' ? 'OVERDUE: ' : fs === 'due' ? 'TODAY: ' : 'Follow-up: '}${p.nextFollowup}</div>` : ''}
+        ${(fs === 'due' || fs === 'overdue') && p.phone ? `<div class="card-followup-actions"><a class="btn-text" href="#" onclick="event.stopPropagation();showFollowupPopup(${p.id})">&#x1F4AC; Text / Invite</a></div>` : ''}
       </div>`;
     }).join('');
   });
@@ -670,6 +692,114 @@ fetch('https://mdjserver.tail7845ea.ts.net/api/millang/leads')
   bar.querySelector('#followup-count').textContent = '!';
   bar.querySelector('#followup-names').textContent = business || name;
 })();
+// --- FOLLOW-UP SEND: Text or Calendar Invite ---
+function showFollowupPopup(prospectId) {
+  var p = prospects.find(function(x) { return x.id === prospectId; });
+  if (!p || !p.nextFollowup) return;
+  var ph = (p.phone || '').replace(/[^\d+]/g, '');
+  var biz = p.name || 'there';
+  var dateObj = new Date(p.nextFollowup + 'T12:00:00');
+  var dateStr = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+  // Build SMS body
+  var smsBody = encodeURIComponent('Hey ' + biz + '! This is Talan from Millang Media. Just wanted to confirm we\'re set to connect on ' + dateStr + '. Looking forward to it!');
+  var smsHref = ph ? ('sms:' + ph + '?body=' + smsBody) : '#';
+
+  // Build .ics calendar invite (as data URI)
+  var dtStart = p.nextFollowup.replace(/-/g, '') + 'T100000';
+  var dtEnd = p.nextFollowup.replace(/-/g, '') + 'T103000';
+  var icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Millang Media//CRM//EN',
+    'BEGIN:VEVENT',
+    'DTSTART:' + dtStart,
+    'DTEND:' + dtEnd,
+    'SUMMARY:Follow-up: ' + p.name + ' — Millang Media',
+    'DESCRIPTION:Follow-up call with ' + (p.contact || p.name) + ' about website services.\\nPhone: ' + (p.phone || 'N/A') + '\\n\\nMillang Media — millangmedia.com',
+    'LOCATION:Phone Call',
+    'STATUS:CONFIRMED',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  var icsBlob = new Blob([icsContent], { type: 'text/calendar' });
+  var icsUrl = URL.createObjectURL(icsBlob);
+
+  // Build email with .ics for calendar invite to prospect
+  var emailSubject = encodeURIComponent('Millang Media — Follow-up on ' + dateStr);
+  var emailBody = encodeURIComponent('Hi ' + (p.contact || biz) + ',\n\nJust confirming our follow-up on ' + dateStr + ' to chat about a website for ' + biz + '.\n\nLooking forward to connecting!\n\nTalan Millang\nMillang Media\n(515) 421-9871\nmillangmedia.com');
+  var emailHref = (p.email) ? ('mailto:' + p.email + '?subject=' + emailSubject + '&body=' + emailBody) : '#';
+
+  var popup = document.getElementById('followup-popup-overlay');
+  document.getElementById('fu-biz-name').textContent = p.name;
+  document.getElementById('fu-date-display').textContent = dateStr;
+  document.getElementById('fu-sms-link').href = smsHref;
+  if (!ph) {
+    document.getElementById('fu-sms-link').style.opacity = '.4';
+    document.getElementById('fu-sms-link').querySelector('.fu-label small').textContent = 'No phone number on file';
+  } else {
+    document.getElementById('fu-sms-link').style.opacity = '1';
+    document.getElementById('fu-sms-link').querySelector('.fu-label small').textContent = 'Opens Messages with date pre-filled';
+  }
+  document.getElementById('fu-cal-link').href = icsUrl;
+  document.getElementById('fu-cal-link').setAttribute('download', 'followup-' + p.name.replace(/[^a-zA-Z0-9]/g, '-') + '.ics');
+  document.getElementById('fu-email-link').href = emailHref;
+  if (!p.email) {
+    document.getElementById('fu-email-link').style.opacity = '.4';
+    document.getElementById('fu-email-link').querySelector('.fu-label small').textContent = 'No email on file';
+  } else {
+    document.getElementById('fu-email-link').style.opacity = '1';
+    document.getElementById('fu-email-link').querySelector('.fu-label small').textContent = 'Email with calendar invite details';
+  }
+  popup.classList.add('active');
+}
+function closeFollowupPopup() { document.getElementById('followup-popup-overlay').classList.remove('active'); }
+
+// Override saveProspect to show follow-up popup when a date is set
+var _origSave = saveProspect;
+saveProspect = function() {
+  var editId = document.getElementById('edit-id').value;
+  var followupDate = document.getElementById('f-nextfollowup').value;
+  var oldFollowup = '';
+  if (editId) {
+    var existing = prospects.find(function(x) { return x.id === parseInt(editId); });
+    if (existing) oldFollowup = existing.nextFollowup || '';
+  }
+  _origSave();
+  // If follow-up date was set or changed, show the popup
+  if (followupDate && followupDate !== oldFollowup) {
+    // Find the prospect we just saved
+    var savedP = editId ? prospects.find(function(x) { return x.id === parseInt(editId); }) : prospects[prospects.length - 1];
+    if (savedP) {
+      setTimeout(function() { showFollowupPopup(savedP.id); }, 200);
+    }
+  }
+};
 </script>
+
+<!-- FOLLOW-UP ACTION POPUP -->
+<div class="followup-popup-overlay" id="followup-popup-overlay" onclick="if(event.target===this)closeFollowupPopup()">
+  <div class="followup-popup">
+    <h3>Follow-up set for <span id="fu-biz-name"></span></h3>
+    <div class="fu-date" id="fu-date-display"></div>
+    <p style="font-size:.78rem;color:var(--gray-500);margin-bottom:.75rem;">Let them know you've got it on the calendar:</p>
+    <div class="fu-actions">
+      <a class="fu-btn" id="fu-sms-link" href="#" onclick="closeFollowupPopup()">
+        <span class="fu-icon text-icon">&#x1F4AC;</span>
+        <span class="fu-label">Text Them the Date<small>Opens Messages with date pre-filled</small></span>
+      </a>
+      <a class="fu-btn" id="fu-cal-link" href="#" download onclick="closeFollowupPopup()">
+        <span class="fu-icon cal-icon">&#x1F4C5;</span>
+        <span class="fu-label">Download Calendar Invite<small>Save .ics file — send it or add to your calendar</small></span>
+      </a>
+      <a class="fu-btn" id="fu-email-link" href="#" onclick="closeFollowupPopup()">
+        <span class="fu-icon cal-icon">&#x1F4E7;</span>
+        <span class="fu-label">Email Them<small>Email with calendar invite details</small></span>
+      </a>
+    </div>
+    <button class="fu-skip" onclick="closeFollowupPopup()">Skip — just save it</button>
+  </div>
+</div>
+
 </body>
 </html>
