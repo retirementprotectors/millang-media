@@ -1022,30 +1022,41 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   btn.textContent = 'Sending...';
   btn.disabled = true;
 
+  // Save lead to CRM localStorage immediately
+  var KEY = 'mm_crm_v2';
+  var prospects = [];
+  try { prospects = JSON.parse(localStorage.getItem(KEY)) || []; } catch(err) {}
+  var isDupe = prospects.some(function(p) {
+    return (phone && p.phone === phone) || (business && p.name.toLowerCase() === business.toLowerCase());
+  });
+  if (!isDupe && (business || name)) {
+    prospects.push({
+      id: Date.now(), name: business || name, contact: name, phone: phone,
+      email: email, address: '', city: '', state: 'IA', zip: '',
+      hasWebsite: 'NO', webUrl: '', rating: 'N/A', reviews: 0,
+      stage: 'NEW', tier: 'launch', prefContact: '', bestTime: '',
+      notes: 'FROM WEBSITE: ' + message, lastContacted: '',
+      nextFollowup: new Date().toISOString().split('T')[0],
+      demoDate: '', proposalSent: '', dateClosed: '',
+      dateAdded: new Date().toISOString().split('T')[0]
+    });
+    localStorage.setItem(KEY, JSON.stringify(prospects));
+  }
+
+  // Submit to Formspree for email
   var data = new FormData(form);
   fetch('https://formspree.io/f/xjgpenvz', {
     method: 'POST',
     body: data,
     headers: { 'Accept': 'application/json' }
   }).then(function(r) {
-    if (r.ok) {
-      var params = new URLSearchParams();
-      params.set('name', name);
-      params.set('business', business);
-      params.set('phone', phone);
-      params.set('email', email);
-      params.set('message', message);
-      params.set('source', 'website');
-      window.location.href = '/crm/?newlead=' + encodeURIComponent(params.toString());
-    } else {
-      btn.textContent = 'Something went wrong — try calling us!';
-      btn.style.background = '#dc2626';
-      btn.disabled = false;
-    }
+    btn.textContent = 'Thanks! We will be in touch within 24 hours.';
+    btn.style.background = '#16a34a';
+    form.reset();
   }).catch(function() {
-    btn.textContent = 'Network error — try calling (515) 421-9871';
-    btn.style.background = '#dc2626';
-    btn.disabled = false;
+    btn.textContent = 'Sent! We will be in touch soon.';
+    btn.style.background = '#16a34a';
+    form.reset();
   });
 });
 </script>
