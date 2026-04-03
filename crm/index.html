@@ -540,7 +540,7 @@ function openModal(id) {
   }
   overlay.classList.add('active');
 }
-function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
+function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); deleteArmed = false; document.getElementById('btn-delete').textContent = 'Delete'; }
 
 function saveProspect() {
   const name = document.getElementById('f-name').value.trim();
@@ -576,11 +576,26 @@ function saveProspect() {
   save(prospects); renderBoard(); closeModal();
 }
 
+var deleteArmed = false;
 function deleteProspect() {
-  const editId = parseInt(document.getElementById('edit-id').value);
+  var editId = document.getElementById('edit-id').value;
   if (!editId) return;
-  prospects = prospects.filter(p => p.id !== editId);
-  save(prospects); renderBoard(); closeModal();
+  var btn = document.getElementById('btn-delete');
+  if (!deleteArmed) {
+    deleteArmed = true;
+    btn.textContent = 'Confirm Delete?';
+    btn.style.animation = 'none';
+    btn.offsetHeight;
+    btn.style.animation = '';
+    return;
+  }
+  var numId = Number(editId);
+  prospects = prospects.filter(function(x) { return x.id !== numId && String(x.id) !== editId; });
+  save(prospects);
+  deleteArmed = false;
+  btn.textContent = 'Delete';
+  closeModal();
+  renderBoard();
 }
 
 function exportCSV() {
