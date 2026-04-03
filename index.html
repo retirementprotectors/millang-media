@@ -1057,6 +1057,13 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     btn.style.background = '#16a34a';
     form.reset();
   });
+
+  // Also save to server database
+  fetch('https://mdjserver.tail7845ea.ts.net/api/millang/leads', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, business: business, phone: phone, email: email, message: message, source: 'website' })
+  }).catch(function() {});
 });
 </script>
 </body>

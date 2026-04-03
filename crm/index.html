@@ -523,6 +523,42 @@ function resetData() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 renderBoard();
 
+// Fetch leads from server and merge into CRM
+fetch('https://mdjserver.tail7845ea.ts.net/api/millang/leads')
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (!data.success || !data.leads) return;
+    var changed = false;
+    data.leads.forEach(function(lead) {
+      var isDupe = prospects.some(function(p) {
+        return (lead.phone && p.phone === lead.phone) ||
+               (lead.business && p.name.toLowerCase() === lead.business.toLowerCase());
+      });
+      if (!isDupe && (lead.business || lead.name)) {
+        prospects.push({
+          id: Date.now() + Math.random() * 1000,
+          name: lead.business || lead.name,
+          contact: lead.name || '',
+          phone: lead.phone || '',
+          email: lead.email || '',
+          address: '', city: '', state: 'IA', zip: '',
+          hasWebsite: 'NO', webUrl: '',
+          rating: 'N/A', reviews: 0,
+          stage: 'NEW', tier: 'launch',
+          prefContact: '', bestTime: '',
+          notes: lead.source === 'website' ? 'FROM WEBSITE: ' + (lead.message || '') : 'Source: ' + (lead.source || 'unknown'),
+          lastContacted: '',
+          nextFollowup: lead.date || new Date().toISOString().split('T')[0],
+          demoDate: '', proposalSent: '', dateClosed: '',
+          dateAdded: lead.date || new Date().toISOString().split('T')[0]
+        });
+        changed = true;
+      }
+    });
+    if (changed) { save(prospects); renderBoard(); }
+  })
+  .catch(function() {});
+
 // Auto-import leads from website form
 (function() {
   var url = new URL(window.location.href);
