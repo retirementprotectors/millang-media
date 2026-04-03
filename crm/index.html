@@ -170,6 +170,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
   <button class="filter-btn" data-filter="no-site" onclick="setFilter('no-site')">No Website</button>
   <button class="filter-btn" data-filter="has-site" onclick="setFilter('has-site')">Has Website</button>
+  <button class="filter-btn" data-filter="website-lead" onclick="setFilter('website-lead')">Website Leads</button>
+  <button class="filter-btn" data-filter="google-places" onclick="setFilter('google-places')">Google Places</button>
   <button class="filter-btn" data-filter="due-today" onclick="setFilter('due-today')">Due Today</button>
   <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue')">Overdue</button>
   <input type="text" class="search-input" id="search" placeholder="Search by name, city, owner, or phone..." oninput="renderBoard()">
@@ -312,7 +314,8 @@ function load() {
     stage: 'NEW', tier: 'launch', prefContact: '', bestTime: '',
     notes: '', lastContacted: '', nextFollowup: '',
     demoDate: '', proposalSent: '', dateClosed: '',
-    dateAdded: new Date().toISOString().split('T')[0]
+    dateAdded: new Date().toISOString().split('T')[0],
+    source: 'google_places'
   }));
 }
 function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
@@ -368,6 +371,8 @@ function renderBoard() {
   else if (currentFilter === 'has-site') filtered = filtered.filter(p => p.hasWebsite === 'YES');
   else if (currentFilter === 'due-today') filtered = filtered.filter(p => { const s = getFollowupStatus(p); return s === 'due' || s === 'overdue'; });
   else if (currentFilter === 'overdue') filtered = filtered.filter(p => getFollowupStatus(p) === 'overdue');
+  else if (currentFilter === 'website-lead') filtered = filtered.filter(p => p.source === 'website');
+  else if (currentFilter === 'google-places') filtered = filtered.filter(p => !p.source || p.source === 'google_places');
 
   STAGES.forEach(stage => {
     const container = document.getElementById('cards-' + stage);
@@ -386,6 +391,7 @@ function renderBoard() {
         <div class="card-meta">
           ${p.rating && p.rating !== 'N/A' ? `<span class="card-rating"><span class="star">&#9733;</span> ${p.rating} (${p.reviews})</span>` : '<span class="card-rating">No reviews</span>'}
           <span class="card-web ${p.hasWebsite === 'YES' ? 'yes' : 'no'}">${p.hasWebsite === 'YES' ? 'Has Site' : 'No Site'}</span>
+          ${p.source === 'website' ? '<span class="card-tier" style="background:#dcfce7;color:#16a34a;">Website Lead</span>' : ''}
           ${p.tier ? `<span class="card-tier ${p.tier}">${p.tier.charAt(0).toUpperCase()+p.tier.slice(1)}</span>` : ''}
         </div>
         ${p.notes ? `<div class="card-notes">${esc(p.notes)}</div>` : ''}
@@ -494,7 +500,7 @@ function saveProspect() {
     const p = prospects.find(x => x.id === parseInt(editId));
     if (p) Object.assign(p, data);
   } else {
-    prospects.push({ id: Date.now(), ...data, rating: 'N/A', reviews: 0, dateAdded: today() });
+    prospects.push({ id: Date.now(), ...data, rating: 'N/A', reviews: 0, dateAdded: today(), source: 'manual' });
   }
   save(prospects); renderBoard(); closeModal();
 }
@@ -547,6 +553,7 @@ fetch('https://mdjserver.tail7845ea.ts.net/api/millang/leads')
           stage: 'NEW', tier: 'launch',
           prefContact: '', bestTime: '',
           notes: lead.source === 'website' ? 'FROM WEBSITE: ' + (lead.message || '') : 'Source: ' + (lead.source || 'unknown'),
+          source: lead.source || 'website',
           lastContacted: '',
           nextFollowup: lead.date || new Date().toISOString().split('T')[0],
           demoDate: '', proposalSent: '', dateClosed: '',
