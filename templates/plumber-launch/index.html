@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heartland Plumbing — Licensed Plumber in Des Moines, Iowa</title>
+  <meta name="description" content="Heartland Plumbing — Licensed, insured plumber serving Des Moines and surrounding areas. Emergency plumbing, drain cleaning, water heaters, and more. Call now!" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --blue-light: #eff6ff;
+      --warm-white: #fafafa;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --white: #ffffff;
+      --green: #16a34a;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --red-border: #fecaca;
+      --star: #f59e0b;
+      --navy: #0f2a5e;
+      --radius: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+      --shadow: 0 4px 16px rgba(0,0,0,.10);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,.14);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      color: var(--gray-900);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      background: var(--gray-900);
+      color: rgba(255,255,255,.8);
+      text-align: center;
+      padding: .5rem 1rem;
+      font-size: .82rem;
+    }
+    .topbar a { color: #93c5fd; text-decoration: none; font-weight: 600; }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .nav-logo small {
+      display: block;
+      font-size: .7rem;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      color: var(--gray-700);
+      text-decoration: none;
+      font-size: .875rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-call {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      background: var(--blue);
+      color: var(--white) !important;
+      padding: .5rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 700 !important;
+      font-size: .875rem !important;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .nav-call:hover { background: var(--blue-dark) !important; }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(160deg, var(--navy) 0%, var(--blue-dark) 50%, var(--blue) 100%);
+      color: var(--white);
+      padding: 5rem 2rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--white);
+      clip-path: ellipse(60% 100% at 50% 100%);
+    }
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      color: rgba(255,255,255,.95);
+      font-size: .8rem;
+      font-weight: 600;
+      padding: .35rem .9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    .hero h1 .accent { color: #93c5fd; }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.8);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .btn-call {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--white);
+      color: var(--blue-dark);
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: .9rem 2rem;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,.25);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-call:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,.3); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(255,255,255,.12);
+      border: 1.5px solid rgba(255,255,255,.3);
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: .85rem 1.75rem;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,.2); }
+    .hero-trust {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .85rem;
+      color: rgba(255,255,255,.8);
+      font-weight: 600;
+    }
+
+    /* SECTIONS COMMON */
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: .6rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--gray-900);
+      margin-bottom: .75rem;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--gray-500);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-header { margin-bottom: 3rem; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-sub { margin: 0 auto; }
+
+    /* SERVICES */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .service-card {
+      background: var(--white);
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--blue);
+    }
+    .service-icon { font-size: 2rem; margin-bottom: .75rem; display: block; }
+    .service-card h3 { font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: .4rem; }
+    .service-card p { font-size: .85rem; color: var(--gray-500); line-height: 1.5; }
+    @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .services-grid { grid-template-columns: 1fr; } }
+
+    /* WHY CHOOSE US */
+    #why { background: var(--blue); }
+    #why .section-title { color: var(--white); }
+    #why .section-sub { color: rgba(255,255,255,.8); }
+    #why .section-label { color: rgba(255,255,255,.7); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .why-item {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius);
+    }
+    .why-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+    .why-item h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; color: var(--white); }
+    .why-item p { font-size: .875rem; color: rgba(255,255,255,.75); line-height: 1.6; }
+    @media (max-width: 640px) { .why-grid { grid-template-columns: 1fr; } }
+
+    /* REVIEWS */
+    #reviews { background: var(--gray-50); }
+    .stars { color: var(--star); font-size: 1.1rem; letter-spacing: .05em; margin-bottom: .75rem; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .review-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .review-text { font-size: .9rem; color: var(--gray-700); line-height: 1.65; margin-bottom: 1rem; font-style: italic; }
+    .review-author { font-size: .82rem; font-weight: 700; color: var(--gray-900); }
+    .review-location { font-size: .78rem; color: var(--gray-400); }
+    @media (max-width: 768px) { .reviews-grid { grid-template-columns: 1fr; } }
+
+    /* SERVICE AREA */
+    .area-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .map-embed {
+      background: var(--gray-100);
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      border: 1px solid var(--gray-200);
+    }
+    .map-embed iframe { width: 100%; height: 100%; border: none; }
+    .cities-list { list-style: none; }
+    .cities-list h4 {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1rem;
+    }
+    .cities-list li {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .9rem;
+      color: var(--gray-700);
+      padding: .4rem 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .cities-list li::before { content: '\U0001F4CD'; font-size: .8rem; }
+    @media (max-width: 768px) { .area-grid { grid-template-columns: 1fr; } }
+
+    /* ABOUT */
+    #about { background: var(--gray-50); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .about-photo {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+      border-radius: 20px;
+      aspect-ratio: 3/4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .about-initials {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      border: 3px solid rgba(255,255,255,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: .05em;
+    }
+    .about-photo-label {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.5);
+      color: var(--white);
+      font-size: .78rem;
+      font-weight: 600;
+      padding: .3rem .8rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .about-text .section-sub { margin-bottom: 1.25rem; }
+    .about-cred {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      margin-top: 1.75rem;
+    }
+    .cred-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .875rem;
+      color: var(--gray-700);
+    }
+    .cred-check {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: .7rem;
+      font-weight: 700;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-photo { display: none; }
+      .about-cred { grid-template-columns: 1fr; }
+    }
+
+    /* BOOK / CONTACT */
+    .book-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    .book-form {
+      background: var(--white);
+      border: 1.5px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .book-form h3 { font-size: 1.2rem; font-weight: 700; color: var(--gray-900); margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    label { display: block; font-size: .8rem; font-weight: 600; color: var(--gray-700); margin-bottom: .35rem; }
+    input, textarea, select {
+      font-family: inherit;
+      font-size: .9rem;
+      color: var(--gray-900);
+      background: var(--gray-50);
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      padding: .65rem .9rem;
+      width: 100%;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+      background: var(--white);
+    }
+    textarea { resize: vertical; min-height: 90px; }
+    .form-submit {
+      margin-top: 1.25rem;
+      width: 100%;
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: .9rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .form-submit:hover { background: var(--blue-dark); }
+    .book-info h3 { font-size: 1.1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 1.5rem; }
+    .info-item { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: 1.25rem; }
+    .info-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--blue-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .info-text { font-size: .88rem; color: var(--gray-700); line-height: 1.5; }
+    .info-text strong { display: block; font-weight: 700; color: var(--gray-900); margin-bottom: .1rem; }
+    .info-hours-green { color: var(--green); font-weight: 600; }
+    .info-phone-link { color: var(--blue); font-weight: 700; text-decoration: none; }
+    .emergency-box {
+      background: var(--red-bg);
+      border: 1.5px solid var(--red-border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .emergency-box h4 { font-size: .9rem; font-weight: 700; color: var(--red); margin-bottom: .35rem; }
+    .emergency-box p { font-size: .85rem; color: var(--red); margin-bottom: .4rem; }
+    .emergency-phone { font-size: 1.1rem; font-weight: 800; color: var(--red); text-decoration: none; }
+    @media (max-width: 768px) {
+      .book-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--gray-900);
+      color: rgba(255,255,255,.5);
+      padding: 2.5rem 2rem;
+      font-size: .875rem;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+    }
+    .footer-brand { font-size: 1.2rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; margin-bottom: .5rem; }
+    .footer-brand small { display: block; font-size: .75rem; font-weight: 400; color: rgba(255,255,255,.4); }
+    .footer-tagline { font-size: .875rem; line-height: 1.6; max-width: 280px; margin-top: .5rem; }
+    .footer-col h4 {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-bottom: .75rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { font-size: .875rem; color: rgba(255,255,255,.6); padding: .2rem 0; }
+    .footer-col a { color: rgba(255,255,255,.6); text-decoration: none; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .5rem;
+      font-size: .8rem;
+    }
+    .footer-bottom a { color: rgba(255,255,255,.4); text-decoration: none; }
+    .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+    .demo-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.35);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .2rem .6rem;
+      border-radius: 4px;
+      margin-left: .5rem;
+    }
+    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } }
+
+    /* STICKY MOBILE CTA */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      padding: 1rem;
+      background: var(--white);
+      border-top: 1px solid var(--gray-200);
+      box-shadow: 0 -4px 20px rgba(0,0,0,.12);
+    }
+    .sticky-cta a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 1.05rem;
+      font-weight: 800;
+      padding: .9rem 1.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      width: 100%;
+    }
+    @media (max-width: 640px) {
+      .sticky-cta { display: block; }
+      body { padding-bottom: 90px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div style="background:linear-gradient(90deg,#2563eb,#3b82f6);color:#fff;text-align:center;padding:.5rem;font-size:.82rem;font-weight:600;">LAUNCH PACKAGE DEMO &mdash; millangmedia.com &middot; $500 setup &middot; $150/mo</div>
+<div class="topbar">
+  Available for Emergency Calls 24/7 —
+  <a href="tel:+15155550199">(515) 555-0199</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      Heartland Plumbing
+      <small>Licensed Plumber · Des Moines, IA</small>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#area">Service Area</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="tel:+15155550199" class="nav-call">&#x1F4DE; (515) 555-0199</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">&#x1F4CD; Serving Des Moines and Surrounding Areas</div>
+    <h1>Heartland Plumbing<br>Your <span class="accent">Trusted Local</span> Plumber</h1>
+    <p class="hero-sub">Fast, reliable plumbing service in Des Moines, Iowa and surrounding communities. We show up when you need us — day or night.</p>
+    <div class="hero-ctas">
+      <a href="tel:+15155550199" class="btn-call">&#x1F4DE; Call Now — (515) 555-0199</a>
+      <a href="#book" class="btn-secondary">&#x1F4C5; Schedule Online</a>
+    </div>
+    <div class="hero-trust">
+      <span class="trust-item">&#x1F6E1;&#xFE0F; Licensed &amp; Insured</span>
+      <span class="trust-item">&#x26A1; 24/7 Emergency</span>
+      <span class="trust-item">&#x2B50; 4.9 Stars · 147 Google Reviews</span>
+      <span class="trust-item">&#x1F3C6; 17+ Years Experience</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-header center">
+      <p class="section-label">Our Services</p>
+      <h2 class="section-title">Everything Plumbing, Done Right</h2>
+      <p class="section-sub">From emergency repairs to full bathroom remodels — we handle it all. Licensed, insured, and ready to help.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">&#x1F6A8;</span>
+        <h3>Emergency Plumbing</h3>
+        <p>Burst pipe? Major leak? We're available 24/7 for plumbing emergencies. Fast response times, no surprise fees.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#x1F527;</span>
+        <h3>Drain Cleaning</h3>
+        <p>Slow drains and blockages cleared fast. We use professional equipment to get the job done right the first time.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#x2668;&#xFE0F;</span>
+        <h3>Water Heater Service</h3>
+        <p>Installation, repair, and replacement of traditional tank and tankless water heaters. Same-day service available.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#x1F529;</span>
+        <h3>Pipe Repair &amp; Replacement</h3>
+        <p>Leaking pipes, cracked lines, outdated galvanized pipes — we diagnose and fix plumbing issues of all sizes.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#x1F6C1;</span>
+        <h3>Bathroom Remodeling</h3>
+        <p>Complete bathroom plumbing for remodels and additions. New fixtures, tub and shower installs, full rough-in work.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#x1F3D7;&#xFE0F;</span>
+        <h3>Sewer Line Service</h3>
+        <p>Sewer camera inspections, hydro-jetting, and sewer line repair or replacement. Know what's going on underground.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="section-inner">
+    <div class="section-header center">
+      <p class="section-label">Why Choose Us</p>
+      <h2 class="section-title">Why Heartland Plumbing?</h2>
+      <p class="section-sub">We're your neighbors. We do the job right and we treat your home with respect.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-icon">&#x1F6E1;&#xFE0F;</span>
+        <h3>Licensed &amp; Insured</h3>
+        <p>Fully licensed plumber in the state of Iowa. Carry full liability insurance for your protection and peace of mind.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">&#x26A1;</span>
+        <h3>24/7 Emergency Service</h3>
+        <p>Plumbing emergencies don't wait for business hours. Neither do we. Call anytime — nights, weekends, holidays.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">&#x2B50;</span>
+        <h3>Satisfaction Guaranteed</h3>
+        <p>We stand behind every job. If something isn't right, we come back and make it right. No questions asked.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-inner">
+    <div class="section-header center">
+      <p class="section-label">Customer Reviews</p>
+      <h2 class="section-title">What Our Customers Say</h2>
+      <p class="section-sub">&#x2B50;&#x2B50;&#x2B50;&#x2B50;&#x2B50; 4.9 stars on Google · 147+ reviews</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+        <p class="review-text">"Called at 8pm on a Tuesday with water coming through the basement ceiling. Mike had a guy at our house in under 45 minutes. Fixed the burst pipe, cleaned up, and the bill was exactly what he quoted. These guys are the real deal."</p>
+        <div class="review-author">Jake R.</div>
+        <div class="review-location">&#x1F4CD; Ankeny, IA · Google Review</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+        <p class="review-text">"We've used Heartland Plumbing three times now — new water heater, drain cleaning, and a bathroom rough-in for our addition. Every time they show up on time, explain everything, and don't try to sell us stuff we don't need. Rare these days."</p>
+        <div class="review-author">Danielle M.</div>
+        <div class="review-location">&#x1F4CD; West Des Moines, IA · Google Review</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+        <p class="review-text">"Got quotes from three plumbers for our sewer line repair. Heartland was the most thorough — they ran a camera first and showed us exactly what was wrong. Fair price, great work, cleaned up the yard better than they found it."</p>
+        <div class="review-author">Chris &amp; Laura T.</div>
+        <div class="review-location">&#x1F4CD; Urbandale, IA · Google Review</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE AREA -->
+<section id="area">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-label">Service Area</p>
+      <h2 class="section-title">Serving Des Moines &amp; Surrounding Communities</h2>
+      <p class="section-sub">Based in Des Moines, we serve the greater metro area. Not sure if we cover your area? Give us a call.</p>
+    </div>
+    <div class="area-grid">
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190015.12345!2d-93.7977!3d41.5868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee99a4c1611ee7%3A0x710028512691e4b2!2sDes%20Moines%2C%20IA!5e0!3m2!1sen!2sus!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div>
+        <ul class="cities-list">
+          <h4>Cities We Serve</h4>
+          <li>Des Moines, Iowa (Home Base)</li>
+          <li>West Des Moines</li>
+          <li>Ankeny</li>
+          <li>Urbandale</li>
+          <li>Waukee</li>
+          <li>Johnston</li>
+          <li>Grimes</li>
+          <li>Clive</li>
+          <li>And surrounding areas</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-photo">
+        <div class="about-initials">MD</div>
+        <div class="about-photo-label">Mike Daniels, Owner</div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">About Us</p>
+        <h2 class="section-title">Heartland Plumbing</h2>
+        <p class="section-sub">Heartland Plumbing has been serving Des Moines and the surrounding area since 2009. What started as a one-person operation has grown into a trusted local business with hundreds of satisfied customers.</p>
+        <br>
+        <p class="section-sub">Owner Mike Daniels personally oversees every job. We believe in honest pricing, showing up when we say we will, and treating your home the way we'd treat our own.</p>
+        <div class="about-cred">
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Iowa Licensed Plumber</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Fully Insured</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> 17+ Years in Business</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Free Estimates</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Upfront Pricing</div>
+          <div class="cred-item"><span class="cred-check">&#x2713;</span> Local &amp; Family Owned</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK / CONTACT -->
+<section id="book">
+  <div class="section-inner">
+    <div class="section-header center">
+      <p class="section-label">Book a Service</p>
+      <h2 class="section-title">Schedule with Heartland Plumbing</h2>
+      <p class="section-sub">Fill out the form and we'll get back to you within a few hours. For emergencies, call directly.</p>
+    </div>
+    <div class="book-grid">
+      <div class="book-form">
+        <h3>Request Service</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-name">Your Name</label>
+            <input type="text" id="f-name" placeholder="John Smith" />
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Phone Number</label>
+            <input type="tel" id="f-phone" placeholder="(515) 000-0000" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" placeholder="john@email.com" />
+        </div>
+        <div class="form-group">
+          <label for="f-service">Service Needed</label>
+          <select id="f-service">
+            <option value="">Select a service...</option>
+            <option>Emergency Plumbing</option>
+            <option>Drain Cleaning</option>
+            <option>Water Heater</option>
+            <option>Pipe Repair / Replacement</option>
+            <option>Bathroom Remodel</option>
+            <option>Sewer Line</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="f-time">Preferred Time</label>
+          <select id="f-time">
+            <option value="">Any time works</option>
+            <option>Morning (8am-12pm)</option>
+            <option>Afternoon (12pm-5pm)</option>
+            <option>ASAP / Emergency</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="f-msg">Describe the Problem</label>
+          <textarea id="f-msg" placeholder="Tell us what's going on..."></textarea>
+        </div>
+        <button type="button" class="form-submit">Submit Request &#x2192;</button>
+      </div>
+
+      <div class="book-info">
+        <h3>Contact Info</h3>
+        <div class="info-item">
+          <div class="info-icon">&#x1F4DE;</div>
+          <div class="info-text">
+            <strong>Phone</strong>
+            <a href="tel:+15155550199" class="info-phone-link">(515) 555-0199</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#x1F4CD;</div>
+          <div class="info-text">
+            <strong>Address</strong>
+            4821 SE 14th St, Des Moines, Iowa 50320
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#x1F550;</div>
+          <div class="info-text">
+            <strong>Business Hours</strong>
+            Mon-Fri: 7am - 6pm<br>
+            Sat: 8am - 4pm<br>
+            <span class="info-hours-green">24/7 Emergency Service</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#x1F4E7;</div>
+          <div class="info-text">
+            <strong>Email</strong>
+            mike@heartlandplumbingdsm.com
+          </div>
+        </div>
+        <div class="emergency-box">
+          <h4>&#x1F6A8; Plumbing Emergency?</h4>
+          <p>Don't wait — call us directly.</p>
+          <a href="tel:+15155550199" class="emergency-phone">(515) 555-0199</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        Heartland Plumbing
+        <small>Licensed Plumber · Des Moines, Iowa</small>
+      </div>
+      <p class="footer-tagline">Serving Des Moines and surrounding communities with honest, reliable plumbing service since 2009.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li>Emergency Plumbing</li>
+        <li>Drain Cleaning</li>
+        <li>Water Heaters</li>
+        <li>Pipe Repair</li>
+        <li>Bathroom Remodel</li>
+        <li>Sewer Line</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+15155550199">(515) 555-0199</a></li>
+        <li>mike@heartlandplumbingdsm.com</li>
+        <li>Des Moines, Iowa 50320</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&#xA9; 2026 Heartland Plumbing · All Rights Reserved <span class="demo-badge">DEMO SITE</span></span>
+    <span>Website by <a href="https://millangmedia.com" target="_blank" rel="noopener">Millang Media</a></span>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE CALL BUTTON -->
+<div class="sticky-cta">
+  <a href="tel:+15155550199">&#x1F4DE; Call Now — (515) 555-0199</a>
+</div>
+
+</body>
+</html>
