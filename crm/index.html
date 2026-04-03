@@ -512,13 +512,13 @@ function openModal(id) {
     var allUrls = launchUrl + '\n' + growthUrl + '\n' + proUrl;
     if (ph || em) {
       demos.style.display = 'block';
-      var smsBody = function(tier, url) { return encodeURIComponent('Hey' + (biz ? ' ' + biz : '') + '! This is Talan from Millang Media. I put together a ' + tier + ' demo site for you to check out: ' + url + ' — Let me know what you think!'); };
+      var smsBody = function(tier, url) { return encodeURIComponent('Hey' + (biz ? ' ' + biz : '') + '! This is Talan from Millang Media. I put together a ' + tier + ' demo site for you to check out:\n\n' + url + '\n\nLet me know what you think!'); };
       var emailSubj = function(tier) { return encodeURIComponent(tier + ' Website Demo for ' + biz); };
       var emailBody = function(tier, url) { return encodeURIComponent('Hi' + (biz ? ' ' + biz : '') + ',\n\nHere is the ' + tier + ' demo I mentioned:\n\n' + url + '\n\nLet me know if you have any questions!\n\nTalan Millang\nMillang Media\n(515) 421-9871'); };
       document.getElementById('sms-launch').href = ph ? 'sms:' + ph + '?body=' + smsBody('Launch', launchUrl) : '#';
       document.getElementById('sms-growth').href = ph ? 'sms:' + ph + '?body=' + smsBody('Growth', growthUrl) : '#';
       document.getElementById('sms-pro').href = ph ? 'sms:' + ph + '?body=' + smsBody('Pro', proUrl) : '#';
-      document.getElementById('sms-all').href = ph ? 'sms:' + ph + '?body=' + encodeURIComponent('Hey' + (biz ? ' ' + biz : '') + '! This is Talan from Millang Media. Check out our 3 website packages:\n\nLaunch: ' + launchUrl + '\nGrowth: ' + growthUrl + '\nPro: ' + proUrl + '\n\nLet me know which one fits!') : '#';
+      document.getElementById('sms-all').href = ph ? 'sms:' + ph + '?body=' + encodeURIComponent('Hey' + (biz ? ' ' + biz : '') + '! This is Talan from Millang Media. Check out our 3 website packages:\n\nLaunch:\n' + launchUrl + '\n\nGrowth:\n' + growthUrl + '\n\nPro:\n' + proUrl + '\n\nLet me know which one fits!') : '#';
       document.getElementById('email-launch').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Launch') + '&body=' + emailBody('Launch', launchUrl) : '#';
       document.getElementById('email-growth').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Growth') + '&body=' + emailBody('Growth', growthUrl) : '#';
       document.getElementById('email-pro').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Pro') + '&body=' + emailBody('Pro', proUrl) : '#';
