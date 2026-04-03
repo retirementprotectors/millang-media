@@ -953,7 +953,7 @@
           </div>
         </div>
       </div>
-      <form class="contact-form reveal" action="https://formspree.io/f/xplaceholder" method="POST" onsubmit="return handleSubmit(event)" id="contact-form">
+      <form class="contact-form reveal" action="https://formspree.io/f/xjgpenvz" method="POST" id="contact-form">
         <div class="form-row">
           <div class="form-group">
             <label for="name">Your Name</label>
@@ -1009,28 +1009,5 @@
   reveals.forEach(el => observer.observe(el));
 </script>
 <script>
-function handleSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const name = form.querySelector('#name').value;
-  const business = form.querySelector('#business').value;
-  const phone = form.querySelector('#phone').value;
-  const email = form.querySelector('#email').value;
-  const message = form.querySelector('#message').value;
-  const subject = encodeURIComponent('New Lead: ' + business);
-  const body = encodeURIComponent(
-    'Name: ' + name + '\n' +
-    'Business: ' + business + '\n' +
-    'Phone: ' + phone + '\n' +
-    'Email: ' + email + '\n\n' +
-    'Message:\n' + message
-  );
-  window.location.href = 'mailto:hello@millangmedia.com?subject=' + subject + '&body=' + body;
-  form.querySelector('.form-submit').textContent = 'Thanks! We\'ll be in touch within 24 hours.';
-  form.querySelector('.form-submit').style.background = '#16a34a';
-  form.querySelector('.form-submit').disabled = true;
-  return false;
-}
-</script>
 </body>
 </html>
