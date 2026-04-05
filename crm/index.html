@@ -76,16 +76,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
 /* BOARD */
 .board { display: flex; gap: .75rem; padding: 1rem 1.5rem; overflow-x: auto; min-height: calc(100vh - 220px); align-items: flex-start; }
-.column { min-width: 250px; max-width: 290px; flex: 1; background: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200); display: flex; flex-direction: column; max-height: calc(100vh - 240px); }
+.column { min-width: 280px; flex: 1; background: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200); display: flex; flex-direction: column; max-height: calc(100vh - 240px); }
 .column-header { padding: .6rem .85rem; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-200); position: sticky; top: 0; background: inherit; border-radius: var(--radius) var(--radius) 0 0; }
 .column-count { background: var(--gray-200); color: var(--gray-700); padding: .1rem .45rem; border-radius: 100px; font-size: .72rem; }
 .column-cards { padding: .4rem; flex: 1; overflow-y: auto; min-height: 50px; }
-.col-new .column-header { color: var(--gray-500); }
-.col-contacted .column-header { color: var(--accent); }
-.col-interested .column-header { color: var(--yellow); }
-.col-proposal .column-header { color: var(--orange); }
+.col-interested .column-header { color: var(--accent); }
 .col-client .column-header { color: var(--green); }
-.col-live .column-header { color: var(--green-dark); }
+.col-not-interested .column-header { color: var(--red); }
 
 /* CARDS */
 .card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: .65rem; margin-bottom: .4rem; cursor: grab; transition: box-shadow .2s, transform .15s; border-left: 3px solid var(--gray-300); position: relative; }
@@ -135,11 +132,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .followup-popup .fu-btn .fu-label small { display:block; font-size:.72rem; font-weight:400; color:var(--gray-500); }
 .followup-popup .fu-skip { margin-top:.75rem; font-size:.78rem; color:var(--gray-400); cursor:pointer; border:none; background:none; font-family:inherit; }
 .followup-popup .fu-skip:hover { color:var(--gray-600); }
-.col-contacted .card { border-left-color: var(--accent); }
-.col-interested .card { border-left-color: var(--yellow); }
-.col-proposal .card { border-left-color: var(--orange); }
+.col-interested .card { border-left-color: var(--accent); }
 .col-client .card { border-left-color: var(--green); }
-.col-live .card { border-left-color: var(--green-dark); }
+.col-not-interested .card { border-left-color: var(--red); opacity: .6; }
 .column-cards.drag-over { background: var(--accent-light); border-radius: 6px; }
 
 /* MODAL */
@@ -199,12 +194,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 </div>
 
 <div class="board" id="board">
-  <div class="column col-new" data-stage="NEW"><div class="column-header">New <span class="column-count" id="count-NEW">0</span></div><div class="column-cards" id="cards-NEW"></div></div>
-  <div class="column col-contacted" data-stage="CONTACTED"><div class="column-header">Contacted <span class="column-count" id="count-CONTACTED">0</span></div><div class="column-cards" id="cards-CONTACTED"></div></div>
   <div class="column col-interested" data-stage="INTERESTED"><div class="column-header">Interested <span class="column-count" id="count-INTERESTED">0</span></div><div class="column-cards" id="cards-INTERESTED"></div></div>
-  <div class="column col-proposal" data-stage="PROPOSAL"><div class="column-header">Proposal <span class="column-count" id="count-PROPOSAL">0</span></div><div class="column-cards" id="cards-PROPOSAL"></div></div>
-  <div class="column col-client" data-stage="CLIENT"><div class="column-header">Client <span class="column-count" id="count-CLIENT">0</span></div><div class="column-cards" id="cards-CLIENT"></div></div>
-  <div class="column col-live" data-stage="LIVE"><div class="column-header">Live <span class="column-count" id="count-LIVE">0</span></div><div class="column-cards" id="cards-LIVE"></div></div>
+  <div class="column col-client" data-stage="CLIENT"><div class="column-header">Clients <span class="column-count" id="count-CLIENT">0</span></div><div class="column-cards" id="cards-CLIENT"></div></div>
+  <div class="column col-not-interested" data-stage="NOT_INTERESTED"><div class="column-header">Not Interested <span class="column-count" id="count-NOT_INTERESTED">0</span></div><div class="column-cards" id="cards-NOT_INTERESTED"></div></div>
 </div>
 
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
@@ -234,7 +226,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
     <h3>Sales Pipeline</h3>
     <div class="form-row-3">
-      <div class="form-group"><label>Stage</label><select id="f-stage"><option>NEW</option><option>CONTACTED</option><option>INTERESTED</option><option>PROPOSAL</option><option>CLIENT</option><option>LIVE</option></select></div>
+      <div class="form-group"><label>Stage</label><select id="f-stage"><option>INTERESTED</option><option>CLIENT</option><option value="NOT_INTERESTED">Not Interested</option></select></div>
       <div class="form-group"><label>Tier Interest</label><select id="f-tier"><option value="">Unknown</option><option value="launch">Launch</option><option value="growth">Growth</option><option value="pro">Pro</option></select></div>
       <div class="form-group"><label>Preferred Contact</label><select id="f-prefcontact"><option value="">Any</option><option value="call">Call</option><option value="email">Email</option><option value="text">Text</option></select></div>
     </div>
@@ -343,7 +335,7 @@ const SEED = [
 {name:"Golden Rule Plumbing Heating Cooling & Electrical",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://goldenrulephc.com/",rating:"4.9",reviews:9230}
 ];
 
-const STAGES = ['NEW','CONTACTED','INTERESTED','PROPOSAL','CLIENT','LIVE'];
+const STAGES = ['INTERESTED','CLIENT','NOT_INTERESTED'];
 const TIER_MONTHLY = { launch: 150, growth: 250, pro: 350 };
 const KEY = 'mm_crm_v2';
 let currentFilter = 'all';
@@ -357,7 +349,7 @@ function load() {
     address: p.address, city: p.city, state: p.state, zip: p.zip || '',
     hasWebsite: p.hasWebsite || 'NO', webUrl: p.webUrl || '',
     rating: p.rating, reviews: p.reviews,
-    stage: 'NEW', tier: 'launch', prefContact: '', bestTime: '',
+    stage: 'INTERESTED', tier: 'launch', prefContact: '', bestTime: '',
     notes: '', lastContacted: '', nextFollowup: '',
     demoDate: '', proposalSent: '', dateClosed: '',
     dateAdded: new Date().toISOString().split('T')[0],
@@ -381,9 +373,9 @@ function getFollowupStatus(p) {
 
 function updateKPIs() {
   const total = prospects.length;
-  const interested = prospects.filter(p => p.stage === 'INTERESTED' || p.stage === 'PROPOSAL');
-  const clients = prospects.filter(p => p.stage === 'CLIENT' || p.stage === 'LIVE');
-  const liveClients = prospects.filter(p => p.stage === 'LIVE');
+  const interested = prospects.filter(p => p.stage === 'INTERESTED');
+  const clients = prospects.filter(p => p.stage === 'CLIENT');
+  const liveClients = clients;
   const dueToday = prospects.filter(p => { const s = getFollowupStatus(p); return s === 'due' || s === 'overdue'; });
   let mrr = 0;
   liveClients.forEach(c => { mrr += TIER_MONTHLY[c.tier] || 250; });
@@ -464,7 +456,7 @@ document.querySelectorAll('.column-cards').forEach(col => {
     const p = prospects.find(x => x.id === dragId);
     if (p) {
       p.stage = newStage;
-      if (newStage !== 'NEW' && !p.lastContacted) p.lastContacted = today();
+      if (!p.lastContacted) p.lastContacted = today();
       save(prospects); renderBoard();
     }
   });
@@ -529,7 +521,7 @@ function openModal(id) {
     document.getElementById('edit-id').value = '';
     document.querySelectorAll('.modal input:not([disabled]), .modal textarea').forEach(i => i.value = '');
     document.getElementById('f-state').value = 'IA';
-    document.getElementById('f-stage').value = 'NEW';
+    document.getElementById('f-stage').value = 'INTERESTED';
     document.getElementById('f-tier').value = '';
     document.getElementById('f-hasweb').value = 'NO';
     document.getElementById('f-prefcontact').value = '';
@@ -571,6 +563,7 @@ function saveProspect() {
     const p = prospects.find(x => x.id === parseInt(editId));
     if (p) Object.assign(p, data);
   } else {
+    data.stage = data.stage || 'INTERESTED';
     prospects.push({ id: Date.now(), ...data, rating: 'N/A', reviews: 0, dateAdded: today(), source: 'manual' });
   }
   save(prospects); renderBoard(); closeModal();
@@ -636,7 +629,7 @@ fetch('https://mdjserver.tail7845ea.ts.net/api/millang/leads')
           address: '', city: '', state: 'IA', zip: '',
           hasWebsite: 'NO', webUrl: '',
           rating: 'N/A', reviews: 0,
-          stage: 'NEW', tier: lead.tier || 'launch',
+          stage: 'INTERESTED', tier: lead.tier || 'launch',
           prefContact: '', bestTime: '',
           notes: lead.source === 'website' ? 'FROM WEBSITE: ' + (lead.message || '') : 'Source: ' + (lead.source || 'unknown'),
           source: lead.source || 'website',
@@ -683,7 +676,7 @@ fetch('https://mdjserver.tail7845ea.ts.net/api/millang/leads')
       webUrl: '',
       rating: 'N/A',
       reviews: 0,
-      stage: 'NEW',
+      stage: 'INTERESTED',
       tier: 'launch',
       prefContact: '',
       bestTime: '',
