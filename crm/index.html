@@ -443,7 +443,7 @@ function renderBoard() {
           ${p.source === 'website' ? '<span class="card-tier" style="background:#dcfce7;color:#16a34a;">Website Lead</span>' : ''}
           ${p.tier ? `<span class="card-tier ${p.tier}">${p.tier.charAt(0).toUpperCase()+p.tier.slice(1)}</span>` : ''}
         </div>
-        <div class="card-called ${p.lastContacted ? 'yes' : 'no'}">${p.lastContacted ? 'Called' : 'Not Called'}</div>
+        ${p.lastContacted ? `<div class="card-called yes">Called ${p.lastContacted}</div>` : `<div class="card-called no" onclick="event.stopPropagation();markCalled(${p.id})" style="cursor:pointer;">Not Called — tap to mark</div>`}
         ${p.notes ? `<div class="card-notes">${esc(p.notes)}</div>` : ''}
         ${p.nextFollowup ? `<div class="card-followup ${fs}">${fs === 'overdue' ? 'OVERDUE: ' : fs === 'due' ? 'TODAY: ' : 'Follow-up: '}${p.nextFollowup}</div>` : ''}
         ${(fs === 'due' || fs === 'overdue') && p.phone ? `<div class="card-followup-actions"><a class="btn-text" href="#" onclick="event.stopPropagation();showFollowupPopup(${p.id})">&#x1F4AC; Text / Invite</a></div>` : ''}
@@ -454,6 +454,11 @@ function renderBoard() {
 }
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function markCalled(id) {
+  var p = prospects.find(function(x) { return x.id === id; });
+  if (p) { p.lastContacted = today(); save(prospects); renderBoard(); }
+}
 
 let dragId = null;
 function onDragStart(e) { dragId = parseInt(e.target.dataset.id); e.target.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }
