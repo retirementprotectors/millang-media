@@ -106,6 +106,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .card-web { font-size: .68rem; padding: .12rem .35rem; border-radius: 4px; font-weight: 600; }
 .card-web.no { background: var(--green-light); color: var(--green); }
 .card-web.yes { background: var(--gray-100); color: var(--gray-400); }
+.card-called { font-size: .68rem; padding: .12rem .35rem; border-radius: 4px; font-weight: 600; margin-top: .3rem; display: inline-block; }
+.card-called.yes { background: var(--green-light); color: var(--green); }
+.card-called.no { background: var(--red-light); color: var(--red); }
 .card-notes { font-size: .72rem; color: var(--gray-400); margin-top: .25rem; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .card-followup { font-size: .7rem; margin-top: .2rem; font-weight: 600; }
 .card-followup.due { color: var(--orange); }
@@ -366,6 +369,9 @@ prospects.forEach(function(p) { if (STAGE_MAP[p.stage]) p.stage = STAGE_MAP[p.st
 // Also update hasWebsite for known businesses that were misclassified
 const WEB_FIXES = {"Streamline Plumbing LLC":"https://www.streamline-plumbing.com/","Bee Line Sewer Cleaning":"https://www.beelinedrainsewercleaning.com/","Rozendaal Drain Cleaning Inc":"http://rozendaal.ca","Doug's Plumbing & Heating":"http://dougsplumbingofpa.com/","Affordable Drain Services Jet Surge":"https://www.jetsurgeia.net/","Pleva Mechanical Inc":"https://www.plevamechanical.com/","Golden Rule Plumbing Heating & Cooling":"https://goldenrulephc.com/","Lifestyle Plumbing":"http://www.lifestyleplumbingwaukee.com/","Mikes Plumbing & Backhoe Service LLC":"https://mikes-plumbing-backhoe-service-llc.business.site/","Bendon Plumbing Heating and AC":"https://www.indianolamechanical.com/","Golden Rule Plumbing":"https://goldenrulephc.com/location/norwalk/"};
 prospects.forEach(function(p) { if (WEB_FIXES[p.name] && p.hasWebsite === 'NO') { p.hasWebsite = 'YES'; p.webUrl = WEB_FIXES[p.name]; } });
+// Auto-fill owner names from research
+var OWNER_NAMES = {"Bob's Sewerooter Services":"Bob Starcevic","Mark's Drain & Plumbing Repair":"Mark Merical","Hulgan Plumbing & Heating Co":"Jim Hulgan","R & D Plumbing":"Randy Phillips","Elite Electric & Utility Contractors":"Sean Hick","Broich Plumbing LLC":"Isaac Broich","Deremiah Plumbing":"Patrick Deremiah","Practical Plumbing Heating & Cooling LLC":"Kevin Moss","G & S Plumbing":"Greg Ault","10G Heating Cooling Plumbing":"Nathan Gillmore","Kevin's Plumbing":"Kevin Evans","Sneller Plumbing Heating Services":"Tony Mosher","Clarks Plumbing Inc":"Brandon Clark","Firebaugh Plumbing":"Stewart Firebaugh","Streamline Plumbing LLC":"Brian Wirth","Bee Line Sewer Cleaning":"Michael DeBrouse II","Rozendaal Drain Cleaning Inc":"Rod Rozendaal","Doug's Plumbing & Heating":"Douglas Kent","Affordable Drain Services Jet Surge":"Dean Owen","Pleva Mechanical Inc":"Mark Pleva","Golden Rule Plumbing Heating & Cooling":"Mark Paup","Lifestyle Plumbing":"Donald Stabenow","Bendon Plumbing Heating and AC":"Don Bendon","Golden Rule Plumbing":"Mark Paup","Holt Plumbing & Heating Inc":"Leonard Holt","Clog Busters Drain Cleaning & Repair":"Jarod","Kohles & Bach Heating & Cooling":"Rick Bach","Lazer Home Services":"Bob Kamin","Lenz Heating & Cooling":"Al Lenz","Lozier Heating & Cooling":"Jon Edelen","True Comfort Heating Cooling and Plumbing":"Jonathan Marchand","1-Tom-Plumber":"Nichoel Gabriele","H & H Plumbing Inc":"Chris Hansen","Schaal Plumbing Heating and Cooling":"Randy Keys","Service Legends":"Brian Leech","Greens Appliance Heating & Cooling":"Dan Sprague","Bell Brothers Heating Cooling & Plumbing":"Jason Gassmann","Golden Rule Plumbing Heating Cooling & Electrical":"Mark Paup","Mikes Plumbing & Backhoe Service LLC":"Mike"};
+prospects.forEach(function(p) { if (!p.contact && OWNER_NAMES[p.name]) p.contact = OWNER_NAMES[p.name]; });
 save(prospects);
 
 function today() { return new Date().toISOString().split('T')[0]; }
@@ -437,6 +443,7 @@ function renderBoard() {
           ${p.source === 'website' ? '<span class="card-tier" style="background:#dcfce7;color:#16a34a;">Website Lead</span>' : ''}
           ${p.tier ? `<span class="card-tier ${p.tier}">${p.tier.charAt(0).toUpperCase()+p.tier.slice(1)}</span>` : ''}
         </div>
+        <div class="card-called ${p.lastContacted ? 'yes' : 'no'}">${p.lastContacted ? 'Called' : 'Not Called'}</div>
         ${p.notes ? `<div class="card-notes">${esc(p.notes)}</div>` : ''}
         ${p.nextFollowup ? `<div class="card-followup ${fs}">${fs === 'overdue' ? 'OVERDUE: ' : fs === 'due' ? 'TODAY: ' : 'Follow-up: '}${p.nextFollowup}</div>` : ''}
         ${(fs === 'due' || fs === 'overdue') && p.phone ? `<div class="card-followup-actions"><a class="btn-text" href="#" onclick="event.stopPropagation();showFollowupPopup(${p.id})">&#x1F4AC; Text / Invite</a></div>` : ''}
