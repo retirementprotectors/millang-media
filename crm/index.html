@@ -80,6 +80,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .column-header { padding: .6rem .85rem; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-200); position: sticky; top: 0; background: inherit; border-radius: var(--radius) var(--radius) 0 0; }
 .column-count { background: var(--gray-200); color: var(--gray-700); padding: .1rem .45rem; border-radius: 100px; font-size: .72rem; }
 .column-cards { padding: .4rem; flex: 1; overflow-y: auto; min-height: 50px; }
+.col-not-called .column-header { color: var(--gray-500); }
+.col-no-answer .column-header { color: var(--yellow); }
 .col-interested .column-header { color: var(--accent); }
 .col-client .column-header { color: var(--green); }
 .col-not-interested .column-header { color: var(--red); }
@@ -135,6 +137,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .followup-popup .fu-btn .fu-label small { display:block; font-size:.72rem; font-weight:400; color:var(--gray-500); }
 .followup-popup .fu-skip { margin-top:.75rem; font-size:.78rem; color:var(--gray-400); cursor:pointer; border:none; background:none; font-family:inherit; }
 .followup-popup .fu-skip:hover { color:var(--gray-600); }
+.col-not-called .card { border-left-color: var(--gray-400); }
+.col-no-answer .card { border-left-color: var(--yellow); }
 .col-interested .card { border-left-color: var(--accent); }
 .col-client .card { border-left-color: var(--green); }
 .col-not-interested .card { border-left-color: var(--red); opacity: .6; }
@@ -196,6 +200,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 </div>
 
 <div class="board" id="board">
+  <div class="column col-not-called" data-stage="NOT_CALLED"><div class="column-header">Not Called <span class="column-count" id="count-NOT_CALLED">0</span></div><div class="column-cards" id="cards-NOT_CALLED"></div></div>
+  <div class="column col-no-answer" data-stage="NO_ANSWER"><div class="column-header">No Answer <span class="column-count" id="count-NO_ANSWER">0</span></div><div class="column-cards" id="cards-NO_ANSWER"></div></div>
   <div class="column col-interested" data-stage="INTERESTED"><div class="column-header">Interested <span class="column-count" id="count-INTERESTED">0</span></div><div class="column-cards" id="cards-INTERESTED"></div></div>
   <div class="column col-client" data-stage="CLIENT"><div class="column-header">Clients <span class="column-count" id="count-CLIENT">0</span></div><div class="column-cards" id="cards-CLIENT"></div></div>
   <div class="column col-not-interested" data-stage="NOT_INTERESTED"><div class="column-header">Not Interested <span class="column-count" id="count-NOT_INTERESTED">0</span></div><div class="column-cards" id="cards-NOT_INTERESTED"></div></div>
@@ -232,7 +238,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
     <h3>Sales Pipeline</h3>
     <div class="form-row-3">
-      <div class="form-group"><label>Stage</label><select id="f-stage"><option>INTERESTED</option><option>CLIENT</option><option value="NOT_INTERESTED">Not Interested</option></select></div>
+      <div class="form-group"><label>Stage</label><select id="f-stage"><option value="NOT_CALLED">Not Called</option><option value="NO_ANSWER">No Answer</option><option>INTERESTED</option><option>CLIENT</option><option value="NOT_INTERESTED">Not Interested</option></select></div>
       <div class="form-group"><label>Tier Interest</label><select id="f-tier"><option value="">Unknown</option><option value="launch">Launch</option><option value="growth">Growth</option><option value="pro">Pro</option></select></div>
       <div class="form-group"><label>Preferred Contact</label><select id="f-prefcontact"><option value="">Any</option><option value="call">Call</option><option value="email">Email</option><option value="text">Text</option></select></div>
     </div>
@@ -341,7 +347,7 @@ const SEED = [
 {name:"Golden Rule Plumbing Heating Cooling & Electrical",address:"Des Moines",city:"Des Moines",state:"IA",zip:"",phone:"",hasWebsite:"YES",webUrl:"https://goldenrulephc.com/",rating:"4.9",reviews:9230}
 ];
 
-const STAGES = ['INTERESTED','CLIENT','NOT_INTERESTED'];
+const STAGES = ['NOT_CALLED','NO_ANSWER','INTERESTED','CLIENT','NOT_INTERESTED'];
 const TIER_MONTHLY = { launch: 150, growth: 250, pro: 350 };
 const KEY = 'mm_crm_v2';
 let currentFilter = 'all';
@@ -355,7 +361,7 @@ function load() {
     address: p.address, city: p.city, state: p.state, zip: p.zip || '',
     hasWebsite: p.hasWebsite || 'NO', webUrl: p.webUrl || '',
     rating: p.rating, reviews: p.reviews,
-    stage: 'INTERESTED', tier: 'launch', prefContact: '', bestTime: '',
+    stage: 'NOT_CALLED', tier: 'launch', prefContact: '', bestTime: '',
     notes: '', lastContacted: '', nextFollowup: '',
     demoDate: '', proposalSent: '', dateClosed: '',
     dateAdded: new Date().toISOString().split('T')[0],
@@ -366,8 +372,10 @@ function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 
 let prospects = load();
 // Migrate old stages to new 3-column system (preserves all notes/data)
-const STAGE_MAP = {NEW:'INTERESTED',CONTACTED:'INTERESTED',INTERESTED:'INTERESTED',PROPOSAL:'INTERESTED',CLIENT:'CLIENT',LIVE:'CLIENT',NOT_INTERESTED:'NOT_INTERESTED',PASSED:'NOT_INTERESTED'};
-prospects.forEach(function(p) { p.stage = STAGE_MAP[p.stage] || (STAGES.includes(p.stage) ? p.stage : 'INTERESTED'); });
+const STAGE_MAP = {NEW:'NOT_CALLED',CONTACTED:'INTERESTED',INTERESTED:'INTERESTED',PROPOSAL:'INTERESTED',CLIENT:'CLIENT',LIVE:'CLIENT',NOT_INTERESTED:'NOT_INTERESTED',PASSED:'NOT_INTERESTED'};
+prospects.forEach(function(p) { p.stage = STAGE_MAP[p.stage] || (STAGES.includes(p.stage) ? p.stage : 'NOT_CALLED'); });
+// Anyone with no notes AND no lastContacted goes to NOT_CALLED
+prospects.forEach(function(p) { if (!p.notes && !p.lastContacted && p.stage === 'INTERESTED') p.stage = 'NOT_CALLED'; });
 // Also update hasWebsite for known businesses that were misclassified
 const WEB_FIXES = {"Streamline Plumbing LLC":"https://www.streamline-plumbing.com/","Bee Line Sewer Cleaning":"https://www.beelinedrainsewercleaning.com/","Rozendaal Drain Cleaning Inc":"http://rozendaal.ca","Doug's Plumbing & Heating":"http://dougsplumbingofpa.com/","Affordable Drain Services Jet Surge":"https://www.jetsurgeia.net/","Pleva Mechanical Inc":"https://www.plevamechanical.com/","Golden Rule Plumbing Heating & Cooling":"https://goldenrulephc.com/","Lifestyle Plumbing":"http://www.lifestyleplumbingwaukee.com/","Mikes Plumbing & Backhoe Service LLC":"https://mikes-plumbing-backhoe-service-llc.business.site/","Bendon Plumbing Heating and AC":"https://www.indianolamechanical.com/","Golden Rule Plumbing":"https://goldenrulephc.com/location/norwalk/"};
 prospects.forEach(function(p) { if (WEB_FIXES[p.name] && p.hasWebsite === 'NO') { p.hasWebsite = 'YES'; p.webUrl = WEB_FIXES[p.name]; } });
@@ -461,7 +469,7 @@ function esc(s) { const d = document.createElement('div'); d.textContent = s || 
 
 function markCalled(id) {
   var p = prospects.find(function(x) { return x.id === id; });
-  if (p) { p.lastContacted = today(); save(prospects); renderBoard(); }
+  if (p) { p.lastContacted = today(); if (p.stage === 'NOT_CALLED') p.stage = 'NO_ANSWER'; save(prospects); renderBoard(); }
 }
 
 let dragId = null;
@@ -548,7 +556,7 @@ function openModal(id) {
     document.getElementById('edit-id').value = '';
     document.querySelectorAll('.modal input:not([disabled]), .modal textarea').forEach(i => i.value = '');
     document.getElementById('f-state').value = 'IA';
-    document.getElementById('f-stage').value = 'INTERESTED';
+    document.getElementById('f-stage').value = 'NOT_CALLED';
     document.getElementById('f-tier').value = '';
     document.getElementById('f-hasweb').value = 'NO';
     document.getElementById('f-prefcontact').value = '';
@@ -591,7 +599,7 @@ function saveProspect() {
     const p = prospects.find(x => x.id === parseInt(editId));
     if (p) Object.assign(p, data);
   } else {
-    data.stage = data.stage || 'INTERESTED';
+    data.stage = data.stage || 'NOT_CALLED';
     prospects.push({ id: Date.now(), ...data, rating: 'N/A', reviews: 0, dateAdded: today(), source: 'manual' });
   }
   save(prospects); renderBoard(); closeModal();
