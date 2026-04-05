@@ -220,6 +220,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
       <div class="form-group"><label>Has Website?</label><select id="f-hasweb"><option value="NO">No</option><option value="YES">Yes</option></select></div>
       <div class="form-group"><label>Website URL</label><input type="url" id="f-weburl" placeholder="https://..."></div>
     </div>
+    <div id="google-link" style="display:none;margin:.5rem 0 .25rem;">
+      <a id="f-google" href="#" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:8px;font-size:.85rem;font-weight:600;color:var(--gray-700);text-decoration:none;transition:all .15s;">&#128269; Search on Google</a>
+      <a id="f-sitelink" href="#" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="display:none;align-items:center;gap:.4rem;padding:.5rem 1rem;background:var(--accent-light);border:1.5px solid var(--accent);border-radius:8px;font-size:.85rem;font-weight:600;color:var(--accent);text-decoration:none;transition:all .15s;margin-left:.4rem;">&#127760; Visit Website</a>
+    </div>
 
     <h3>Sales Pipeline</h3>
     <div class="form-row-3">
@@ -426,6 +430,7 @@ function renderBoard() {
         ${p.contact ? `<div class="card-contact">${esc(p.contact)}</div>` : ''}
         <div class="card-city">${esc(p.city)}, ${esc(p.state)}</div>
         ${p.phone ? `<a class="card-phone" href="tel:${p.phone.replace(/[^\d+]/g,'')}" onclick="event.stopPropagation()">&#128222; ${esc(p.phone)}</a>` : ''}
+        <a class="card-phone" href="https://www.google.com/search?q=${encodeURIComponent(p.name + ' ' + p.city + ' ' + p.state)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--gray-500);font-weight:500;">&#128269; Google</a>
         <div class="card-meta">
           ${p.rating && p.rating !== 'N/A' ? `<span class="card-rating"><span class="star">&#9733;</span> ${p.rating} (${p.reviews})</span>` : '<span class="card-rating">No reviews</span>'}
           <span class="card-web ${p.hasWebsite === 'YES' ? 'yes' : 'no'}">${p.hasWebsite === 'YES' ? 'Has Site' : 'No Site'}</span>
@@ -493,6 +498,12 @@ function openModal(id) {
     document.getElementById('f-dateadded').value = p.dateAdded || '';
     document.getElementById('f-notes').value = p.notes || '';
     delBtn.style.display = 'block';
+    // Set up Google search + website links
+    var gLink = document.getElementById('google-link');
+    gLink.style.display = 'block';
+    document.getElementById('f-google').href = 'https://www.google.com/search?q=' + encodeURIComponent(p.name + ' ' + p.city + ' ' + p.state);
+    var siteLink = document.getElementById('f-sitelink');
+    if (p.webUrl) { siteLink.style.display = 'inline-flex'; siteLink.href = p.webUrl; } else { siteLink.style.display = 'none'; }
     // Set up Send Demo links
     var demos = document.getElementById('send-demos');
     var ph = (p.phone || '').replace(/[^\d+]/g, '');
@@ -529,6 +540,7 @@ function openModal(id) {
     document.getElementById('f-dateadded').value = today();
     delBtn.style.display = 'none';
     document.getElementById('send-demos').style.display = 'none';
+    document.getElementById('google-link').style.display = 'none';
   }
   overlay.classList.add('active');
 }
