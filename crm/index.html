@@ -364,7 +364,7 @@ function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 
 let prospects = load();
 // ONE-TIME migration — only runs once, then never touches your data again
-var MIG_KEY = 'mm_crm_migrated_v4';
+var MIG_KEY = 'mm_crm_migrated_v5';
 if (!localStorage.getItem(MIG_KEY)) {
   // Map old stages to new 4-column system
   var STAGE_MAP = {NEW:'NOT_CALLED',CONTACTED:'CALLED',INTERESTED:'CALLED',PROPOSAL:'CALLED',CLIENT:'CLIENT',LIVE:'CLIENT',NOT_INTERESTED:'NOT_INTERESTED',PASSED:'NOT_INTERESTED',NO_ANSWER:'CALLED',NOT_CALLED:'NOT_CALLED'};
@@ -632,7 +632,7 @@ function exportCSV() {
 function resetData() {
   if (!window.confirm('Reset all CRM data to original prospects? This cannot be undone.')) return;
   localStorage.removeItem(KEY);
-  localStorage.removeItem('mm_crm_migrated_v4');
+  localStorage.removeItem('mm_crm_migrated_v5');
   location.reload();
 }
 
