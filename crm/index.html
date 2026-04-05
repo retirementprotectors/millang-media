@@ -659,7 +659,10 @@ fetch('https://mdjserver.tail7845ea.ts.net/api/millang/leads')
   .then(function(data) {
     if (!data.success || !data.leads) return;
     var changed = false;
+    var banned2 = ['e','test biz','hockey plumming','hockey plumbing'].concat(JSON.parse(localStorage.getItem('mm_crm_deleted') || '[]'));
     data.leads.forEach(function(lead) {
+      var leadName = (lead.business || lead.name || '').toLowerCase().trim();
+      if (banned2.indexOf(leadName) !== -1) return;
       var isDupe = prospects.some(function(p) {
         return (lead.phone && p.phone === lead.phone) ||
                (lead.business && p.name.toLowerCase() === lead.business.toLowerCase());
