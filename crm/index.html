@@ -363,20 +363,25 @@ function load() {
 function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 
 let prospects = load();
-// Migrate old stages to new 3-column system (preserves all notes/data)
-const STAGE_MAP = {NEW:'NOT_CALLED',CONTACTED:'CALLED',INTERESTED:'CALLED',PROPOSAL:'CALLED',CLIENT:'CLIENT',LIVE:'CLIENT',NOT_INTERESTED:'NOT_INTERESTED',PASSED:'NOT_INTERESTED',NO_ANSWER:'CALLED',NOT_CALLED:'NOT_CALLED'};
-prospects.forEach(function(p) { p.stage = STAGE_MAP[p.stage] || (STAGES.includes(p.stage) ? p.stage : 'NOT_CALLED'); });
-// Also update hasWebsite for known businesses that were misclassified
-const WEB_FIXES = {"Streamline Plumbing LLC":"https://www.streamline-plumbing.com/","Bee Line Sewer Cleaning":"https://www.beelinedrainsewercleaning.com/","Rozendaal Drain Cleaning Inc":"http://rozendaal.ca","Doug's Plumbing & Heating":"http://dougsplumbingofpa.com/","Affordable Drain Services Jet Surge":"https://www.jetsurgeia.net/","Pleva Mechanical Inc":"https://www.plevamechanical.com/","Golden Rule Plumbing Heating & Cooling":"https://goldenrulephc.com/","Lifestyle Plumbing":"http://www.lifestyleplumbingwaukee.com/","Mikes Plumbing & Backhoe Service LLC":"https://mikes-plumbing-backhoe-service-llc.business.site/","Bendon Plumbing Heating and AC":"https://www.indianolamechanical.com/","Golden Rule Plumbing":"https://goldenrulephc.com/location/norwalk/"};
-prospects.forEach(function(p) { if (WEB_FIXES[p.name] && p.hasWebsite === 'NO') { p.hasWebsite = 'YES'; p.webUrl = WEB_FIXES[p.name]; } });
-// Auto-fill owner names from research
-var OWNER_NAMES = {"Bob's Sewerooter Services":"Bob Starcevic","Mark's Drain & Plumbing Repair":"Mark Merical","Hulgan Plumbing & Heating Co":"Jim Hulgan","R & D Plumbing":"Randy Phillips","Elite Electric & Utility Contractors":"Sean Hick","Broich Plumbing LLC":"Isaac Broich","Deremiah Plumbing":"Patrick Deremiah","Practical Plumbing Heating & Cooling LLC":"Kevin Moss","G & S Plumbing":"Greg Ault","10G Heating Cooling Plumbing":"Nathan Gillmore","Kevin's Plumbing":"Kevin Evans","Sneller Plumbing Heating Services":"Tony Mosher","Clarks Plumbing Inc":"Brandon Clark","Firebaugh Plumbing":"Stewart Firebaugh","Streamline Plumbing LLC":"Brian Wirth","Bee Line Sewer Cleaning":"Michael DeBrouse II","Rozendaal Drain Cleaning Inc":"Rod Rozendaal","Doug's Plumbing & Heating":"Douglas Kent","Affordable Drain Services Jet Surge":"Dean Owen","Pleva Mechanical Inc":"Mark Pleva","Golden Rule Plumbing Heating & Cooling":"Mark Paup","Lifestyle Plumbing":"Donald Stabenow","Bendon Plumbing Heating and AC":"Don Bendon","Golden Rule Plumbing":"Mark Paup","Holt Plumbing & Heating Inc":"Leonard Holt","Clog Busters Drain Cleaning & Repair":"Jarod","Kohles & Bach Heating & Cooling":"Rick Bach","Lazer Home Services":"Bob Kamin","Lenz Heating & Cooling":"Al Lenz","Lozier Heating & Cooling":"Jon Edelen","True Comfort Heating Cooling and Plumbing":"Jonathan Marchand","1-Tom-Plumber":"Nichoel Gabriele","H & H Plumbing Inc":"Chris Hansen","Schaal Plumbing Heating and Cooling":"Randy Keys","Service Legends":"Brian Leech","Greens Appliance Heating & Cooling":"Dan Sprague","Bell Brothers Heating Cooling & Plumbing":"Jason Gassmann","Golden Rule Plumbing Heating Cooling & Electrical":"Mark Paup","Mikes Plumbing & Backhoe Service LLC":"Mike"};
-prospects.forEach(function(p) { if (!p.contact && OWNER_NAMES[p.name]) p.contact = OWNER_NAMES[p.name]; });
-// People with notes go to Called, everyone else Not Called
-prospects.forEach(function(p) { if (p.notes && p.stage === 'NOT_CALLED') p.stage = 'CALLED'; if (!p.notes && !p.lastContacted && p.stage === 'CALLED') p.stage = 'NOT_CALLED'; });
-// Remove test/junk entries
-var JUNK = ['e','test biz','hockey plumming','hockey plumbing'];
-prospects = prospects.filter(function(p) { return JUNK.indexOf(p.name.toLowerCase().trim()) === -1; });
+// ONE-TIME migration — only runs once, then never touches your data again
+var MIG_KEY = 'mm_crm_migrated_v4';
+if (!localStorage.getItem(MIG_KEY)) {
+  // Map old stages to new 4-column system
+  var STAGE_MAP = {NEW:'NOT_CALLED',CONTACTED:'CALLED',INTERESTED:'CALLED',PROPOSAL:'CALLED',CLIENT:'CLIENT',LIVE:'CLIENT',NOT_INTERESTED:'NOT_INTERESTED',PASSED:'NOT_INTERESTED',NO_ANSWER:'CALLED',NOT_CALLED:'NOT_CALLED'};
+  prospects.forEach(function(p) { p.stage = STAGE_MAP[p.stage] || (STAGES.includes(p.stage) ? p.stage : 'NOT_CALLED'); });
+  // Fix misclassified websites
+  var WEB_FIXES = {"Streamline Plumbing LLC":"https://www.streamline-plumbing.com/","Bee Line Sewer Cleaning":"https://www.beelinedrainsewercleaning.com/","Rozendaal Drain Cleaning Inc":"http://rozendaal.ca","Doug's Plumbing & Heating":"http://dougsplumbingofpa.com/","Affordable Drain Services Jet Surge":"https://www.jetsurgeia.net/","Pleva Mechanical Inc":"https://www.plevamechanical.com/","Golden Rule Plumbing Heating & Cooling":"https://goldenrulephc.com/","Lifestyle Plumbing":"http://www.lifestyleplumbingwaukee.com/","Mikes Plumbing & Backhoe Service LLC":"https://mikes-plumbing-backhoe-service-llc.business.site/","Bendon Plumbing Heating and AC":"https://www.indianolamechanical.com/","Golden Rule Plumbing":"https://goldenrulephc.com/location/norwalk/"};
+  prospects.forEach(function(p) { if (WEB_FIXES[p.name] && p.hasWebsite === 'NO') { p.hasWebsite = 'YES'; p.webUrl = WEB_FIXES[p.name]; } });
+  // Fill owner names
+  var OWNER_NAMES = {"Bob's Sewerooter Services":"Bob Starcevic","Mark's Drain & Plumbing Repair":"Mark Merical","Hulgan Plumbing & Heating Co":"Jim Hulgan","R & D Plumbing":"Randy Phillips","Elite Electric & Utility Contractors":"Sean Hick","Broich Plumbing LLC":"Isaac Broich","Deremiah Plumbing":"Patrick Deremiah","Practical Plumbing Heating & Cooling LLC":"Kevin Moss","G & S Plumbing":"Greg Ault","10G Heating Cooling Plumbing":"Nathan Gillmore","Kevin's Plumbing":"Kevin Evans","Sneller Plumbing Heating Services":"Tony Mosher","Clarks Plumbing Inc":"Brandon Clark","Firebaugh Plumbing":"Stewart Firebaugh","Streamline Plumbing LLC":"Brian Wirth","Bee Line Sewer Cleaning":"Michael DeBrouse II","Rozendaal Drain Cleaning Inc":"Rod Rozendaal","Doug's Plumbing & Heating":"Douglas Kent","Affordable Drain Services Jet Surge":"Dean Owen","Pleva Mechanical Inc":"Mark Pleva","Golden Rule Plumbing Heating & Cooling":"Mark Paup","Lifestyle Plumbing":"Donald Stabenow","Bendon Plumbing Heating and AC":"Don Bendon","Golden Rule Plumbing":"Mark Paup","Holt Plumbing & Heating Inc":"Leonard Holt","Clog Busters Drain Cleaning & Repair":"Jarod","Kohles & Bach Heating & Cooling":"Rick Bach","Lazer Home Services":"Bob Kamin","Lenz Heating & Cooling":"Al Lenz","Lozier Heating & Cooling":"Jon Edelen","True Comfort Heating Cooling and Plumbing":"Jonathan Marchand","1-Tom-Plumber":"Nichoel Gabriele","H & H Plumbing Inc":"Chris Hansen","Schaal Plumbing Heating and Cooling":"Randy Keys","Service Legends":"Brian Leech","Greens Appliance Heating & Cooling":"Dan Sprague","Bell Brothers Heating Cooling & Plumbing":"Jason Gassmann","Golden Rule Plumbing Heating Cooling & Electrical":"Mark Paup","Mikes Plumbing & Backhoe Service LLC":"Mike"};
+  prospects.forEach(function(p) { if (!p.contact && OWNER_NAMES[p.name]) p.contact = OWNER_NAMES[p.name]; });
+  // People with notes or lastContacted go to Called, everyone else Not Called
+  prospects.forEach(function(p) { if ((p.notes || p.lastContacted) && p.stage === 'NOT_CALLED') p.stage = 'CALLED'; });
+  // Remove test entries
+  var JUNK = ['e','test biz','hockey plumming','hockey plumbing'];
+  prospects = prospects.filter(function(p) { return JUNK.indexOf(p.name.toLowerCase().trim()) === -1; });
+  localStorage.setItem(MIG_KEY, 'done');
+}
 save(prospects);
 
 function today() { return new Date().toISOString().split('T')[0]; }
@@ -627,7 +632,8 @@ function exportCSV() {
 function resetData() {
   if (!window.confirm('Reset all CRM data to original prospects? This cannot be undone.')) return;
   localStorage.removeItem(KEY);
-  prospects = load(); save(prospects); renderBoard();
+  localStorage.removeItem('mm_crm_migrated_v4');
+  location.reload();
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
