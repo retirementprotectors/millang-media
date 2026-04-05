@@ -186,10 +186,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
   <button class="filter-btn" data-filter="no-site" onclick="setFilter('no-site')">No Website</button>
   <button class="filter-btn" data-filter="has-site" onclick="setFilter('has-site')">Has Website</button>
-  <button class="filter-btn" data-filter="website-lead" onclick="setFilter('website-lead')">Website Leads</button>
-  <button class="filter-btn" data-filter="google-places" onclick="setFilter('google-places')">Google Places</button>
-  <button class="filter-btn" data-filter="due-today" onclick="setFilter('due-today')">Due Today</button>
-  <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue')">Overdue</button>
+  <button class="filter-btn" data-filter="due-today" onclick="setFilter('due-today')">Follow-Up Due</button>
   <input type="text" class="search-input" id="search" placeholder="Search by name, city, owner, or phone..." oninput="renderBoard()">
 </div>
 
@@ -285,25 +282,25 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
 <script>
 const SEED = [
-{name:"Streamline Plumbing LLC",address:"1513 NW 8th St",city:"Grimes",state:"IA",zip:"50111",phone:"(515) 779-0247",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:133},
+{name:"Streamline Plumbing LLC",address:"1513 NW 8th St",city:"Grimes",state:"IA",zip:"50111",phone:"(515) 779-0247",hasWebsite:"YES",webUrl:"https://www.streamline-plumbing.com/",rating:"5.0",reviews:133},
 {name:"Bob's Sewerooter Services",address:"4677 NE 38th St",city:"Des Moines",state:"IA",zip:"50317",phone:"(515) 262-6520",hasWebsite:"NO",webUrl:"",rating:"4.8",reviews:126},
 {name:"Mark's Drain & Plumbing Repair",address:"120 Northview Dr",city:"Waukee",state:"IA",zip:"50263",phone:"(515) 537-0006",hasWebsite:"NO",webUrl:"",rating:"4.7",reviews:48},
 {name:"Hulgan Plumbing & Heating Co",address:"801 1st Ave",city:"Perry",state:"IA",zip:"50220",phone:"(515) 465-3030",hasWebsite:"NO",webUrl:"",rating:"4.3",reviews:42},
-{name:"Rozendaal Drain Cleaning Inc",address:"503 N 2nd Ct",city:"Sully",state:"IA",zip:"50251",phone:"(641) 990-5215",hasWebsite:"NO",webUrl:"",rating:"4.8",reviews:29},
-{name:"Doug's Plumbing & Heating",address:"2164 IA-25",city:"Guthrie Center",state:"IA",zip:"50115",phone:"(641) 332-2198",hasWebsite:"NO",webUrl:"",rating:"4.4",reviews:28},
-{name:"Bee Line Sewer Cleaning",address:"Des Moines",city:"Des Moines",state:"IA",zip:"50311",phone:"(515) 225-4843",hasWebsite:"NO",webUrl:"",rating:"4.0",reviews:27},
+{name:"Rozendaal Drain Cleaning Inc",address:"503 N 2nd Ct",city:"Sully",state:"IA",zip:"50251",phone:"(641) 990-5215",hasWebsite:"YES",webUrl:"http://rozendaal.ca",rating:"4.8",reviews:29},
+{name:"Doug's Plumbing & Heating",address:"2164 IA-25",city:"Guthrie Center",state:"IA",zip:"50115",phone:"(641) 332-2198",hasWebsite:"YES",webUrl:"http://dougsplumbingofpa.com/",rating:"4.4",reviews:28},
+{name:"Bee Line Sewer Cleaning",address:"Des Moines",city:"Des Moines",state:"IA",zip:"50311",phone:"(515) 225-4843",hasWebsite:"YES",webUrl:"https://www.beelinedrainsewercleaning.com/",rating:"4.0",reviews:27},
 {name:"R & D Plumbing",address:"302 1st Ave N",city:"Altoona",state:"IA",zip:"50009",phone:"(515) 967-3957",hasWebsite:"NO",webUrl:"",rating:"4.0",reviews:25},
-{name:"Affordable Drain Services Jet Surge",address:"Indianola",city:"Indianola",state:"IA",zip:"50125",phone:"(515) 961-9843",hasWebsite:"NO",webUrl:"",rating:"3.4",reviews:17},
-{name:"Pleva Mechanical Inc",address:"13420 Bittersweet Rd",city:"Woodward",state:"IA",zip:"50276",phone:"(515) 438-2279",hasWebsite:"NO",webUrl:"",rating:"4.7",reviews:15},
+{name:"Affordable Drain Services Jet Surge",address:"Indianola",city:"Indianola",state:"IA",zip:"50125",phone:"(515) 961-9843",hasWebsite:"YES",webUrl:"https://www.jetsurgeia.net/",rating:"3.4",reviews:17},
+{name:"Pleva Mechanical Inc",address:"13420 Bittersweet Rd",city:"Woodward",state:"IA",zip:"50276",phone:"(515) 438-2279",hasWebsite:"YES",webUrl:"https://www.plevamechanical.com/",rating:"4.7",reviews:15},
 {name:"Elite Electric & Utility Contractors",address:"1403 Sugar Grove Ave",city:"Dallas Center",state:"IA",zip:"50063",phone:"(515) 992-3222",hasWebsite:"NO",webUrl:"",rating:"3.5",reviews:14},
 {name:"Broich Plumbing LLC",address:"2502 SW 31st St",city:"Ankeny",state:"IA",zip:"50023",phone:"(515) 229-8635",hasWebsite:"NO",webUrl:"",rating:"3.4",reviews:10},
 {name:"G & R Plumbing",address:"Waukee",city:"Waukee",state:"IA",zip:"50263",phone:"(515) 987-1008",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:8},
 {name:"Deremiah Plumbing",address:"1070 45th St",city:"Des Moines",state:"IA",zip:"50311",phone:"(515) 710-7997",hasWebsite:"NO",webUrl:"",rating:"4.1",reviews:7},
 {name:"Practical Plumbing Heating & Cooling LLC",address:"12045 NE 68th St",city:"Bondurant",state:"IA",zip:"50035",phone:"(515) 964-1070",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:7},
-{name:"Golden Rule Plumbing Heating & Cooling",address:"102 N Jefferson Way",city:"Indianola",state:"IA",zip:"50125",phone:"(888) 986-2424",hasWebsite:"NO",webUrl:"",rating:"3.9",reviews:7},
-{name:"Lifestyle Plumbing",address:"707 Collins Dr",city:"Waukee",state:"IA",zip:"50263",phone:"(515) 987-4193",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:6},
-{name:"Mikes Plumbing & Backhoe Service LLC",address:"3802 25th Ave",city:"Cumming",state:"IA",zip:"50061",phone:"(515) 208-3681",hasWebsite:"NO",webUrl:"",rating:"3.7",reviews:6},
-{name:"Bendon Plumbing Heating and AC",address:"717 W 2nd Ave",city:"Indianola",state:"IA",zip:"50125",phone:"(515) 962-5016",hasWebsite:"NO",webUrl:"",rating:"4.3",reviews:6},
+{name:"Golden Rule Plumbing Heating & Cooling",address:"102 N Jefferson Way",city:"Indianola",state:"IA",zip:"50125",phone:"(888) 986-2424",hasWebsite:"YES",webUrl:"https://goldenrulephc.com/",rating:"3.9",reviews:7},
+{name:"Lifestyle Plumbing",address:"707 Collins Dr",city:"Waukee",state:"IA",zip:"50263",phone:"(515) 987-4193",hasWebsite:"YES",webUrl:"http://www.lifestyleplumbingwaukee.com/",rating:"5.0",reviews:6},
+{name:"Mikes Plumbing & Backhoe Service LLC",address:"3802 25th Ave",city:"Cumming",state:"IA",zip:"50061",phone:"(515) 208-3681",hasWebsite:"YES",webUrl:"https://mikes-plumbing-backhoe-service-llc.business.site/",rating:"3.7",reviews:6},
+{name:"Bendon Plumbing Heating and AC",address:"717 W 2nd Ave",city:"Indianola",state:"IA",zip:"50125",phone:"(515) 962-5016",hasWebsite:"YES",webUrl:"https://www.indianolamechanical.com/",rating:"4.3",reviews:6},
 {name:"G & S Plumbing",address:"8090 NE 30th Pl",city:"Altoona",state:"IA",zip:"50009",phone:"(515) 975-7515",hasWebsite:"NO",webUrl:"",rating:"4.4",reviews:5},
 {name:"Above the Radar Resource",address:"405 3rd St NE",city:"Mitchellville",state:"IA",zip:"50169",phone:"(515) 202-6632",hasWebsite:"NO",webUrl:"",rating:"4.0",reviews:5},
 {name:"Des Moines Plumbing",address:"3419 1st St UNIT 7",city:"Des Moines",state:"IA",zip:"50313",phone:"(515) 346-6891",hasWebsite:"NO",webUrl:"",rating:"4.3",reviews:4},
@@ -313,7 +310,7 @@ const SEED = [
 {name:"Sneller Plumbing Heating Services",address:"110 N Marshall St",city:"Prairie City",state:"IA",zip:"50228",phone:"(515) 994-2283",hasWebsite:"NO",webUrl:"",rating:"2.5",reviews:2},
 {name:"Clarks Plumbing Inc",address:"608 N NW 8th St",city:"Grimes",state:"IA",zip:"50111",phone:"(515) 986-4545",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:1},
 {name:"Walls Plumbing & Handyman Services",address:"600 E 4th St N",city:"Newton",state:"IA",zip:"50208",phone:"(641) 275-7252",hasWebsite:"NO",webUrl:"",rating:"5.0",reviews:1},
-{name:"Golden Rule Plumbing",address:"Norwalk",city:"Norwalk",state:"IA",zip:"50211",phone:"(515) 981-5710",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
+{name:"Golden Rule Plumbing",address:"Norwalk",city:"Norwalk",state:"IA",zip:"50211",phone:"(515) 981-5710",hasWebsite:"YES",webUrl:"https://goldenrulephc.com/location/norwalk/",rating:"N/A",reviews:0},
 {name:"Madison County Plumbing Heating",address:"108 W Jefferson St",city:"Winterset",state:"IA",zip:"50273",phone:"(515) 462-3467",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
 {name:"Carstens Plumbing & Heating & AC",address:"307 SE 4th St",city:"Panora",state:"IA",zip:"50216",phone:"(641) 755-3805",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
 {name:"Firebaugh Plumbing",address:"406 NE 2nd St",city:"Panora",state:"IA",zip:"50216",phone:"(641) 755-3665",hasWebsite:"NO",webUrl:"",rating:"N/A",reviews:0},
@@ -359,6 +356,12 @@ function load() {
 function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 
 let prospects = load();
+// Migrate old stages to new 3-column system (preserves all notes/data)
+const STAGE_MAP = {NEW:'INTERESTED',CONTACTED:'INTERESTED',INTERESTED:'INTERESTED',PROPOSAL:'INTERESTED',CLIENT:'CLIENT',LIVE:'CLIENT',NOT_INTERESTED:'NOT_INTERESTED',PASSED:'NOT_INTERESTED'};
+prospects.forEach(function(p) { if (STAGE_MAP[p.stage]) p.stage = STAGE_MAP[p.stage]; else if (!STAGES.includes(p.stage)) p.stage = 'INTERESTED'; });
+// Also update hasWebsite for known businesses that were misclassified
+const WEB_FIXES = {"Streamline Plumbing LLC":"https://www.streamline-plumbing.com/","Bee Line Sewer Cleaning":"https://www.beelinedrainsewercleaning.com/","Rozendaal Drain Cleaning Inc":"http://rozendaal.ca","Doug's Plumbing & Heating":"http://dougsplumbingofpa.com/","Affordable Drain Services Jet Surge":"https://www.jetsurgeia.net/","Pleva Mechanical Inc":"https://www.plevamechanical.com/","Golden Rule Plumbing Heating & Cooling":"https://goldenrulephc.com/","Lifestyle Plumbing":"http://www.lifestyleplumbingwaukee.com/","Mikes Plumbing & Backhoe Service LLC":"https://mikes-plumbing-backhoe-service-llc.business.site/","Bendon Plumbing Heating and AC":"https://www.indianolamechanical.com/","Golden Rule Plumbing":"https://goldenrulephc.com/location/norwalk/"};
+prospects.forEach(function(p) { if (WEB_FIXES[p.name] && p.hasWebsite === 'NO') { p.hasWebsite = 'YES'; p.webUrl = WEB_FIXES[p.name]; } });
 save(prospects);
 
 function today() { return new Date().toISOString().split('T')[0]; }
@@ -408,9 +411,6 @@ function renderBoard() {
   if (currentFilter === 'no-site') filtered = filtered.filter(p => p.hasWebsite === 'NO');
   else if (currentFilter === 'has-site') filtered = filtered.filter(p => p.hasWebsite === 'YES');
   else if (currentFilter === 'due-today') filtered = filtered.filter(p => { const s = getFollowupStatus(p); return s === 'due' || s === 'overdue'; });
-  else if (currentFilter === 'overdue') filtered = filtered.filter(p => getFollowupStatus(p) === 'overdue');
-  else if (currentFilter === 'website-lead') filtered = filtered.filter(p => p.source === 'website');
-  else if (currentFilter === 'google-places') filtered = filtered.filter(p => !p.source || p.source === 'google_places');
 
   STAGES.forEach(stage => {
     const container = document.getElementById('cards-' + stage);
