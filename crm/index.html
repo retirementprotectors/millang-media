@@ -377,11 +377,11 @@ if (!localStorage.getItem(MIG_KEY)) {
   prospects.forEach(function(p) { if (!p.contact && OWNER_NAMES[p.name]) p.contact = OWNER_NAMES[p.name]; });
   // People with notes or lastContacted go to Called, everyone else Not Called
   prospects.forEach(function(p) { if ((p.notes || p.lastContacted) && p.stage === 'NOT_CALLED') p.stage = 'CALLED'; });
-  // Remove test entries
-  var JUNK = ['e','test biz','hockey plumming','hockey plumbing'];
-  prospects = prospects.filter(function(p) { return JUNK.indexOf(p.name.toLowerCase().trim()) === -1; });
   localStorage.setItem(MIG_KEY, 'done');
 }
+// Always remove junk entries
+var JUNK = ['e','test biz','hockey plumming','hockey plumbing'];
+prospects = prospects.filter(function(p) { return JUNK.indexOf(p.name.toLowerCase().trim()) === -1; });
 save(prospects);
 
 function today() { return new Date().toISOString().split('T')[0]; }
