@@ -189,6 +189,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
   <button class="filter-btn" data-filter="no-site" onclick="setFilter('no-site')">No Website</button>
   <button class="filter-btn" data-filter="has-site" onclick="setFilter('has-site')">Has Website</button>
+  <button class="filter-btn" data-filter="called" onclick="setFilter('called')">Called</button>
+  <button class="filter-btn" data-filter="not-called" onclick="setFilter('not-called')">Not Called</button>
   <button class="filter-btn" data-filter="due-today" onclick="setFilter('due-today')">Follow-Up Due</button>
   <input type="text" class="search-input" id="search" placeholder="Search by name, city, owner, or phone..." oninput="renderBoard()">
 </div>
@@ -365,7 +367,7 @@ function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 let prospects = load();
 // Migrate old stages to new 3-column system (preserves all notes/data)
 const STAGE_MAP = {NEW:'INTERESTED',CONTACTED:'INTERESTED',INTERESTED:'INTERESTED',PROPOSAL:'INTERESTED',CLIENT:'CLIENT',LIVE:'CLIENT',NOT_INTERESTED:'NOT_INTERESTED',PASSED:'NOT_INTERESTED'};
-prospects.forEach(function(p) { if (STAGE_MAP[p.stage]) p.stage = STAGE_MAP[p.stage]; else if (!STAGES.includes(p.stage)) p.stage = 'INTERESTED'; });
+prospects.forEach(function(p) { p.stage = STAGE_MAP[p.stage] || (STAGES.includes(p.stage) ? p.stage : 'INTERESTED'); });
 // Also update hasWebsite for known businesses that were misclassified
 const WEB_FIXES = {"Streamline Plumbing LLC":"https://www.streamline-plumbing.com/","Bee Line Sewer Cleaning":"https://www.beelinedrainsewercleaning.com/","Rozendaal Drain Cleaning Inc":"http://rozendaal.ca","Doug's Plumbing & Heating":"http://dougsplumbingofpa.com/","Affordable Drain Services Jet Surge":"https://www.jetsurgeia.net/","Pleva Mechanical Inc":"https://www.plevamechanical.com/","Golden Rule Plumbing Heating & Cooling":"https://goldenrulephc.com/","Lifestyle Plumbing":"http://www.lifestyleplumbingwaukee.com/","Mikes Plumbing & Backhoe Service LLC":"https://mikes-plumbing-backhoe-service-llc.business.site/","Bendon Plumbing Heating and AC":"https://www.indianolamechanical.com/","Golden Rule Plumbing":"https://goldenrulephc.com/location/norwalk/"};
 prospects.forEach(function(p) { if (WEB_FIXES[p.name] && p.hasWebsite === 'NO') { p.hasWebsite = 'YES'; p.webUrl = WEB_FIXES[p.name]; } });
@@ -420,6 +422,8 @@ function renderBoard() {
   );
   if (currentFilter === 'no-site') filtered = filtered.filter(p => p.hasWebsite === 'NO');
   else if (currentFilter === 'has-site') filtered = filtered.filter(p => p.hasWebsite === 'YES');
+  else if (currentFilter === 'called') filtered = filtered.filter(p => !!p.lastContacted);
+  else if (currentFilter === 'not-called') filtered = filtered.filter(p => !p.lastContacted);
   else if (currentFilter === 'due-today') filtered = filtered.filter(p => { const s = getFollowupStatus(p); return s === 'due' || s === 'overdue'; });
 
   STAGES.forEach(stage => {
