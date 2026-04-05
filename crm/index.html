@@ -370,7 +370,7 @@ function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 
 let prospects = load();
 // ONE-TIME migration — only runs once, then never touches your data again
-var MIG_KEY = 'mm_crm_migrated_v5';
+var MIG_KEY = 'mm_crm_migrated_v6';
 if (!localStorage.getItem(MIG_KEY)) {
   // Map old stages to new 4-column system
   var STAGE_MAP = {NEW:'NOT_CALLED',CONTACTED:'CALLED',INTERESTED:'CALLED',PROPOSAL:'CALLED',CLIENT:'CLIENT',LIVE:'CLIENT',NOT_INTERESTED:'NOT_INTERESTED',PASSED:'NOT_INTERESTED',NO_ANSWER:'CALLED',NOT_CALLED:'NOT_CALLED'};
@@ -383,6 +383,9 @@ if (!localStorage.getItem(MIG_KEY)) {
   prospects.forEach(function(p) { if (!p.contact && OWNER_NAMES[p.name]) p.contact = OWNER_NAMES[p.name]; });
   // People with notes or lastContacted go to Called, everyone else Not Called
   prospects.forEach(function(p) { if ((p.notes || p.lastContacted) && p.stage === 'NOT_CALLED') p.stage = 'CALLED'; });
+  // Numbers Talan already called — move to CALLED
+  var CALLED_PHONES = ['(515) 779-0247','(515) 262-6520','(515) 229-8635','(515) 967-3957','(515) 208-3681','(515) 962-5016','(515) 987-4193','(515) 795-4050'];
+  prospects.forEach(function(p) { if (CALLED_PHONES.indexOf(p.phone) !== -1) { p.stage = 'CALLED'; p.lastContacted = '2026-04-05'; } });
   localStorage.setItem(MIG_KEY, 'done');
 }
 // Always remove deleted + junk entries
@@ -646,7 +649,7 @@ function exportCSV() {
 function resetData() {
   if (!window.confirm('Reset all CRM data to original prospects? This cannot be undone.')) return;
   localStorage.removeItem(KEY);
-  localStorage.removeItem('mm_crm_migrated_v5');
+  localStorage.removeItem('mm_crm_migrated_v6');
   location.reload();
 }
 
