@@ -374,6 +374,9 @@ var OWNER_NAMES = {"Bob's Sewerooter Services":"Bob Starcevic","Mark's Drain & P
 prospects.forEach(function(p) { if (!p.contact && OWNER_NAMES[p.name]) p.contact = OWNER_NAMES[p.name]; });
 // People with notes go to Called, everyone else Not Called
 prospects.forEach(function(p) { if (p.notes && p.stage === 'NOT_CALLED') p.stage = 'CALLED'; if (!p.notes && !p.lastContacted && p.stage === 'CALLED') p.stage = 'NOT_CALLED'; });
+// Remove test/junk entries
+var JUNK = ['e','test biz','hockey plumming','hockey plumbing'];
+prospects = prospects.filter(function(p) { return JUNK.indexOf(p.name.toLowerCase().trim()) === -1; });
 save(prospects);
 
 function today() { return new Date().toISOString().split('T')[0]; }
