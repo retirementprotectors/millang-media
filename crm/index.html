@@ -346,7 +346,13 @@ let currentFilter = 'all';
 
 function load() {
   const stored = localStorage.getItem(KEY);
-  if (stored) return JSON.parse(stored);
+  if (stored) {
+    var data = JSON.parse(stored);
+    var banned = ['e','test biz','hockey plumming','hockey plumbing'];
+    var userDel = JSON.parse(localStorage.getItem('mm_crm_deleted') || '[]');
+    banned = banned.concat(userDel);
+    return data.filter(function(p) { return banned.indexOf(p.name.toLowerCase().trim()) === -1; });
+  }
   return SEED.map((p, i) => ({
     id: Date.now() + i,
     name: p.name, contact: '', phone: p.phone || '', email: '',
