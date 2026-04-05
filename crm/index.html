@@ -379,9 +379,11 @@ if (!localStorage.getItem(MIG_KEY)) {
   prospects.forEach(function(p) { if ((p.notes || p.lastContacted) && p.stage === 'NOT_CALLED') p.stage = 'CALLED'; });
   localStorage.setItem(MIG_KEY, 'done');
 }
-// Always remove junk entries
+// Always remove deleted + junk entries
 var JUNK = ['e','test biz','hockey plumming','hockey plumbing'];
-prospects = prospects.filter(function(p) { return JUNK.indexOf(p.name.toLowerCase().trim()) === -1; });
+var userDeleted = JSON.parse(localStorage.getItem('mm_crm_deleted') || '[]');
+var allJunk = JUNK.concat(userDeleted);
+prospects = prospects.filter(function(p) { return allJunk.indexOf(p.name.toLowerCase().trim()) === -1; });
 save(prospects);
 
 function today() { return new Date().toISOString().split('T')[0]; }
@@ -613,6 +615,12 @@ function deleteProspect() {
     return;
   }
   var numId = Number(editId);
+  var deleted = prospects.find(function(x) { return x.id === numId || String(x.id) === editId; });
+  if (deleted) {
+    var trash = JSON.parse(localStorage.getItem('mm_crm_deleted') || '[]');
+    trash.push(deleted.name.toLowerCase().trim());
+    localStorage.setItem('mm_crm_deleted', JSON.stringify(trash));
+  }
   prospects = prospects.filter(function(x) { return x.id !== numId && String(x.id) !== editId; });
   save(prospects);
   deleteArmed = false;
