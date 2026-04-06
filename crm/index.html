@@ -1598,6 +1598,7 @@ function resetData() {
   if (!window.confirm('Reset all CRM data to original prospects? This cannot be undone.')) return;
   localStorage.removeItem(KEY);
   localStorage.removeItem('mm_crm_migrated_v6');
+  localStorage.removeItem('mm_crm_migrated_v7');
   location.reload();
 }
 
