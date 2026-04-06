@@ -1417,6 +1417,7 @@ function renderBoard() {
         ${p.nextFollowup ? `<div class="card-followup ${fs}">${fs === 'overdue' ? 'OVERDUE: ' : fs === 'due' ? 'TODAY: ' : 'Follow-up: '}${p.nextFollowup}</div>` : ''}
         ${(fs === 'due' || fs === 'overdue') && p.phone ? `<div class="card-followup-actions"><a class="btn-text" href="#" onclick="event.stopPropagation();showFollowupPopup(${p.id})">&#x1F4AC; Text / Invite</a></div>` : ''}
         <div style="display:flex;gap:.3rem;margin-top:.4rem;">
+          <a href="#" onclick="event.preventDefault();event.stopPropagation();openVM(${p.id})" style="flex:1;text-align:center;padding:.35rem;background:#16a34a;color:#fff;border-radius:6px;font-size:.7rem;font-weight:600;text-decoration:none;cursor:pointer;">&#128379; Voicemail</a>
           <a href="#" onclick="event.preventDefault();event.stopPropagation();var card=this.closest('[data-id]');var pid=card.dataset.id;var p=prospects.find(function(x){return x.id==pid});if(p){var to=p.email||'';var subj=encodeURIComponent('Professional Website for '+p.name);var nl='%0A';var body='Hi'+(p.contact?' '+encodeURIComponent(p.contact):'')+','+nl+nl+'My name is Talan with Millang Media. I found '+encodeURIComponent(p.name)+' on Google and noticed you don%27t have a website yet.'+nl+nl+'I build professional, mobile-friendly websites for local '+encodeURIComponent(p.trade||'trade')+' businesses in the '+encodeURIComponent(p.city)+' area. Your customers are searching for you online right now %E2%80%94 a website makes sure they find YOU instead of your competitors.'+nl+nl+'I put together a quick demo so you can see what yours could look like:'+nl+'https://millangmedia.com/demo/launch'+nl+nl+'It takes about 48 hours to get your site live, and starts at just %24500 setup %2B %24150/month. No contracts.'+nl+nl+'Would you be open to a quick call this week%3F I%27d love to show you how it works.'+nl+nl+'Talan Millang'+nl+'Millang Media'+nl+'(515) 421-9871'+nl+'hello%40millangmedia.com';window.open('https://outlook.office365.com/owa/?path=/mail/action/compose&to='+to+'&subject='+subj+'&body='+body,'_blank')}" style="flex:1;text-align:center;padding:.35rem;background:var(--navy);color:#fff;border-radius:6px;font-size:.7rem;font-weight:600;text-decoration:none;cursor:pointer;">&#9993; Email Pitch</a>
         </div>
       </div>`;
@@ -1790,6 +1791,34 @@ saveProspect = function() {
     }
   }
 };
+
+function openVM(id) {
+  var p = prospects.find(function(x) { return x.id == id; });
+  if (!p) return;
+  var name = p.contact || p.name;
+  var trade = p.trade || 'trade';
+  var city = p.city || 'your area';
+  
+  var script = '<strong>"Hey' + (p.contact ? ' ' + esc(p.contact) : '') + ', this is Talan with Millang Media.</strong> ' +
+    'I found <strong>' + esc(p.name) + '</strong> on Google — you\'ve got great reviews but I noticed you don\'t have a website yet. ' +
+    'I build sites for local ' + esc(trade) + ' businesses in ' + esc(city) + '. ' +
+    'Takes 48 hours, starts at 500 bucks, no contracts. ' +
+    'Give me a call back at <strong>515-421-9871</strong>. ' +
+    'Again, it\'s Talan, <strong>515-421-9871</strong>. Have a good one!"';
+  
+  document.getElementById('vm-script').innerHTML = script;
+  document.getElementById('vm-overlay').classList.add('active');
+}
+function closeVM() { document.getElementById('vm-overlay').classList.remove('active'); }
+function copyVM() {
+  var text = document.getElementById('vm-script').innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.querySelector('#vm-overlay .btn-primary');
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy Script'; }, 2000);
+  });
+}
+
 </script>
 
 <!-- FOLLOW-UP ACTION POPUP -->
@@ -1813,6 +1842,28 @@ saveProspect = function() {
       </a>
     </div>
     <button class="fu-skip" onclick="closeFollowupPopup()">Skip — just save it</button>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="vm-overlay" onclick="if(event.target===this)closeVM()">
+  <div class="modal" style="max-width:480px;">
+    <h2 style="margin-bottom:.25rem;">Voicemail Script</h2>
+    <p style="font-size:.75rem;color:var(--gray-500);margin-bottom:1rem;">Read this in ~15 seconds. Smile while you talk!</p>
+    <div id="vm-script" style="background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:10px;padding:1.25rem;font-size:.95rem;line-height:1.7;color:var(--gray-900);"></div>
+    <div style="margin-top:1rem;padding:1rem;background:#eff6ff;border-radius:8px;">
+      <p style="font-size:.75rem;font-weight:700;color:var(--accent);margin-bottom:.5rem;">TIPS:</p>
+      <ul style="font-size:.75rem;color:var(--gray-700);padding-left:1rem;line-height:1.8;">
+        <li>Keep it under 20 seconds</li>
+        <li>Speak slow and clear — they're writing your number down</li>
+        <li>Say your number TWICE at the end</li>
+        <li>Sound like a real person, not a salesman</li>
+      </ul>
+    </div>
+    <div style="display:flex;gap:.5rem;margin-top:1rem;">
+      <button class="btn btn-primary" style="flex:1;" onclick="copyVM()">Copy Script</button>
+      <button class="btn" style="flex:1;border:1.5px solid var(--gray-300);background:var(--white);color:var(--gray-700);" onclick="closeVM()">Close</button>
+    </div>
   </div>
 </div>
 
