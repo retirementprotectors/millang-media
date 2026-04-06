@@ -1387,6 +1387,8 @@ function renderBoard() {
   else if (currentFilter === 'has-site') filtered = filtered.filter(p => p.hasWebsite === 'YES');
   else if (currentFilter === 'due-today') filtered = filtered.filter(p => { const s = getFollowupStatus(p); return s === 'due' || s === 'overdue'; });
   if (currentTrade !== 'all') filtered = filtered.filter(p => (p.trade || 'plumber') === currentTrade);
+  if (currentFilter === 'no-site') filtered.sort((a, b) => (b.reviews || 0) - (a.reviews || 0));
+  else if (currentFilter === 'has-site') filtered.sort((a, b) => (a.reviews || 0) - (b.reviews || 0));
 
   STAGES.forEach(stage => {
     const container = document.getElementById('cards-' + stage);
