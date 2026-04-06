@@ -1418,7 +1418,7 @@ function renderBoard() {
         ${(fs === 'due' || fs === 'overdue') && p.phone ? `<div class="card-followup-actions"><a class="btn-text" href="#" onclick="event.stopPropagation();showFollowupPopup(${p.id})">&#x1F4AC; Text / Invite</a></div>` : ''}
         <div style="display:flex;gap:.3rem;margin-top:.4rem;">
           <a href="#" onclick="event.preventDefault();event.stopPropagation();openVM(${p.id})" style="flex:1;text-align:center;padding:.35rem;background:#16a34a;color:#fff;border-radius:6px;font-size:.7rem;font-weight:600;text-decoration:none;cursor:pointer;">&#128379; Voicemail</a>
-          <a href="#" onclick="event.preventDefault();event.stopPropagation();var card=this.closest('[data-id]');var pid=card.dataset.id;var p=prospects.find(function(x){return x.id==pid});if(p){var to=p.email||'';var subj=encodeURIComponent('Professional Website for '+p.name);var nl='%0A';var body='Hi'+(p.contact?' '+encodeURIComponent(p.contact):'')+','+nl+nl+'My name is Talan with Millang Media. I found '+encodeURIComponent(p.name)+' on Google and noticed you don%27t have a website yet.'+nl+nl+'I build professional, mobile-friendly websites for local '+encodeURIComponent(p.trade||'trade')+' businesses in the '+encodeURIComponent(p.city)+' area. Your customers are searching for you online right now %E2%80%94 a website makes sure they find YOU instead of your competitors.'+nl+nl+'I put together a quick demo so you can see what yours could look like:'+nl+'https://millangmedia.com/demo/launch'+nl+nl+'It takes about 48 hours to get your site live, and starts at just %24500 setup %2B %24150/month. No contracts.'+nl+nl+'Would you be open to a quick call this week%3F I%27d love to show you how it works.'+nl+nl+'Talan Millang'+nl+'Millang Media'+nl+'(515) 421-9871'+nl+'hello%40millangmedia.com';window.open('https://outlook.office365.com/owa/?path=/mail/action/compose&to='+to+'&subject='+subj+'&body='+body,'_blank')}" style="flex:1;text-align:center;padding:.35rem;background:var(--navy);color:#fff;border-radius:6px;font-size:.7rem;font-weight:600;text-decoration:none;cursor:pointer;">&#9993; Email Pitch</a>
+          <a href="#" onclick="event.preventDefault();event.stopPropagation();var card=this.closest('[data-id]');var pid=card.dataset.id;var p=prospects.find(function(x){return x.id==pid});if(p){var to=p.email||'';var subj=encodeURIComponent('Professional Website for '+p.name);var nl='%0A';var body='Hi'+(p.contact?' '+encodeURIComponent(p.contact):'')+','+nl+nl+'My name is Talan with Millang Media. I found '+encodeURIComponent(p.name)+' on Google and noticed you don%27t have a website yet.'+nl+nl+'I build professional, mobile-friendly websites for local '+encodeURIComponent(p.trade||'trade')+' businesses in the '+encodeURIComponent(p.city)+' area. Your customers are searching for you online right now %E2%80%94 a website makes sure they find YOU instead of your competitors.'+nl+nl+'I put together a quick demo so you can see what yours could look like:'+nl+'https://millangmedia.com/demo/launch'+nl+nl+'It takes about 48 hours to get your site live, and starts at just %24500 setup %2B %24150/month. No contracts.'+nl+nl+'Would you be open to a quick call this week%3F I%27d love to show you how it works.'+nl+nl+'Talan Millang'+nl+'Millang Media'+nl+'(515) 412-8318'+nl+'hello%40millangmedia.com';window.open('https://outlook.office365.com/owa/?path=/mail/action/compose&to='+to+'&subject='+subj+'&body='+body,'_blank')}" style="flex:1;text-align:center;padding:.35rem;background:var(--navy);color:#fff;border-radius:6px;font-size:.7rem;font-weight:600;text-decoration:none;cursor:pointer;">&#9993; Email Pitch</a>
         </div>
       </div>`;
     }).join('');
@@ -1500,7 +1500,7 @@ function openModal(id) {
       demos.style.display = 'block';
       var smsBody = function(tier, url) { return encodeURIComponent('Hey' + (biz ? ' ' + biz : '') + '! This is Talan from Millang Media. I put together a ' + tier + ' demo site for you. Check it out and let me know what you think! ' + url); };
       var emailSubj = function(tier) { return encodeURIComponent(tier + ' Website Demo for ' + biz); };
-      var emailBody = function(tier, url) { return encodeURIComponent('Hi' + (biz ? ' ' + biz : '') + ',\n\nHere is the ' + tier + ' demo I mentioned:\n\n' + url + '\n\nLet me know if you have any questions!\n\nTalan Millang\nMillang Media\n(515) 421-9871'); };
+      var emailBody = function(tier, url) { return encodeURIComponent('Hi' + (biz ? ' ' + biz : '') + ',\n\nHere is the ' + tier + ' demo I mentioned:\n\n' + url + '\n\nLet me know if you have any questions!\n\nTalan Millang\nMillang Media\n(515) 412-8318'); };
       document.getElementById('sms-launch').href = ph ? 'sms:' + ph + '?body=' + smsBody('Launch', launchUrl) : '#';
       document.getElementById('sms-growth').href = ph ? 'sms:' + ph + '?body=' + smsBody('Growth', growthUrl) : '#';
       document.getElementById('sms-pro').href = ph ? 'sms:' + ph + '?body=' + smsBody('Pro', proUrl) : '#';
@@ -1508,7 +1508,7 @@ function openModal(id) {
       document.getElementById('email-launch').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Launch') + '&body=' + emailBody('Launch', launchUrl) : '#';
       document.getElementById('email-growth').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Growth') + '&body=' + emailBody('Growth', growthUrl) : '#';
       document.getElementById('email-pro').href = em ? 'mailto:' + em + '?subject=' + emailSubj('Pro') + '&body=' + emailBody('Pro', proUrl) : '#';
-      document.getElementById('email-all').href = em ? 'mailto:' + em + '?subject=' + encodeURIComponent('Website Demo Options for ' + biz) + '&body=' + encodeURIComponent('Hi' + (biz ? ' ' + biz : '') + ',\n\nHere are our 3 website packages:\n\nLaunch ($500 + $150/mo): ' + launchUrl + '\nGrowth ($1,000 + $250/mo): ' + growthUrl + '\nPro ($1,500 + $350/mo): ' + proUrl + '\n\nLet me know which one interests you!\n\nTalan Millang\nMillang Media\n(515) 421-9871') : '#';
+      document.getElementById('email-all').href = em ? 'mailto:' + em + '?subject=' + encodeURIComponent('Website Demo Options for ' + biz) + '&body=' + encodeURIComponent('Hi' + (biz ? ' ' + biz : '') + ',\n\nHere are our 3 website packages:\n\nLaunch ($500 + $150/mo): ' + launchUrl + '\nGrowth ($1,000 + $250/mo): ' + growthUrl + '\nPro ($1,500 + $350/mo): ' + proUrl + '\n\nLet me know which one interests you!\n\nTalan Millang\nMillang Media\n(515) 412-8318') : '#';
     } else { demos.style.display = 'none'; }
   } else {
     title.textContent = 'Add Prospect';
@@ -1743,7 +1743,7 @@ function showFollowupPopup(prospectId) {
 
   // Build email with .ics for calendar invite to prospect
   var emailSubject = encodeURIComponent('Millang Media — Follow-up on ' + dateStr);
-  var emailBody = encodeURIComponent('Hi ' + (p.contact || biz) + ',\n\nJust confirming our follow-up on ' + dateStr + ' to chat about a website for ' + biz + '.\n\nLooking forward to connecting!\n\nTalan Millang\nMillang Media\n(515) 421-9871\nmillangmedia.com');
+  var emailBody = encodeURIComponent('Hi ' + (p.contact || biz) + ',\n\nJust confirming our follow-up on ' + dateStr + ' to chat about a website for ' + biz + '.\n\nLooking forward to connecting!\n\nTalan Millang\nMillang Media\n(515) 412-8318\nmillangmedia.com');
   var emailHref = (p.email) ? ('mailto:' + p.email + '?subject=' + emailSubject + '&body=' + emailBody) : '#';
 
   var popup = document.getElementById('followup-popup-overlay');
@@ -1803,8 +1803,8 @@ function openVM(id) {
     'I found <strong>' + esc(p.name) + '</strong> on Google — you\'ve got great reviews but I noticed you don\'t have a website yet. ' +
     'I build sites for local ' + esc(trade) + ' businesses in ' + esc(city) + '. ' +
     'Takes 48 hours, starts at 500 bucks, no contracts. ' +
-    'Give me a call back at <strong>515-421-9871</strong>. ' +
-    'Again, it\'s Talan, <strong>515-421-9871</strong>. Have a good one!"';
+    'Give me a call back at <strong>515-412-8318</strong>. ' +
+    'Again, it\'s Talan, <strong>515-412-8318</strong>. Have a good one!"';
   
   document.getElementById('vm-script').innerHTML = script;
   document.getElementById('vm-overlay').classList.add('active');
